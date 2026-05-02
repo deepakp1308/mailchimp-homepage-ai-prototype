@@ -1,0 +1,3132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mailchimp · The marketing platform that grows your business</title>
+<meta name="description" content="Mailchimp homepage prototype with three switchable AI hero variants. Stakeholder review build." />
+<style>
+  /* ============================================================ */
+  /* === Mailchimp Design System (carried from analytics build) === */
+  /* ============================================================ */
+  :root {
+    --mc-text: #241c15;
+    --mc-text-secondary: #5C4F45;
+    --mc-text-muted: #8B7E72;
+    --mc-bg: #ffffff;
+    --mc-bg-alt: #F1EFE8;
+    --mc-bg-soft: #FAFAF7;
+    --mc-border: #EBE9E1;
+    --mc-cta: #007C89;
+    --mc-cta-hover: #006670;
+    --mc-teal: #00B9A6;
+    --mc-teal-dark: #007C89;
+    --mc-yellow: #FFE01B;
+    --mc-yellow-dim: #FFF1A8;
+    --mc-coral: #FF6B47;
+    --mc-sage: #3FB58E;
+    --mc-gold: #F4A100;
+    --mc-pep-deep: #15100A;
+    --mc-pep: #241C15;
+    --mc-pep-soft: #3A2E22;
+    --mc-orange: #F4A100;
+    --mc-green: #3FB58E;
+    --mc-red: #FF6B47;
+    --mc-navy: #241C15;
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+    --radius-xl: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+    color: var(--mc-text);
+    line-height: 1.5;
+    background: var(--mc-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display-serif {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
+    font-weight: 300;
+  }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; }
+
+  /* ===================== Variant switcher (sticky top bar) ===================== */
+  .variant-switcher {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--mc-pep);
+    color: white;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 9px 16px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+  }
+  .variant-switcher .vs-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--mc-yellow); color: var(--mc-text);
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .variant-switcher .vs-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.62);
+    margin-right: 4px;
+  }
+  .variant-switcher button {
+    border: 1px solid rgba(255,255,255,0.28);
+    background: transparent;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .variant-switcher button:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.5); }
+  .variant-switcher button.active {
+    background: white; color: var(--mc-text); border-color: white;
+  }
+  .variant-switcher .vs-meta {
+    margin-left: 8px; font-size: 11px; color: rgba(255,255,255,0.55);
+  }
+
+  /* ===================== Header ===================== */
+  header.site {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--mc-bg-soft);
+    border-bottom: 1px solid transparent;
+  }
+  /* When variant switcher is present, header sits below it. We layer with offsets. */
+  .variant-switcher + header.site { top: 41px; }
+  header.site .nav {
+    max-width: 1380px; margin: 0 auto;
+    display: flex; align-items: center;
+    height: 64px; padding: 0 32px;
+    gap: 32px;
+  }
+  .logo-link { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
+  .mc-logo-img { height: 40px; width: auto; display: block; }
+  .nav-links {
+    display: flex; gap: 28px; list-style: none; flex: 1;
+    margin-left: 12px;
+  }
+  .nav-links a {
+    color: var(--mc-text); text-decoration: none; font-size: 15px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 6px 0;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--mc-cta); }
+  .nav-links a.has-arrow::after {
+    content: ''; display: inline-block;
+    width: 8px; height: 8px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translate(-1px, -1px);
+    margin-left: 2px; opacity: 0.7;
+  }
+  .nav-right { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+  .nav-right .icon-btn {
+    background: none; border: none; cursor: pointer; padding: 4px;
+    color: var(--mc-text); display: flex; align-items: center;
+  }
+  .nav-right .login {
+    font-size: 14px; color: var(--mc-text); text-decoration: none; font-weight: 600;
+  }
+  .nav-cta {
+    background: var(--mc-yellow); color: var(--mc-text);
+    padding: 10px 22px;
+    border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+    border: 1.5px solid var(--mc-text);
+  }
+  .nav-cta:hover { background: #ffec5b; transform: translateY(-1px); }
+
+  /* ===================== Layout ===================== */
+  section { padding: 88px 32px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--mc-cta);
+  }
+
+  /* ===================== Hero shell ===================== */
+  .hero-shell {
+    background: var(--mc-bg-soft);
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-variant { display: none; }
+  .hero-variant.active { display: block; }
+
+  /* Hero common typography */
+  .hero-h1 {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.015em;
+    color: var(--mc-text);
+    line-height: 1.05;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--mc-text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Animated brand-gradient CTA */
+  .btn-spin {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1.5px solid var(--mc-text);
+    font-family: inherit; font-weight: 700; font-size: 14px;
+    color: #15100A;
+    cursor: pointer; text-decoration: none;
+    background: var(--mc-yellow);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+  .btn-spin:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,0.08); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1.5px solid var(--mc-text);
+    font-family: inherit; font-weight: 700; font-size: 14px;
+    color: var(--mc-text);
+    cursor: pointer; text-decoration: none;
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--mc-text); color: white; }
+
+  /* ===================== VARIANT A — Ask Mailchimp ===================== */
+  .va-hero {
+    padding: 56px 32px 96px;
+    position: relative;
+  }
+  .va-inner {
+    max-width: 1100px; margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .va-eyebrow-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0, 185, 166, 0.18);
+    color: var(--mc-cta);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .va-eyebrow-pill .va-spark { color: var(--mc-cta); font-size: 13px; line-height: 1; }
+  .va-headline {
+    font-size: 88px;
+    margin-bottom: 36px;
+    max-width: 920px;
+    margin-left: auto; margin-right: auto;
+  }
+  .va-input-wrap {
+    max-width: 680px; margin: 0 auto 28px;
+    position: relative;
+  }
+  .va-input-row {
+    background: white;
+    border: 1.5px solid var(--mc-border);
+    border-radius: 18px;
+    padding: 8px 8px 8px 18px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 4px 18px rgba(36,28,21,0.06);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .va-input-row:focus-within {
+    border-color: var(--mc-cta);
+    box-shadow: 0 4px 24px rgba(0, 124, 137, 0.15);
+  }
+  .va-spark-icon {
+    width: 32px; height: 32px;
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    color: var(--mc-yellow);
+  }
+  .va-spark-icon svg { width: 28px; height: 28px; }
+  .va-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--mc-text);
+    padding: 14px 4px;
+    background: transparent;
+  }
+  .va-input::placeholder { color: var(--mc-text-muted); }
+  .va-ask-btn {
+    background: var(--mc-pep);
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .va-ask-btn:hover { background: #000; transform: translateY(-1px); }
+
+  .va-chip-grid {
+    max-width: 920px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 10px;
+  }
+  .va-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    border: 1px solid var(--mc-border);
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 13px; font-weight: 600;
+    color: var(--mc-text);
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: 0 1px 3px rgba(36,28,21,0.04);
+  }
+  .va-chip:hover {
+    border-color: var(--mc-text);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(36,28,21,0.08);
+  }
+  .va-chip.active {
+    background: var(--mc-text);
+    color: white;
+    border-color: var(--mc-text);
+  }
+  .va-chip-icon {
+    width: 18px; height: 18px;
+    display: grid; place-items: center;
+    color: var(--mc-text-muted);
+  }
+  .va-chip.active .va-chip-icon { color: var(--mc-yellow); }
+  .va-chip-icon svg { width: 16px; height: 16px; stroke-width: 1.8; }
+
+  /* Variant A — answer panel that slides in below chip cluster */
+  .va-answer-wrap {
+    max-width: 820px; margin: 32px auto 0;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.45s ease, opacity 0.45s ease, margin 0.45s ease;
+  }
+  .va-answer-wrap.visible {
+    max-height: 600px;
+    opacity: 1;
+  }
+  .va-answer {
+    background: white;
+    border: 1px solid var(--mc-border);
+    border-radius: 18px;
+    padding: 24px;
+    text-align: left;
+    box-shadow: var(--shadow-md);
+  }
+  .va-answer-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--mc-border);
+  }
+  .va-answer-avatar {
+    width: 32px; height: 32px;
+    background: var(--mc-cta);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: var(--mc-yellow);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .va-answer-q { font-size: 14px; font-weight: 600; color: var(--mc-text); }
+  .va-answer-body { font-size: 15px; color: var(--mc-text); line-height: 1.6; margin-bottom: 16px; }
+  .va-answer-body strong { color: var(--mc-cta); font-weight: 700; }
+  .va-answer-viz {
+    background: var(--mc-bg-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .va-answer-bars { display: flex; align-items: flex-end; gap: 4px; height: 40px; flex: 1; }
+  .va-answer-bar {
+    flex: 1;
+    background: var(--mc-cta);
+    border-radius: 3px 3px 0 0;
+    transition: height 0.35s;
+  }
+  .va-answer-bar.hot { background: var(--mc-coral); }
+  .va-answer-stat {
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-size: 24px; font-weight: 300;
+    color: var(--mc-text);
+  }
+  .va-answer-stat .num { display: block; }
+  .va-answer-stat .label { font-size: 11px; color: var(--mc-text-muted); font-family: 'Helvetica Neue', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  .va-answer-tools {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    font-size: 12px; color: var(--mc-text-muted);
+  }
+  .va-answer-tools .lbl { letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; font-size: 10px; }
+  .va-tool-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--mc-bg-soft);
+    border: 1px solid var(--mc-border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px; font-weight: 600;
+    color: var(--mc-text);
+    cursor: pointer; text-decoration: none;
+    transition: all 0.18s;
+  }
+  .va-tool-chip:hover { background: var(--mc-text); color: white; border-color: var(--mc-text); }
+
+  /* Variant A — corner ink illustrations */
+  .va-corner {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.95;
+  }
+  .va-corner.left {
+    left: 32px;
+    top: 80px;
+    width: 200px;
+  }
+  .va-corner.right {
+    right: 32px;
+    top: 80px;
+    width: 200px;
+  }
+  .va-corner img {
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+    filter: contrast(1.05);
+  }
+  .va-sparkle {
+    position: absolute;
+    font-size: 20px;
+    color: var(--mc-text);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .va-sparkle.s1 { top: 130px; left: 16%; font-size: 24px; }
+  .va-sparkle.s2 { top: 200px; left: 12%; font-size: 14px; }
+  .va-sparkle.s3 { top: 130px; right: 16%; font-size: 18px; color: var(--mc-yellow); -webkit-text-stroke: 1px var(--mc-text); }
+
+  @media (max-width: 1100px) {
+    .va-corner.left, .va-corner.right { width: 130px; opacity: 0.7; }
+  }
+  @media (max-width: 820px) {
+    .va-corner { display: none; }
+    .va-sparkle { display: none; }
+    .va-headline { font-size: 48px; }
+    .va-input-row { padding: 6px 6px 6px 14px; }
+    .va-ask-btn { padding: 10px 18px; font-size: 13px; }
+  }
+  @media (max-width: 480px) {
+    .va-headline { font-size: 36px; }
+    .va-hero { padding: 36px 18px 64px; }
+  }
+
+  /* ===================== VARIANT B — Persona pivot ===================== */
+  .vb-hero {
+    padding: 36px 32px 80px;
+  }
+  .vb-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--mc-text);
+    margin-bottom: 18px;
+  }
+  .vb-pillrow {
+    display: flex; gap: 14px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+  }
+  .vb-pill {
+    background: white;
+    border: 1.5px solid var(--mc-text);
+    color: var(--mc-text);
+    padding: 14px 32px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .vb-pill:hover { background: var(--mc-bg-alt); }
+  .vb-pill.active {
+    background: var(--mc-pep);
+    color: white;
+    border-color: var(--mc-pep);
+  }
+
+  .vb-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    align-items: stretch;
+  }
+  .vb-left { display: flex; flex-direction: column; }
+  .vb-headline {
+    font-size: 64px;
+    margin-bottom: 12px;
+  }
+  .vb-subhead {
+    font-size: 16px;
+    color: var(--mc-text-secondary);
+    margin-bottom: 36px;
+  }
+  .vb-feature-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-top: auto;
+  }
+  .vb-feature-card {
+    background: white;
+    border: 1px solid var(--mc-border);
+    border-radius: 14px;
+    padding: 22px 20px 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .vb-feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .vb-feature-illo {
+    width: 80px; height: 80px;
+    margin-bottom: 14px;
+    display: grid; place-items: center;
+    color: var(--mc-text);
+  }
+  .vb-feature-illo svg { width: 80px; height: 80px; }
+  .vb-feature-card h4 {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-weight: 300;
+    font-size: 22px;
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  .vb-feature-card p {
+    font-size: 13px;
+    color: var(--mc-text-secondary);
+    line-height: 1.45;
+  }
+
+  .vb-right {
+    background: var(--mc-pep);
+    color: white;
+    border-radius: 22px;
+    padding: 32px;
+    display: flex; flex-direction: column;
+    min-height: 420px;
+  }
+  .vb-card-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mc-teal);
+    margin-bottom: 8px;
+  }
+  .vb-ask-bubble {
+    background: white;
+    color: var(--mc-text);
+    border-radius: 22px 22px 22px 4px;
+    padding: 16px 22px;
+    font-size: 16px; font-weight: 500;
+    margin-bottom: 24px;
+    max-width: 90%;
+    align-self: flex-start;
+    line-height: 1.4;
+  }
+  .vb-agent-row {
+    display: flex; gap: 14px; margin-bottom: auto;
+  }
+  .vb-agent-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--mc-teal);
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 22px;
+  }
+  .vb-agent-bubble {
+    background: var(--mc-pep-soft);
+    border-radius: 4px 22px 22px 22px;
+    padding: 16px 22px;
+    font-size: 15px; line-height: 1.45;
+    color: white;
+    max-width: 100%;
+  }
+  .vb-tools {
+    margin-top: 28px;
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .vb-tool-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0, 185, 166, 0.18);
+    color: var(--mc-teal);
+    border: 1px solid rgba(0, 185, 166, 0.4);
+    border-radius: 12px;
+    padding: 9px 16px;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+    text-decoration: none;
+  }
+  .vb-tool-chip:hover { background: rgba(0, 185, 166, 0.28); border-color: var(--mc-teal); }
+  .vb-tool-chip svg { width: 14px; height: 14px; }
+
+  .vb-dotrow {
+    display: flex; justify-content: center; align-items: center; gap: 12px;
+    margin-top: 36px;
+  }
+  .vb-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 1.5px solid var(--mc-text);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+  .vb-dot.active { background: var(--mc-text); }
+  .vb-rotate-note {
+    font-size: 12px; color: var(--mc-text-muted);
+    margin-left: 8px;
+  }
+
+  @media (max-width: 920px) {
+    .vb-grid { grid-template-columns: 1fr; gap: 28px; }
+    .vb-headline { font-size: 44px; }
+    .vb-pill { padding: 11px 18px; font-size: 12px; }
+    .vb-feature-row { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .vb-feature-card { padding: 18px 14px; }
+    .vb-feature-illo { width: 56px; height: 56px; }
+    .vb-feature-illo svg { width: 56px; height: 56px; }
+    .vb-feature-card h4 { font-size: 17px; }
+  }
+  @media (max-width: 540px) {
+    .vb-feature-row { grid-template-columns: 1fr; }
+    .vb-headline { font-size: 36px; }
+  }
+
+  /* ===================== VARIANT C — Watch the agent ===================== */
+  .vc-hero { padding: 28px 32px 80px; text-align: center; }
+  .vc-eyebrow {
+    color: var(--mc-cta);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: inline-block;
+  }
+  .vc-headline {
+    font-size: 76px;
+    margin-bottom: 36px;
+    max-width: 1000px;
+    margin-left: auto; margin-right: auto;
+  }
+  .vc-frame {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--mc-pep);
+    border-radius: 22px;
+    padding: 28px 32px 32px;
+    box-shadow: 0 30px 80px -30px rgba(36,28,21,0.35);
+    text-align: left;
+    position: relative;
+  }
+  .vc-traffic {
+    display: flex; gap: 8px; margin-bottom: 22px;
+  }
+  .vc-traffic span {
+    width: 12px; height: 12px; border-radius: 50%;
+  }
+  .vc-traffic .dot1 { background: #FF5F57; }
+  .vc-traffic .dot2 { background: #FEBC2E; }
+  .vc-traffic .dot3 { background: #28C840; }
+
+  .vc-cmd {
+    background: var(--mc-pep-deep);
+    border: 1.5px solid var(--mc-teal);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+    color: white;
+    font-size: 15px;
+    margin-bottom: 22px;
+    box-shadow: 0 0 0 0 rgba(0, 185, 166, 0.0);
+    transition: box-shadow 0.4s;
+  }
+  .vc-cmd.glow { box-shadow: 0 0 0 4px rgba(0, 185, 166, 0.18); }
+  .vc-cmd-spark {
+    color: var(--mc-teal);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .vc-cmd-text {
+    flex: 1;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+  }
+  .vc-cmd-text strong { color: var(--mc-teal); font-weight: 700; }
+  .vc-cmd-key {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    flex-shrink: 0;
+  }
+
+  .vc-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    background: var(--mc-pep-deep);
+    border-radius: 14px;
+    padding: 20px;
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+  }
+  .vc-pane {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex; flex-direction: column;
+    color: rgba(255,255,255,0.85);
+    min-height: 260px;
+    position: relative;
+  }
+  .vc-pane-label {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 14px;
+  }
+
+  /* Scene-specific content. Each scene has 2 panes: left + right. */
+  .vc-scene {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+    animation: vcSceneFade 0.5s ease;
+  }
+  .vc-scene.active { display: grid; }
+  @keyframes vcSceneFade {
+    0% { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Editor scene */
+  .vc-email-mock {
+    background: white;
+    border-radius: 8px;
+    padding: 18px 16px;
+    color: var(--mc-text);
+    font-family: 'Helvetica Neue', sans-serif;
+    width: 100%;
+    align-self: center;
+  }
+  .vc-email-mock h5 {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-weight: 300;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .vc-email-mock h6 {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-weight: 300;
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .vc-email-mock p.lead {
+    text-align: center;
+    font-size: 11px;
+    color: var(--mc-text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .vc-email-product {
+    background: var(--mc-bg-soft);
+    border-radius: 6px;
+    padding: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .vc-email-product-img {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #2d4a3d, #1a2e26);
+    border-radius: 4px;
+    display: grid; place-items: center;
+    color: white; font-size: 18px;
+    flex-shrink: 0;
+  }
+  .vc-email-product-info { flex: 1; min-width: 0; }
+  .vc-email-product-info .name { font-size: 11px; font-weight: 700; line-height: 1.2; }
+  .vc-email-product-info .price { font-size: 11px; color: var(--mc-text-muted); }
+  .vc-email-product-info .btn {
+    margin-top: 4px;
+    background: var(--mc-yellow);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 9px; font-weight: 700;
+    display: inline-block;
+  }
+  .vc-template-block {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    color: var(--mc-text);
+  }
+  .vc-template-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px;
+    border: 1px dashed var(--mc-border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: var(--mc-text-muted);
+  }
+  .vc-template-row.has {
+    border-style: solid;
+    background: var(--mc-bg-soft);
+    color: var(--mc-text);
+    font-weight: 600;
+  }
+  .vc-template-row .pill-tag {
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 9px; font-weight: 700;
+    margin-left: auto;
+  }
+  .vc-handle {
+    width: 16px; height: 16px;
+    border-radius: 50%; background: var(--mc-cta);
+    color: white; display: grid; place-items: center;
+    font-size: 10px; flex-shrink: 0;
+  }
+
+  /* Segment scene */
+  .vc-seg-list {
+    display: flex; flex-direction: column; gap: 8px;
+    width: 100%;
+  }
+  .vc-seg-row {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+  .vc-seg-row.hot {
+    background: rgba(0, 185, 166, 0.12);
+    border-color: var(--mc-teal);
+    color: white;
+  }
+  .vc-seg-bar {
+    flex: 1; height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px; overflow: hidden;
+  }
+  .vc-seg-bar-fill {
+    height: 100%; background: rgba(255,255,255,0.4);
+  }
+  .vc-seg-row.hot .vc-seg-bar-fill { background: var(--mc-teal); }
+  .vc-seg-pct { font-weight: 700; color: white; min-width: 30px; text-align: right; }
+  .vc-seg-name { font-weight: 600; min-width: 90px; }
+
+  /* Analytics scene */
+  .vc-chart {
+    width: 100%; height: 180px;
+    align-self: center;
+  }
+  .vc-chart svg { width: 100%; height: 100%; }
+  .vc-anomaly-callout {
+    background: rgba(255, 107, 71, 0.16);
+    border: 1px solid var(--mc-coral);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: white;
+    font-size: 12px;
+    align-self: center;
+    line-height: 1.5;
+  }
+  .vc-anomaly-callout strong { color: var(--mc-coral); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* Automation scene */
+  .vc-flow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; flex-wrap: wrap;
+    width: 100%;
+    align-self: center;
+    padding: 12px;
+  }
+  .vc-flow-node {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 24px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .vc-flow-node.cart { background: var(--mc-yellow); color: var(--mc-text); }
+  .vc-flow-node.wait { width: auto; height: 36px; padding: 0 16px; border-radius: 999px; background: var(--mc-teal); font-size: 12px; font-weight: 700; gap: 4px; display: flex; align-items: center; }
+  .vc-flow-node.send { background: var(--mc-cta); }
+  .vc-flow-node-label {
+    position: absolute;
+    bottom: -22px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: rgba(255,255,255,0.7); white-space: nowrap;
+  }
+  .vc-flow-arrow {
+    width: 22px; height: 2px; background: var(--mc-teal); position: relative;
+    flex-shrink: 0;
+  }
+  .vc-flow-arrow::after {
+    content: '';
+    position: absolute; right: -4px; top: -3px;
+    border-left: 6px solid var(--mc-teal);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+  .vc-canvas-controls {
+    position: absolute;
+    bottom: 14px; left: 14px;
+    display: flex; gap: 4px;
+  }
+  .vc-canvas-controls button {
+    width: 26px; height: 26px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  /* SMS scene */
+  .vc-sms-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    color: var(--mc-text);
+    width: 100%;
+    align-self: center;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .vc-sms-bubble {
+    background: var(--mc-cta);
+    color: white;
+    border-radius: 14px 14px 14px 4px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .vc-sms-meta {
+    display: flex; justify-content: space-between; font-size: 11px; color: var(--mc-text-muted);
+  }
+
+  /* Brand kit scene */
+  .vc-bk-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .vc-bk-swatch {
+    width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+  }
+  .vc-bk-card {
+    background: white;
+    border-radius: 8px;
+    padding: 14px;
+    color: var(--mc-text);
+  }
+  .vc-bk-card .h {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+  .vc-bk-card p {
+    font-size: 11px; color: var(--mc-text-secondary); margin-bottom: 10px; line-height: 1.5;
+  }
+  .vc-bk-card .btn {
+    background: var(--mc-pep);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-block;
+  }
+
+  .vc-progress-row {
+    max-width: 1080px;
+    margin: 24px auto 0;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
+  }
+  .vc-progress-bar {
+    height: 8px;
+    background: var(--mc-bg-alt);
+    border-radius: 999px;
+    border: 1px solid var(--mc-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .vc-progress-bar.active {
+    background: white;
+  }
+  .vc-progress-bar.done {
+    background: var(--mc-cta);
+    border-color: var(--mc-cta);
+  }
+  .vc-progress-bar.active::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 6px; height: 6px;
+    background: var(--mc-pep);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .vc-labels-row {
+    max-width: 1080px;
+    margin: 10px auto 0;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
+    text-align: center;
+  }
+  .vc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--mc-text-muted);
+  }
+  .vc-label.active {
+    color: var(--mc-cta);
+  }
+
+  @media (max-width: 880px) {
+    .vc-headline { font-size: 44px; }
+    .vc-frame { padding: 18px; }
+    .vc-body { grid-template-columns: 1fr; padding: 14px; }
+    .vc-progress-row, .vc-labels-row { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 540px) {
+    .vc-headline { font-size: 32px; }
+    .vc-progress-row, .vc-labels-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ===================== Recommended for your business ===================== */
+  .reco-section { background: white; padding: 96px 32px 64px; }
+  .reco-head {
+    max-width: 1280px; margin: 0 auto 40px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 32px;
+  }
+  .reco-head h2 {
+    font-size: 44px;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    max-width: 720px;
+  }
+  .reco-head .reco-link {
+    font-size: 14px; font-weight: 700; color: var(--mc-cta);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .reco-head .reco-link:hover { text-decoration: underline; }
+  .reco-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .reco-card {
+    background: var(--mc-bg-soft);
+    border-radius: 14px;
+    padding: 28px 26px;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--mc-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .reco-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .reco-illo {
+    width: 84px; height: 84px;
+    margin-bottom: 20px;
+    color: var(--mc-text);
+    display: grid; place-items: center;
+  }
+  .reco-illo svg { width: 84px; height: 84px; }
+  .reco-card h3 {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-weight: 300;
+    font-size: 24px;
+    margin-bottom: 8px;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+  .reco-card p {
+    font-size: 14px;
+    color: var(--mc-text-secondary);
+    margin-bottom: 18px;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .reco-card .reco-cta {
+    color: var(--mc-cta);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+
+  @media (max-width: 980px) {
+    .reco-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .reco-grid { grid-template-columns: 1fr; }
+    .reco-head { flex-direction: column; align-items: flex-start; }
+    .reco-head h2 { font-size: 32px; }
+  }
+
+  /* ===================== Marketing that delivers ===================== */
+  .stats-section { background: var(--mc-bg-soft); padding: 96px 32px; }
+  .stats-head { max-width: 1280px; margin: 0 auto 56px; text-align: center; }
+  .stats-head h2 {
+    font-size: 48px;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .stats-head p {
+    font-size: 17px;
+    color: var(--mc-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .stats-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 32px 28px;
+    border: 1px solid var(--mc-border);
+  }
+  .stat-card .stat-num {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 56px;
+    color: var(--mc-text);
+    line-height: 1;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .stat-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--mc-text);
+  }
+  .stat-card p {
+    font-size: 13px;
+    color: var(--mc-text-secondary);
+    line-height: 1.55;
+  }
+  .stats-footnote {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--mc-text-muted);
+    max-width: 1000px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  @media (max-width: 980px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-head h2 { font-size: 36px; }
+    .stat-card .stat-num { font-size: 44px; }
+  }
+  @media (max-width: 540px) {
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===================== Personalized tour callout ===================== */
+  .tour-section {
+    padding: 80px 32px;
+    background: white;
+  }
+  .tour-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--mc-pep);
+    color: white;
+    border-radius: 22px;
+    padding: 56px 64px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .tour-card::before {
+    content: '';
+    position: absolute;
+    right: -60px; bottom: -60px;
+    width: 240px; height: 240px;
+    background: var(--mc-yellow);
+    border-radius: 50%;
+    opacity: 0.95;
+  }
+  .tour-card::after {
+    content: '';
+    position: absolute;
+    right: 60px; top: -40px;
+    width: 80px; height: 80px;
+    background: var(--mc-teal);
+    border-radius: 50%;
+    opacity: 0.85;
+  }
+  .tour-text { position: relative; z-index: 2; }
+  .tour-text h2 {
+    font-size: 40px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .tour-text p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+  .tour-text .btn-spin {
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    border-color: var(--mc-yellow);
+  }
+  .tour-illo {
+    position: relative; z-index: 2;
+    text-align: center;
+  }
+  .tour-illo img {
+    max-width: 220px;
+    margin: 0 auto;
+    mix-blend-mode: screen;
+    opacity: 0.92;
+    filter: brightness(1.4) contrast(1.1);
+  }
+  @media (max-width: 880px) {
+    .tour-card { grid-template-columns: 1fr; padding: 36px 28px; gap: 24px; text-align: center; }
+    .tour-text h2 { font-size: 30px; }
+    .tour-illo img { max-width: 160px; }
+  }
+
+  /* ===================== Pricing (carried over) ===================== */
+  .pricing-section {
+    background: linear-gradient(180deg, var(--mc-bg-soft) 0%, white 100%);
+    padding: 100px 32px;
+    scroll-margin-top: 110px;
+  }
+  .pricing-section h2 {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif; font-weight: 300;
+    text-align: center; font-size: 56px; letter-spacing: -0.01em;
+    margin-bottom: 12px; line-height: 1.05;
+  }
+  .pricing-section .sub {
+    text-align: center; color: var(--mc-text-secondary); font-size: 18px; margin-bottom: 32px;
+    max-width: 720px; margin-left: auto; margin-right: auto;
+  }
+  .billing-toggle {
+    display: flex; justify-content: center; gap: 4px; margin-bottom: 48px;
+    background: white; padding: 4px; border-radius: 999px;
+    width: fit-content; margin-left: auto; margin-right: auto;
+    border: 1px solid var(--mc-border);
+  }
+  .billing-toggle button {
+    border: none; background: transparent; padding: 10px 20px; border-radius: 999px;
+    font-weight: 600; font-size: 14px; cursor: pointer; color: var(--mc-text-secondary);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .billing-toggle button.active { background: var(--mc-text); color: white; }
+  .save-badge {
+    background: var(--mc-orange); color: white; padding: 2px 8px; border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+  }
+  .billing-toggle button.active .save-badge { background: white; color: var(--mc-orange); }
+
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    max-width: 1200px; margin: 0 auto 32px;
+  }
+  .price-card {
+    background: white; padding: 32px 24px; border-radius: var(--radius-lg);
+    border: 1px solid var(--mc-border); display: flex; flex-direction: column;
+    position: relative; transition: all 0.2s;
+  }
+  .price-card:hover { box-shadow: var(--shadow-md); }
+  .price-card.recommended {
+    background: white;
+    border-color: var(--mc-yellow); border-width: 2px;
+    box-shadow: 0 0 0 4px var(--mc-yellow-dim), var(--shadow-md);
+    transform: translateY(-8px);
+  }
+  .recommend-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--mc-yellow); color: var(--mc-text); padding: 5px 14px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 4px;
+    white-space: nowrap;
+  }
+  .price-card .tier-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .price-card .tier-desc { font-size: 13px; color: var(--mc-text-muted); margin-bottom: 20px; min-height: 32px; }
+  .price-card .price-row { margin-bottom: 8px; }
+  .price-card .price {
+    font-size: 44px; font-weight: 700; color: var(--mc-text); letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .price-card .price-period { font-size: 14px; color: var(--mc-text-muted); }
+  .price-card .price-strike { font-size: 14px; color: var(--mc-text-muted); text-decoration: line-through; margin-right: 6px; }
+  .price-card .save-tag {
+    display: inline-block; background: rgba(255,149,0,0.12); color: var(--mc-orange);
+    padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; margin-bottom: 16px;
+  }
+  .price-card .contact-select {
+    width: 100%; padding: 8px 12px; border: 1px solid var(--mc-border);
+    border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 16px;
+    background: white; font-family: inherit;
+  }
+  .price-card .features { list-style: none; flex: 1; margin-bottom: 20px; }
+  .price-card .features li {
+    padding: 6px 0; font-size: 13px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  .price-card .features li::before {
+    content: '✓'; color: var(--mc-green); font-weight: 700; flex-shrink: 0;
+  }
+  .price-card .features li.ai-feat::before { content: '✦'; color: var(--mc-teal-dark); }
+  .price-card .features li.ai-feat strong { color: var(--mc-teal-dark); }
+  .price-card .features li.ai-feat-muted::before { content: '✦'; color: var(--mc-text-muted); opacity: 0.6; }
+  .price-card .features li.ai-feat-muted { color: var(--mc-text-muted); }
+  .price-card .price-helper { font-size: 13px; color: var(--mc-text-muted); margin-bottom: 16px; }
+  .price-card .contact-select-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--mc-text-muted); margin-bottom: 4px; }
+  .price-card .contact-select-spacer { height: 56px; margin-bottom: 16px; }
+  .price-card .btn-card {
+    width: 100%; padding: 12px; border-radius: var(--radius-sm);
+    font-weight: 600; font-size: 14px; cursor: pointer; border: none;
+    text-decoration: none; text-align: center; display: block;
+    transition: all 0.2s;
+  }
+  .price-card .btn-card.primary { background: var(--mc-cta); color: white; }
+  .price-card .btn-card.primary:hover { background: var(--mc-cta-hover); }
+  .price-card .btn-card.outline {
+    background: white; color: var(--mc-text); border: 1.5px solid var(--mc-text);
+  }
+  .price-card .btn-card.outline:hover { background: var(--mc-text); color: white; }
+  .price-card .btn-secondary-link {
+    text-align: center; margin-top: 8px; font-size: 13px; color: var(--mc-text-muted);
+  }
+  .price-card .btn-secondary-link a { color: var(--mc-cta); text-decoration: none; }
+  .pricing-footer { text-align: center; margin-top: 16px; }
+  .pricing-footer p { color: var(--mc-text-muted); font-size: 14px; margin-bottom: 12px; }
+
+  /* ===================== Integrations marquee ===================== */
+  .integrations-section {
+    background: var(--mc-bg-soft); padding: 56px 0 40px; overflow: hidden;
+    border-top: 1px solid var(--mc-border); border-bottom: 1px solid var(--mc-border);
+  }
+  .integrations-section .int-header {
+    text-align: center; margin-bottom: 28px; padding: 0 32px;
+  }
+  .integrations-section .int-header h2 {
+    font-family: 'Cooper Light','Cooper Lt BT',Georgia,serif; font-weight: 300;
+    font-size: 32px; color: var(--mc-text); margin-bottom: 8px; line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .integrations-section .int-header p { font-size: 15px; color: var(--mc-text-secondary); }
+  .int-marquee {
+    display: flex; width: max-content;
+    animation: intScroll 30s linear infinite;
+  }
+  .int-marquee.reverse { animation: intScrollR 35s linear infinite; }
+  .int-marquee:hover { animation-play-state: paused; }
+  @keyframes intScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @keyframes intScrollR { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+  .int-set { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+  .int-logo {
+    display: flex; align-items: center; justify-content: center;
+    width: 110px; height: 60px; padding: 12px 22px; flex-shrink: 0;
+    opacity: 0.55; transition: opacity 0.3s;
+  }
+  .int-logo:hover { opacity: 1; }
+  .int-logo img { height: 28px; width: auto; max-width: 70px; object-fit: contain; filter: grayscale(100%); transition: filter 0.3s; }
+  .int-logo:hover img { filter: grayscale(0%); }
+  .int-sep {
+    width: 1px; height: 22px; background: var(--mc-border); flex-shrink: 0; margin: 0 4px;
+  }
+  .int-badge {
+    display: flex; align-items: center; gap: 6px; padding: 0 24px; flex-shrink: 0;
+    font-size: 14px; font-weight: 700; color: var(--mc-cta); white-space: nowrap;
+  }
+  .int-divider {
+    text-align: center; margin: 30px auto 18px; padding: 0 32px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    max-width: 600px;
+  }
+  .int-divider::before, .int-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--mc-border);
+  }
+  .int-divider span {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--mc-text-muted);
+  }
+  .cust-logo {
+    display: flex; align-items: center; justify-content: center;
+    height: 56px; padding: 0 36px; flex-shrink: 0;
+    opacity: 0.7; transition: opacity 0.3s;
+  }
+  .cust-logo:hover { opacity: 1; }
+  .cust-logo img { height: 32px; width: auto; max-width: 140px; object-fit: contain; }
+
+  /* ===================== Testimonials (3-up editorial) ===================== */
+  .testimonial-section { background: white; padding: 112px 32px; }
+  .testimonial-section .testimonial-intro {
+    max-width: 1280px; margin: 0 auto 56px;
+    text-align: center;
+  }
+  .testimonial-section .testimonial-intro .eyebrow {
+    color: var(--mc-cta); margin-bottom: 12px; display: block;
+  }
+  .testimonial-section .testimonial-intro h2 {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif; font-weight: 300;
+    font-size: 48px; letter-spacing: -0.01em; line-height: 1.05;
+    color: var(--mc-text); margin: 0 0 12px;
+  }
+  .testimonial-section .testimonial-intro p {
+    font-size: 17px; color: var(--mc-text-secondary); max-width: 640px;
+    margin: 0 auto;
+  }
+  .testimonial-grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .testimonial-card {
+    background: var(--mc-bg-soft);
+    border-radius: 18px;
+    padding: 36px 32px 32px;
+    border: 1px solid var(--mc-border);
+    display: flex; flex-direction: column;
+    transition: all 0.25s;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+  }
+  .testimonial-card .quote-mark {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-size: 80px; line-height: 0.6;
+    color: var(--mc-yellow);
+    margin-bottom: 6px;
+    letter-spacing: -0.04em;
+  }
+  .testimonial-card .quote-text {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
+    font-size: 22px; font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--mc-text);
+    margin-bottom: 28px;
+    flex: 1;
+  }
+  .testimonial-attr-row {
+    display: flex; align-items: center; gap: 14px;
+    padding-top: 24px;
+    border-top: 1px solid var(--mc-border);
+  }
+  .testimonial-photo {
+    width: 52px; height: 52px; border-radius: 50%;
+    background-size: cover; background-position: center;
+    flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .testimonial-attr-text { flex: 1; min-width: 0; }
+  .testimonial-attr-text .name { font-size: 14px; font-weight: 700; color: var(--mc-text); }
+  .testimonial-attr-text .role {
+    font-size: 12px; color: var(--mc-text-muted);
+    line-height: 1.4; margin-top: 2px;
+  }
+  .testimonial-attr-text .role .company { color: var(--mc-text); font-weight: 600; }
+  @media (max-width: 960px) {
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .testimonial-section .testimonial-intro h2 { font-size: 36px; }
+  }
+
+  /* ===================== FAQ ===================== */
+  .faq-section { background: var(--mc-bg-alt); padding: 100px 32px; scroll-margin-top: 110px; }
+  .faq-section h2 {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif; font-weight: 300;
+    text-align: center; font-size: 44px; margin-bottom: 48px;
+    letter-spacing: -0.01em; line-height: 1.1;
+  }
+  .faq-list { max-width: 800px; margin: 0 auto; }
+  .faq-item {
+    background: white; border-radius: var(--radius-md); margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 20px 24px; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 600; font-size: 16px;
+  }
+  .faq-question:hover { background: rgba(0,124,137,0.03); }
+  .faq-toggle {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--mc-bg-soft);
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+    transition: transform 0.2s;
+  }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s;
+    padding: 0 24px;
+    color: var(--mc-text-secondary); font-size: 15px; line-height: 1.6;
+  }
+  .faq-item.open .faq-answer { max-height: 360px; padding: 0 24px 20px; }
+
+  /* ===================== Final CTA ===================== */
+  .final-cta {
+    background: var(--mc-text);
+    color: white; padding: 100px 32px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: var(--mc-yellow); opacity: 0.95;
+  }
+  .final-cta > * { position: relative; z-index: 1; }
+  .final-cta h2 {
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif; font-weight: 300;
+    font-size: 56px; letter-spacing: -0.01em; margin-bottom: 16px; line-height: 1.05;
+  }
+  .final-cta p { font-size: 18px; opacity: 0.85; margin-bottom: 32px; }
+  .final-cta .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .final-cta .btn-spin { background: var(--mc-yellow); color: var(--mc-text); border-color: var(--mc-yellow); }
+  .final-cta .btn-secondary { border-color: white; color: white; }
+  .final-cta .btn-secondary:hover { background: white; color: var(--mc-text); }
+
+  /* ===================== Footer ===================== */
+  footer.site {
+    background: var(--mc-text); color: white; padding: 64px 32px 32px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px;
+    max-width: 1200px; margin: 0 auto 48px;
+  }
+  .footer-logo {
+    height: 38px; width: auto; display: block;
+    filter: invert(1) brightness(2);
+  }
+  .footer-col h5 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; opacity: 0.8; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; font-size: 14px; }
+  .footer-col a { color: white; opacity: 0.8; text-decoration: none; }
+  .footer-col a:hover { opacity: 1; }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 12px; opacity: 0.6;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+
+  /* ===================== Responsive ===================== */
+  @media (max-width: 960px) {
+    section { padding: 72px 24px; }
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .price-card.recommended { transform: none; }
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .reco-head h2 { font-size: 32px; }
+    .stats-head h2 { font-size: 32px; }
+  }
+  @media (max-width: 600px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .vb-pillrow { flex-direction: column; }
+    .vb-pill { width: 100%; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    .int-marquee, .int-marquee.reverse { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- VARIANT SWITCHER (sticky, top-most)                          -->
+<!-- ============================================================ -->
+<div class="variant-switcher" role="tablist" aria-label="Hero variant switcher">
+  <span class="vs-badge">Demo prototype</span>
+  <span class="vs-label">Hero variant</span>
+  <button data-variant="a" class="active" role="tab" aria-selected="true">A · Ask Mailchimp</button>
+  <button data-variant="b" role="tab" aria-selected="false">B · Persona pivot</button>
+  <button data-variant="c" role="tab" aria-selected="false">C · Watch the agent</button>
+  <span class="vs-meta">Stakeholder review · shared sections below the fold</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- HEADER — top nav (shared across variants)                    -->
+<!-- ============================================================ -->
+<header class="site">
+  <nav class="nav">
+    <a href="#" class="logo-link" aria-label="Mailchimp home">
+      <img src="mailchimp-logo.png" alt="Mailchimp" class="mc-logo-img" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="has-arrow">Solutions</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#" class="has-arrow">Resources</a></li>
+      <li><a href="#">Enterprise</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <a href="#" class="login">Log In</a>
+      <a href="#" class="nav-cta">Sign Up Free</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============================================================ -->
+<!-- HERO SHELL — 3 variants stacked, only one active at a time   -->
+<!-- ============================================================ -->
+<div class="hero-shell">
+
+<!-- ===== VARIANT A · Ask Mailchimp ===== -->
+<section class="hero-variant active va-hero" id="variant-a" data-variant="a" role="tabpanel">
+  <!-- Corner illustrations: plant + freddie thinking. Approximated with hand-drawn SVGs to avoid heavy mix-blend on cream BG. -->
+  <div class="va-corner left" aria-hidden="true">
+    <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <g stroke="#241c15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Plant pot -->
+        <path d="M70 220 L60 250 L160 250 L150 220 Z" fill="#FAFAF7"/>
+        <line x1="70" y1="220" x2="150" y2="220"/>
+        <!-- Leaves -->
+        <path d="M110 220 C110 180 95 150 80 130 C70 117 80 90 100 90 C108 90 113 95 110 105 C108 115 110 130 110 220 Z" fill="#FFE01B" opacity="0.9"/>
+        <path d="M110 220 C110 175 130 145 145 125 C158 110 150 85 130 88 C120 89 116 100 118 110 C122 130 110 175 110 220 Z" fill="none"/>
+        <path d="M110 220 C110 175 130 145 145 125 C158 110 150 85 130 88 C120 89 116 100 118 110 C122 130 110 175 110 220 Z" fill="#FAFAF7" stroke="#241c15"/>
+        <path d="M125 110 Q138 95 144 80" stroke-width="1.3" fill="none"/>
+        <path d="M95 130 Q86 115 88 100" stroke-width="1.3" fill="none"/>
+        <!-- Coffee cup -->
+        <path d="M30 180 Q30 230 70 230 Q110 230 110 180 L30 180 Z" fill="white" />
+        <path d="M110 195 Q140 195 140 215 Q140 225 110 225"/>
+        <line x1="50" y1="180" x2="50" y2="170" />
+        <line x1="60" y1="180" x2="60" y2="166" />
+        <line x1="70" y1="180" x2="70" y2="170" />
+        <line x1="80" y1="180" x2="80" y2="166" />
+        <line x1="90" y1="180" x2="90" y2="170" />
+      </g>
+    </svg>
+  </div>
+  <div class="va-corner right" aria-hidden="true">
+    <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <g stroke="#241c15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Clouds -->
+        <path d="M30 30 q10 -16 26 -10 q14 -10 28 4 q14 -2 14 12 q-2 8 -16 8 l-44 0 q-12 -2 -8 -14 z" fill="white"/>
+        <path d="M120 70 q8 -10 20 -6 q10 -6 20 4 q10 -2 10 8 q-2 6 -12 6 l-30 0 q-10 0 -8 -12 z" fill="white"/>
+        <path d="M62 78 q8 -8 18 -4 q10 -4 18 4 q8 -2 8 8 q-2 6 -10 6 l-26 0 q-10 0 -8 -14 z" fill="white"/>
+        <!-- Freddie head (stylised as a chimp silhouette looking up) -->
+        <path d="M120 130 C100 130 88 145 90 168 C92 188 110 200 130 200 C152 200 170 184 168 162 C166 142 144 130 120 130 Z" fill="white"/>
+        <!-- Hat -->
+        <path d="M100 138 L106 122 L168 124 L170 138" fill="white"/>
+        <path d="M96 138 L172 138" />
+        <ellipse cx="118" cy="160" rx="3" ry="3" fill="#241c15"/>
+        <ellipse cx="146" cy="158" rx="3" ry="3" fill="#241c15"/>
+        <path d="M120 178 q12 8 24 -2"/>
+        <!-- Body hint -->
+        <path d="M96 200 q-4 38 16 60 l60 0 q14 -22 6 -56" fill="white"/>
+        <!-- Yellow notes -->
+        <path d="M180 116 l-6 12 M188 122 l-12 6 M184 132 l-2 14" stroke="#FFE01B" stroke-width="3"/>
+      </g>
+    </svg>
+  </div>
+  <span class="va-sparkle s1" aria-hidden="true">✦</span>
+  <span class="va-sparkle s2" aria-hidden="true">✦</span>
+  <span class="va-sparkle s3" aria-hidden="true">✦</span>
+
+  <div class="va-inner">
+    <div class="va-eyebrow-pill">
+      <span class="va-spark">✦</span>
+      Powered by Analytics AI
+    </div>
+    <h1 class="hero-h1 va-headline">Ask Mailchimp anything about your business.</h1>
+
+    <form class="va-input-wrap" id="vaInputForm" autocomplete="off" onsubmit="return false;">
+      <div class="va-input-row">
+        <span class="va-spark-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 L13.8 10.2 L22 12 L13.8 13.8 L12 22 L10.2 13.8 L2 12 L10.2 10.2 Z" fill="#FFE01B" stroke="#241c15" stroke-width="0.8" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <input class="va-input" id="vaInput" type="text" placeholder="Why are my opens dropping?" aria-label="Ask Mailchimp" />
+        <button class="va-ask-btn" type="submit" id="vaAskBtn">Ask</button>
+      </div>
+    </form>
+
+    <div class="va-chip-grid" id="vaChipGrid">
+      <button class="va-chip" data-chip="opens">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17 L8 12 L12 16 L21 7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7 L21 7 L21 13" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Why did opens drop?
+      </button>
+      <button class="va-chip" data-chip="mothers-day">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="6" width="18" height="13" rx="1.5"/><path d="M3 8 L12 14 L21 8"/></svg></span>
+        Draft Mother's Day email
+      </button>
+      <button class="va-chip" data-chip="vip">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 19 c0 -3 3 -5 6 -5 c3 0 6 2 6 5"/><path d="M14 18 c0 -2 2 -4 5 -4 s4 2 4 4"/></svg></span>
+        Build a VIP segment
+      </button>
+      <button class="va-chip" data-chip="cart">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4 L5 4 L7 16 L19 16 L21 8 L7 8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></span>
+        Set up cart recovery
+      </button>
+      <button class="va-chip" data-chip="sms">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4 h16 v12 h-9 l-5 4 v-4 h-2 z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12" x2="13" y2="12"/></svg></span>
+        Send via SMS
+      </button>
+      <button class="va-chip" data-chip="forecast">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="20" x2="21" y2="20"/><rect x="5" y="13" width="3" height="6"/><rect x="11" y="9" width="3" height="10"/><rect x="17" y="5" width="3" height="14"/></svg></span>
+        Forecast next month
+      </button>
+      <button class="va-chip" data-chip="brand">
+        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 16 L9 12 L13 15 L20 9"/></svg></span>
+        Apply brand kit
+      </button>
+    </div>
+
+    <div class="va-answer-wrap" id="vaAnswerWrap" aria-live="polite">
+      <div class="va-answer">
+        <div class="va-answer-head">
+          <div class="va-answer-avatar" aria-hidden="true">✦</div>
+          <div class="va-answer-q" id="vaAnswerQ">Why did opens drop?</div>
+        </div>
+        <div class="va-answer-body" id="vaAnswerBody"></div>
+        <div class="va-answer-viz" id="vaAnswerViz">
+          <div class="va-answer-bars" id="vaAnswerBars"></div>
+          <div class="va-answer-stat" id="vaAnswerStat">
+            <span class="num">−18%</span>
+            <span class="label">vs prior 7 days</span>
+          </div>
+        </div>
+        <div class="va-answer-tools">
+          <span class="lbl">Used</span>
+          <span id="vaAnswerTools"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VARIANT B · Persona pivot ===== -->
+<section class="hero-variant vb-hero" id="variant-b" data-variant="b" role="tabpanel">
+  <div class="container" style="max-width: 1280px;">
+    <div class="vb-eyebrow">I am a . . .</div>
+    <div class="vb-pillrow" id="vbPillRow">
+      <button class="vb-pill active" data-persona="ecommerce">E-commerce founder</button>
+      <button class="vb-pill" data-persona="agency">Agency</button>
+      <button class="vb-pill" data-persona="nonprofit">Nonprofit</button>
+      <button class="vb-pill" data-persona="b2b">B2B services</button>
+    </div>
+
+    <div class="vb-grid">
+      <div class="vb-left">
+        <h2 class="hero-h1 vb-headline" id="vbHeadline">Sell more. Work less.</h2>
+        <p class="vb-subhead" id="vbSubhead">For DTC brands shipping under 1,000 orders per month.</p>
+        <div class="vb-feature-row" id="vbFeatureRow">
+          <!-- Feature cards injected by JS based on persona -->
+        </div>
+      </div>
+
+      <aside class="vb-right">
+        <div class="vb-card-label">Ask</div>
+        <div class="vb-ask-bubble" id="vbAskBubble">What should I send for Mother's Day?</div>
+        <div class="vb-card-label" style="color: var(--mc-text-muted);">Agent</div>
+        <div class="vb-agent-row">
+          <div class="vb-agent-avatar" aria-hidden="true">✦</div>
+          <div class="vb-agent-bubble" id="vbAgentBubble">Best send: Mon 9am to VIP segment. Draft and landing page ready.</div>
+        </div>
+        <div class="vb-tools" id="vbTools">
+          <a href="#" class="vb-tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3 l5 5 -10 10 -5 1 1 -5 z"/></svg> Editor</a>
+          <a href="#" class="vb-tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 19 c0 -3 3 -5 6 -5"/></svg> Segments</a>
+          <a href="#" class="vb-tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 6 h8 M18 8 v8 M16 18 H8 a4 4 0 0 1 -4 -4 V8"/></svg> Automations</a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="vb-dotrow">
+      <button class="vb-dot active" data-persona-dot="0" aria-label="E-commerce"></button>
+      <button class="vb-dot" data-persona-dot="1" aria-label="Agency"></button>
+      <button class="vb-dot" data-persona-dot="2" aria-label="Nonprofit"></button>
+      <button class="vb-dot" data-persona-dot="3" aria-label="B2B"></button>
+      <span class="vb-rotate-note">Auto-rotates every 8 seconds</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VARIANT C · Watch the agent ===== -->
+<section class="hero-variant vc-hero" id="variant-c" data-variant="c" role="tabpanel">
+  <div class="vc-eyebrow">One agent. Every Mailchimp tool.</div>
+  <h1 class="hero-h1 vc-headline">Watch the agent run your marketing.</h1>
+
+  <div class="vc-frame">
+    <div class="vc-traffic" aria-hidden="true">
+      <span class="dot1"></span><span class="dot2"></span><span class="dot3"></span>
+    </div>
+
+    <div class="vc-cmd glow" id="vcCmd">
+      <span class="vc-cmd-spark">✦</span>
+      <span class="vc-cmd-text" id="vcCmdText">Agent: <strong>"Draft Mother's Day email"</strong></span>
+      <span class="vc-cmd-key">⌘ K</span>
+    </div>
+
+    <div class="vc-body">
+      <!-- Scene 1 — Editor -->
+      <div class="vc-scene active" data-scene="0">
+        <div class="vc-pane">
+          <div class="vc-pane-label">Email editor · template</div>
+          <div class="vc-template-block">
+            <div class="vc-template-row has"><span class="vc-handle">≡</span> Hero · Mother's Day banner <span class="pill-tag">Auto</span></div>
+            <div class="vc-template-row has"><span class="vc-handle">≡</span> Subject · "A gift made just for her"</div>
+            <div class="vc-template-row has"><span class="vc-handle">≡</span> Product · Posture Chair</div>
+            <div class="vc-template-row"><span class="vc-handle" style="background:var(--mc-text-muted)">+</span> Drag to add block</div>
+          </div>
+        </div>
+        <div class="vc-pane">
+          <div class="vc-pane-label">Live preview</div>
+          <div class="vc-email-mock">
+            <h5 style="font-size:13px;font-style:italic;color:var(--mc-text-muted);">Big Mood</h5>
+            <h6>A gift she'll love</h6>
+            <p class="lead">We picked your top sellers for Mother's Day. Free shipping included.</p>
+            <div class="vc-email-product">
+              <div class="vc-email-product-img">🪑</div>
+              <div class="vc-email-product-info">
+                <div class="name">Posture Chair</div>
+                <div class="price">$149.00</div>
+                <span class="btn">Shop now</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — Segment -->
+      <div class="vc-scene" data-scene="1">
+        <div class="vc-pane">
+          <div class="vc-pane-label">Segments · ranked</div>
+          <div class="vc-seg-list">
+            <div class="vc-seg-row hot">
+              <span class="vc-seg-name">VIP buyers</span>
+              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 92%"></div></div>
+              <span class="vc-seg-pct">92%</span>
+            </div>
+            <div class="vc-seg-row">
+              <span class="vc-seg-name">Repeat shoppers</span>
+              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 64%"></div></div>
+              <span class="vc-seg-pct">64%</span>
+            </div>
+            <div class="vc-seg-row">
+              <span class="vc-seg-name">Browse abandoners</span>
+              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 41%"></div></div>
+              <span class="vc-seg-pct">41%</span>
+            </div>
+            <div class="vc-seg-row">
+              <span class="vc-seg-name">Lapsed 90d</span>
+              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 22%"></div></div>
+              <span class="vc-seg-pct">22%</span>
+            </div>
+          </div>
+        </div>
+        <div class="vc-pane" style="justify-content:center">
+          <div class="vc-pane-label">Agent recommendation</div>
+          <div style="background: rgba(0,185,166,0.12); border:1px solid var(--mc-teal); border-radius:10px; padding:14px 16px; color:white; font-size:13px; line-height:1.55;">
+            <strong style="color:var(--mc-teal); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; display:block; margin-bottom:6px;">Send first</strong>
+            VIP buyers · 1,847 contacts.<br/>
+            Predicted open rate <strong style="color:white;">52%</strong>, predicted revenue <strong style="color:white;">$12,400</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — Analytics -->
+      <div class="vc-scene" data-scene="2">
+        <div class="vc-pane" style="grid-column: span 1;">
+          <div class="vc-pane-label">Open rate · last 14 days</div>
+          <div class="vc-chart">
+            <svg viewBox="0 0 320 160" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="vcAreaG" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00B9A6" stop-opacity="0.32"/>
+                  <stop offset="100%" stop-color="#00B9A6" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <g stroke="rgba(255,255,255,0.06)" stroke-width="0.6">
+                <line x1="0" y1="40" x2="320" y2="40"/>
+                <line x1="0" y1="80" x2="320" y2="80"/>
+                <line x1="0" y1="120" x2="320" y2="120"/>
+              </g>
+              <path d="M 0 80 L 30 70 L 60 65 L 90 60 L 120 55 L 150 60 L 180 70 L 210 95 L 240 120 L 270 132 L 300 130 L 320 128"
+                fill="none" stroke="#00B9A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 0 80 L 30 70 L 60 65 L 90 60 L 120 55 L 150 60 L 180 70 L 210 95 L 240 120 L 270 132 L 300 130 L 320 128 L 320 160 L 0 160 Z"
+                fill="url(#vcAreaG)"/>
+              <circle cx="210" cy="95" r="6" fill="#FF6B47" stroke="white" stroke-width="1.5"/>
+              <circle cx="210" cy="95" r="11" fill="none" stroke="#FF6B47" stroke-opacity="0.4" stroke-width="1.2">
+                <animate attributeName="r" values="11;18;11" dur="1.6s" repeatCount="indefinite"/>
+                <animate attributeName="stroke-opacity" values="0.4;0;0.4" dur="1.6s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </div>
+        </div>
+        <div class="vc-pane" style="justify-content:center">
+          <div class="vc-pane-label">Anomaly detected</div>
+          <div class="vc-anomaly-callout">
+            <strong>Open rate −18% on Apr 28</strong>
+            Subject line tested low on the "Repeat shoppers" segment. Try a question-led subject in the next send.
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — Automation -->
+      <div class="vc-scene" data-scene="3">
+        <div class="vc-pane" style="grid-column: span 2; min-height: 280px;">
+          <div class="vc-pane-label">Automations · canvas</div>
+          <div class="vc-flow">
+            <div class="vc-flow-node cart" title="Abandoned cart">🛒
+              <span class="vc-flow-node-label">Abandoned Cart</span>
+            </div>
+            <div class="vc-flow-arrow"></div>
+            <div class="vc-flow-node wait">⏱ <span>Wait 1d</span></div>
+            <div class="vc-flow-arrow"></div>
+            <div class="vc-flow-node send" title="Send reminder">✉
+              <span class="vc-flow-node-label">Send Reminder</span>
+            </div>
+          </div>
+          <div class="vc-canvas-controls" aria-hidden="true">
+            <button>+</button><button>−</button><button>⛶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 5 — SMS -->
+      <div class="vc-scene" data-scene="4">
+        <div class="vc-pane">
+          <div class="vc-pane-label">SMS composer</div>
+          <div class="vc-sms-card">
+            <div class="vc-sms-bubble">Big Mood: a gift made just for her. 20% off this weekend → bigm.co/mday</div>
+            <div class="vc-sms-meta">
+              <span>To · VIP buyers (1,847)</span>
+              <span>92 / 160 chars</span>
+            </div>
+          </div>
+        </div>
+        <div class="vc-pane" style="justify-content:center">
+          <div class="vc-pane-label">Cross-channel plan</div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px 16px; color:rgba(255,255,255,0.85); font-size:13px; line-height:1.55;">
+            <strong style="color:var(--mc-teal); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; display:block; margin-bottom:6px;">Sync</strong>
+            Email lands Mon 9am. SMS goes 4 hours later to non-openers.<br/>
+            Predicted lift · <strong style="color:white;">+27%</strong> click rate.
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 6 — Brand kit -->
+      <div class="vc-scene" data-scene="5">
+        <div class="vc-pane">
+          <div class="vc-pane-label">Brand kit</div>
+          <div style="margin-bottom:14px;">
+            <div class="vc-bk-row">
+              <div class="vc-bk-swatch" style="background:#1B5E5A;"></div>
+              <div class="vc-bk-swatch" style="background:#FFE01B;"></div>
+              <div class="vc-bk-swatch" style="background:#241C15;"></div>
+              <div class="vc-bk-swatch" style="background:#FAFAF7;"></div>
+            </div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55); letter-spacing:0.06em; text-transform:uppercase;">Voice · Confident, friendly, witty</div>
+          </div>
+        </div>
+        <div class="vc-pane">
+          <div class="vc-pane-label">Recolored template</div>
+          <div class="vc-bk-card">
+            <div class="h">Big Mood</div>
+            <p>Hand-picked gifts for the people who get you. Brand voice and palette applied automatically.</p>
+            <span class="btn">Shop the collection</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vc-progress-row" id="vcProgressRow">
+    <div class="vc-progress-bar" data-bar="0"></div>
+    <div class="vc-progress-bar" data-bar="1"></div>
+    <div class="vc-progress-bar" data-bar="2"></div>
+    <div class="vc-progress-bar" data-bar="3"></div>
+    <div class="vc-progress-bar" data-bar="4"></div>
+    <div class="vc-progress-bar" data-bar="5"></div>
+  </div>
+  <div class="vc-labels-row" id="vcLabelsRow">
+    <span class="vc-label" data-label="0">Editor</span>
+    <span class="vc-label" data-label="1">Segment</span>
+    <span class="vc-label" data-label="2">Analytics</span>
+    <span class="vc-label" data-label="3">Automation</span>
+    <span class="vc-label" data-label="4">SMS</span>
+    <span class="vc-label" data-label="5">Brand kit</span>
+  </div>
+</section>
+
+</div><!-- /.hero-shell -->
+
+<!-- ============================================================ -->
+<!-- BELOW THE FOLD — shared across all variants                  -->
+<!-- ============================================================ -->
+
+<!-- ===== Recommended for your business ===== -->
+<section class="reco-section" id="recommended">
+  <div class="reco-head">
+    <h2 class="display-serif">Recommended for your business.</h2>
+    <a href="#" class="reco-link">Customize my experience →</a>
+  </div>
+  <div class="reco-grid">
+    <a class="reco-card" href="#">
+      <div class="reco-illo">
+        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="20" y="14" width="44" height="58" rx="6" fill="#FFF1A8"/>
+          <line x1="32" y1="26" x2="52" y2="26"/>
+          <line x1="32" y1="34" x2="48" y2="34"/>
+          <line x1="32" y1="42" x2="44" y2="42"/>
+          <circle cx="42" cy="58" r="3" fill="#241c15"/>
+          <path d="M14 28 q-4 4 -2 8 q3 5 8 4" stroke="#007C89"/>
+          <path d="M70 30 q4 4 2 8 q-3 5 -8 4" stroke="#007C89"/>
+        </svg>
+      </div>
+      <h3>Reach more customers with SMS</h3>
+      <p>Send timely texts that land alongside your campaigns. SMS shows higher open rates than any other channel.</p>
+      <span class="reco-cta">Explore SMS →</span>
+    </a>
+
+    <a class="reco-card" href="#">
+      <div class="reco-illo">
+        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 64 L26 50 L36 56 L48 38 L58 46 L70 22" fill="none" stroke="#007C89" stroke-width="2.2"/>
+          <circle cx="14" cy="64" r="3" fill="#241c15"/>
+          <circle cx="26" cy="50" r="3" fill="#241c15"/>
+          <circle cx="36" cy="56" r="3" fill="#241c15"/>
+          <circle cx="48" cy="38" r="3" fill="#241c15"/>
+          <circle cx="58" cy="46" r="3" fill="#241c15"/>
+          <circle cx="70" cy="22" r="3" fill="#FFE01B"/>
+          <path d="M64 16 l3 -8 m6 8 l-3 -8 m-3 16 l-8 0 m11 -3 l8 -3" stroke="#FFE01B" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3>Discover new ways to drive sales</h3>
+      <p>AI tools surface hidden patterns in your data and recommend the next best action for every customer.</p>
+      <span class="reco-cta">Try Analytics AI →</span>
+    </a>
+
+    <a class="reco-card" href="#">
+      <div class="reco-illo">
+        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="20" cy="22" r="9" fill="#FFE01B"/>
+          <circle cx="62" cy="22" r="9" fill="white"/>
+          <circle cx="42" cy="62" r="9" fill="#00B9A6"/>
+          <path d="M28 24 H54" stroke="#241c15"/>
+          <path d="M22 32 L40 54" stroke="#241c15"/>
+          <path d="M60 32 L46 54" stroke="#241c15"/>
+          <path d="M22 18 l-4 -4 m6 -2 l-2 -6" stroke="#241c15" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <h3>Save time on repetitive tasks</h3>
+      <p>Automate welcome series, abandoned carts, win-backs and birthdays in a single visual canvas.</p>
+      <span class="reco-cta">See automations →</span>
+    </a>
+
+    <a class="reco-card" href="#">
+      <div class="reco-illo">
+        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="14" y="18" width="56" height="40" rx="4" fill="white"/>
+          <line x1="14" y1="28" x2="70" y2="28"/>
+          <circle cx="20" cy="23" r="1.5" fill="#FF6B47"/>
+          <circle cx="26" cy="23" r="1.5" fill="#FFE01B"/>
+          <circle cx="32" cy="23" r="1.5" fill="#3FB58E"/>
+          <line x1="22" y1="38" x2="62" y2="38"/>
+          <line x1="22" y1="44" x2="56" y2="44"/>
+          <line x1="22" y1="50" x2="48" y2="50"/>
+          <path d="M30 70 q12 -8 24 0" stroke="#FFE01B" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>Send high-quality content with ease</h3>
+      <p>Pre-built templates, brand kit, and AI assist help you draft, design and send beautiful emails fast.</p>
+      <span class="reco-cta">Explore the editor →</span>
+    </a>
+
+    <a class="reco-card" href="#">
+      <div class="reco-illo">
+        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="12" y="20" width="60" height="44" rx="4" fill="#FAFAF7"/>
+          <rect x="20" y="44" width="6" height="14" fill="#007C89"/>
+          <rect x="30" y="36" width="6" height="22" fill="#00B9A6"/>
+          <rect x="40" y="28" width="6" height="30" fill="#FFE01B"/>
+          <rect x="50" y="40" width="6" height="18" fill="#007C89"/>
+          <rect x="60" y="32" width="6" height="26" fill="#00B9A6"/>
+          <path d="M18 30 L28 26 L38 22 L48 24 L58 18 L68 20" stroke="#241c15" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3>See what's working at a glance</h3>
+      <p>Daily insight cards, revenue forecasts and benchmark comparisons surface what changed and why.</p>
+      <span class="reco-cta">View dashboards →</span>
+    </a>
+
+    <a class="reco-card" href="#">
+      <div class="reco-illo">
+        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="42" cy="42" r="22" fill="white"/>
+          <circle cx="42" cy="42" r="22" fill="none" stroke-dasharray="34 14"/>
+          <circle cx="42" cy="32" r="5" fill="#FFE01B"/>
+          <path d="M30 56 q12 -10 24 0" stroke="#241c15"/>
+          <circle cx="22" cy="22" r="3" fill="#00B9A6"/>
+          <circle cx="62" cy="22" r="3" fill="#FF6B47"/>
+          <circle cx="22" cy="62" r="3" fill="#007C89"/>
+          <circle cx="62" cy="62" r="3" fill="#3FB58E"/>
+        </svg>
+      </div>
+      <h3>Personalize every interaction</h3>
+      <p>Predictive segments and dynamic content adapt every send to where each customer is in their journey.</p>
+      <span class="reco-cta">Build a segment →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== Marketing that delivers results ===== -->
+<section class="stats-section">
+  <div class="stats-head">
+    <h2 class="display-serif">Marketing that delivers results.</h2>
+    <p>Mailchimp customers grow faster, send smarter, and reach more customers in more places.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">97%</div>
+      <h4>more clicks</h4>
+      <p>Customers saw up to 97% higher click rates when they used both email and SMS together.</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">30x</div>
+      <h4>ROI</h4>
+      <p>E-commerce businesses see up to 30x ROI using Mailchimp's Standard Plan.</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">99.99%</div>
+      <h4>delivery rate</h4>
+      <p>Customers experience 99.99% transactional email delivery rates across millions of sends a day.</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">9.8B</div>
+      <h4>AI emails sent</h4>
+      <p>Our customers have sent over 9.8 billion emails with AI-generated content.</p>
+    </div>
+  </div>
+  <p class="stats-footnote">Performance data based on Mailchimp customer aggregates measured in the last 12 months. Individual results vary.</p>
+</section>
+
+<!-- ===== Personalized tour callout ===== -->
+<section class="tour-section">
+  <div class="tour-card">
+    <div class="tour-text">
+      <h2 class="display-serif">Get started easily with a personalized product tour.</h2>
+      <p>Tell us about your business and we'll surface the templates, automations, and audiences most likely to drive growth for you.</p>
+      <a href="#" class="btn-spin"><span>Take the 60-second tour</span> →</a>
+    </div>
+    <div class="tour-illo" aria-hidden="true">
+      <img src="assets/mc-brand/spot-magicbear.jpg" alt="" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== Pricing module ===== -->
+<section class="pricing-section" id="pricing">
+  <h2>Find the right plan</h2>
+  <p class="sub">Start free, scale as you grow. Every paid plan now includes Analytics AI with unlimited prompts.</p>
+
+  <div class="pricing-controls">
+    <div class="billing-toggle">
+      <button class="active" data-billing="annual">Annual <span class="save-badge">Save 20%</span></button>
+      <button data-billing="monthly">Monthly</button>
+    </div>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card" data-tier="free">
+      <div class="tier-name">Free</div>
+      <div class="tier-desc">Easily create email campaigns and learn more about your customers.</div>
+      <div class="price-row">
+        <span class="price">$0</span>
+        <span class="price-period">/month</span>
+      </div>
+      <div class="price-helper">Limit of 500 contacts</div>
+      <div class="contact-select-spacer"></div>
+      <ul class="features">
+        <li>1 audience, 1 user seat</li>
+        <li>1,000 monthly email sends, 500 per day</li>
+        <li>Pre-built email templates and landing pages</li>
+        <li>Marketing CRM and basic reporting</li>
+        <li>30 days of email support</li>
+        <li class="ai-feat-muted">Analytics AI: explore with sample data</li>
+      </ul>
+      <a href="#" class="btn-card outline">Sign Up Free</a>
+      <div class="btn-secondary-link">No credit card required</div>
+    </div>
+
+    <div class="price-card"
+         data-tier="essentials"
+         data-annual='{"500":"10.40","1500":"17.60","2500":"25.60","5000":"48","10000":"80"}'
+         data-monthly='{"500":"13","1500":"22","2500":"32","5000":"60","10000":"100"}'>
+      <div class="tier-name">Essentials</div>
+      <div class="tier-desc">Send the right content at the right time with testing and scheduling features.</div>
+      <div class="price-row">
+        <span class="price-strike">$13</span>
+        <span class="price">$10.40</span>
+        <span class="price-period">/month</span>
+      </div>
+      <span class="save-tag">Save 20% with annual</span>
+      <div class="contact-select-label">Contacts</div>
+      <select class="contact-select" aria-label="Essentials contact tier">
+        <option value="500">Up to 500</option>
+        <option value="1500">Up to 1,500</option>
+        <option value="2500">Up to 2,500</option>
+        <option value="5000">Up to 5,000</option>
+        <option value="10000">Up to 10,000</option>
+      </select>
+      <ul class="features">
+        <li class="ai-feat"><strong>Analytics AI</strong> · unlimited prompts</li>
+        <li>3 audiences · 3 user seats</li>
+        <li>10x contacts in monthly email sends</li>
+        <li>A/B testing and send time scheduling</li>
+        <li>Custom branding and pre-built journeys</li>
+        <li>24/7 email and chat support</li>
+      </ul>
+      <a href="#" class="btn-card outline">Start Free Trial</a>
+      <div class="btn-secondary-link">14-day trial, no card required</div>
+    </div>
+
+    <div class="price-card recommended"
+         data-tier="standard"
+         data-annual='{"500":"16","1500":"24","2500":"36","5000":"60","10000":"108"}'
+         data-monthly='{"500":"20","1500":"30","2500":"45","5000":"75","10000":"135"}'>
+      <div class="recommend-badge">✦ Most popular</div>
+      <div class="tier-name">Standard</div>
+      <div class="tier-desc">Sell more with personalization, optimization tools, and predictive Analytics AI.</div>
+      <div class="price-row">
+        <span class="price-strike">$20</span>
+        <span class="price">$16</span>
+        <span class="price-period">/month</span>
+      </div>
+      <span class="save-tag">Save 20% with annual</span>
+      <div class="contact-select-label">Contacts</div>
+      <select class="contact-select" aria-label="Standard contact tier">
+        <option value="500">Up to 500</option>
+        <option value="1500">Up to 1,500</option>
+        <option value="2500">Up to 2,500</option>
+        <option value="5000">Up to 5,000</option>
+        <option value="10000">Up to 10,000</option>
+      </select>
+      <ul class="features">
+        <li class="ai-feat"><strong>Analytics AI</strong> · unlimited prompts</li>
+        <li class="ai-feat"><strong>Predictive insights</strong> and revenue forecasting</li>
+        <li>5 audiences · 5 user seats</li>
+        <li>12x contacts in monthly email sends</li>
+        <li>Customer journey builder and dynamic content</li>
+        <li>Personalized onboarding session</li>
+      </ul>
+      <a href="#" class="btn-card primary">Start Free Trial</a>
+      <div class="btn-secondary-link">14-day trial, no card required</div>
+    </div>
+
+    <div class="price-card"
+         data-tier="premium"
+         data-annual='{"10000":"280","50000":"640","100000":"1040","200000":"1840"}'
+         data-monthly='{"10000":"350","50000":"800","100000":"1300","200000":"2300"}'>
+      <div class="tier-name">Premium</div>
+      <div class="tier-desc">Our most advanced tools, unlimited contacts, and priority support, built for teams.</div>
+      <div class="price-row">
+        <span class="price-strike">$350</span>
+        <span class="price">$280</span>
+        <span class="price-period">/month</span>
+      </div>
+      <span class="save-tag">Save 20% with annual</span>
+      <div class="contact-select-label">Contacts</div>
+      <select class="contact-select" aria-label="Premium contact tier">
+        <option value="10000">Up to 10,000</option>
+        <option value="50000">Up to 50,000</option>
+        <option value="100000">Up to 100,000</option>
+        <option value="200000">Up to 200,000</option>
+      </select>
+      <ul class="features">
+        <li class="ai-feat"><strong>Analytics AI</strong> · unlimited prompts</li>
+        <li class="ai-feat"><strong>Custom AI dashboards</strong> and team workspaces</li>
+        <li>Unlimited audiences and user seats</li>
+        <li>15x contacts in monthly email sends</li>
+        <li>Advanced segmentation and multivariate testing</li>
+        <li>Phone and priority support · 4 onboarding sessions</li>
+      </ul>
+      <a href="#" class="btn-card primary">Buy Now</a>
+      <div class="btn-secondary-link"><a href="#">Or talk to sales for custom pricing</a></div>
+    </div>
+  </div>
+
+  <div class="pricing-footer">
+    <p>Risk free, no credit card required to try. Cancel or downgrade anytime.</p>
+  </div>
+</section>
+
+<!-- ===== Integrations marquee ===== -->
+<section class="integrations-section">
+  <div class="int-header">
+    <h2>Plus support for 300+ integrations.</h2>
+    <p>Connect Mailchimp to the tools you already use, in one click.</p>
+  </div>
+  <div class="int-marquee">
+    <div class="int-set">
+      <div class="int-logo" title="Shopify"><img src="assets/logos/shopify.svg" alt="Shopify"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Stripe"><img src="assets/logos/stripe.svg" alt="Stripe"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Salesforce"><img src="assets/logos/salesforce.svg" alt="Salesforce"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Google Analytics"><img src="assets/logos/googleanalytics.svg" alt="Google Analytics"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Meta"><img src="assets/logos/meta.svg" alt="Meta"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="WooCommerce"><img src="assets/logos/woocommerce.svg" alt="WooCommerce"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Square"><img src="assets/logos/square.svg" alt="Square"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="QuickBooks"><img src="assets/logos/quickbooks.svg" alt="QuickBooks"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Slack"><img src="assets/logos/slack.svg" alt="Slack"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="HubSpot"><img src="assets/logos/hubspot.svg" alt="HubSpot"/></div><div class="int-sep"></div>
+      <div class="int-logo" title="Canva"><img src="assets/logos/canva.svg" alt="Canva"/></div><div class="int-sep"></div>
+      <div class="int-badge">300+ integrations</div><div class="int-sep"></div>
+    </div>
+    <div class="int-set" aria-hidden="true">
+      <div class="int-logo"><img src="assets/logos/shopify.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/stripe.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/salesforce.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/googleanalytics.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/meta.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/woocommerce.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/square.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/quickbooks.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/slack.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/hubspot.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-logo"><img src="assets/logos/canva.svg" alt=""/></div><div class="int-sep"></div>
+      <div class="int-badge">300+ integrations</div><div class="int-sep"></div>
+    </div>
+  </div>
+
+  <div class="int-divider"><span>Trusted by brands like</span></div>
+  <div class="int-marquee reverse">
+    <div class="int-set">
+      <div class="cust-logo" title="Entra Homes"><img src="assets/mc-brand/customers/entra-homes.png" alt="Entra Homes"/></div>
+      <div class="cust-logo" title="Farrow Heights"><img src="assets/mc-brand/customers/farrow-heights.svg" alt="Farrow Heights"/></div>
+      <div class="cust-logo" title="Halwell &amp; Associates"><img src="assets/mc-brand/customers/halwell.png" alt="Halwell"/></div>
+      <div class="cust-logo" title="Escultura"><img src="assets/mc-brand/customers/escultura.png" alt="Escultura"/></div>
+      <div class="cust-logo" title="Flexstart"><img src="assets/mc-brand/customers/flexstart.png" alt="Flexstart"/></div>
+      <div class="cust-logo" title="Canopy Coalition"><img src="assets/mc-brand/customers/canopy-coalition.png" alt="Canopy Coalition"/></div>
+    </div>
+    <div class="int-set" aria-hidden="true">
+      <div class="cust-logo"><img src="assets/mc-brand/customers/entra-homes.png" alt=""/></div>
+      <div class="cust-logo"><img src="assets/mc-brand/customers/farrow-heights.svg" alt=""/></div>
+      <div class="cust-logo"><img src="assets/mc-brand/customers/halwell.png" alt=""/></div>
+      <div class="cust-logo"><img src="assets/mc-brand/customers/escultura.png" alt=""/></div>
+      <div class="cust-logo"><img src="assets/mc-brand/customers/flexstart.png" alt=""/></div>
+      <div class="cust-logo"><img src="assets/mc-brand/customers/canopy-coalition.png" alt=""/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Testimonials (3-up) ===== -->
+<section class="testimonial-section">
+  <div class="testimonial-intro">
+    <span class="eyebrow">Customer stories</span>
+    <h2>Millions of users trust us.</h2>
+    <p>Marketers, founders, and operators across e-commerce, agencies, nonprofits, and B2B services choose Mailchimp to grow their businesses.</p>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote-text">Quarterly performance reviews used to take me 4 to 6 hours. With Analytics AI, I get the same insights in minutes.</p>
+      <div class="testimonial-attr-row">
+        <div class="testimonial-photo" style="background-image: url('assets/testimonial-anuj.jpg');"></div>
+        <div class="testimonial-attr-text">
+          <div class="name">Anuj Chaudhry</div>
+          <div class="role">Chief Growth Officer<br><span class="company">Faris Team Real Estate Brokerage</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote-text">Mailchimp gave me a marketing plan I could act on. Instead of constantly chasing my audience, I can focus on my work. It felt like an exhale.</p>
+      <div class="testimonial-attr-row">
+        <div class="testimonial-photo" style="background-image: url('assets/testimonial-suskia.jpg');"></div>
+        <div class="testimonial-attr-text">
+          <div class="name">Suskia Strafella</div>
+          <div class="role">Founder<br><span class="company">I Am Wild Woman</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote-text">It's like getting to hire a marketing specialist, for free.</p>
+      <div class="testimonial-attr-row">
+        <div class="testimonial-photo" style="background-image: url('assets/testimonial-damon.jpg');"></div>
+        <div class="testimonial-attr-text">
+          <div class="name">Damon Runnals</div>
+          <div class="role">CEO and Owner<br><span class="company">Minnesota Playlist</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq-section" id="faq">
+  <h2>Common questions.</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question">Can I switch plans later? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">Yes. Upgrade or downgrade your plan at any time from your account settings. Your data, audiences, and templates carry over automatically. Pro-rated refunds are issued for unused time on annual plans.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Is there a free trial? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">Free is free forever for up to 500 contacts. Paid plans (Essentials and Standard) include a 14-day full-feature trial. No credit card required to start, cancel any time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">How do I cancel? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">Cancel any time from Account Settings. You'll keep access through the end of your billing period and can re-activate later. Data export is available for 12 months after cancellation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">How does Analytics AI access my data? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">Analytics AI reads only the data you connect: your Mailchimp account plus any integrations you authorize. It uses read-only access by default and shows you exactly which records it queries for each answer.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Will my data be used to train someone else's model? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">No. Your data is never used to train Analytics AI or any third-party model. It's used only to answer your questions in your account. Full details in our AI security brief.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">What happens if Analytics AI is wrong? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">Every answer cites the rows and metrics it used. Hover any number to verify. We also publish accuracy benchmarks quarterly. If you find an error, flag it and our team will investigate.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Can I use Mailchimp with non-Mailchimp data? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">Yes. Connect Shopify, Stripe, Salesforce, your warehouse, or upload a CSV. Mailchimp works across whatever data you bring in.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">What's the 70% intro discount? <span class="faq-toggle">+</span></div>
+      <div class="faq-answer">For new Standard plan customers, your first 3 months are 70% off. After that, standard pricing applies. Cancel anytime.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Final CTA ===== -->
+<section class="final-cta">
+  <h2>Get the Standard plan<br/>with Analytics AI at <span style="color: var(--mc-yellow);">70% off.</span></h2>
+  <p>Limited intro pricing for new Standard customers. 14-day free trial · No credit card required · Cancel anytime.</p>
+  <div class="cta-row">
+    <a href="#pricing" class="btn-spin"><span>Get Standard + Analytics AI</span> →</a>
+    <a href="#" class="btn-secondary">Talk to Sales</a>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="site">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="mailchimp-logo.png" alt="Mailchimp" class="footer-logo" />
+      <p style="font-size: 14px; opacity: 0.7; margin-top: 16px; max-width: 240px; line-height: 1.5;">The #1 AI-powered marketing platform, turning customer data into growth for 11M+ businesses worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <ul>
+        <li><a href="#">Email Marketing</a></li>
+        <li><a href="#">SMS Marketing</a></li>
+        <li><a href="#">Automations</a></li>
+        <li><a href="#">Analytics AI</a></li>
+        <li><a href="#">Brand Kit</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Resources</h5>
+      <ul>
+        <li><a href="#">Marketing Library</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">API Docs</a></li>
+        <li><a href="#">Mailchimp Presents</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Newsroom</a></li>
+        <li><a href="#">Investor Relations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">GDPR</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2001-2026 Mailchimp. All rights reserved. Mailchimp® is a registered trademark of The Rocket Science Group, LLC.</span>
+    <span>An Intuit company</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================ */
+/* Reduced motion check                                          */
+/* ============================================================ */
+const prefersReducedMotion = window.matchMedia &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============================================================ */
+/* Variant switcher                                              */
+/* ============================================================ */
+(function variantSwitcher() {
+  const buttons = document.querySelectorAll('.variant-switcher button[data-variant]');
+  const panels = document.querySelectorAll('.hero-variant');
+  if (!buttons.length || !panels.length) return;
+
+  function activate(v) {
+    if (!['a','b','c'].includes(v)) v = 'a';
+    buttons.forEach(b => {
+      const isActive = b.dataset.variant === v;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    panels.forEach(p => {
+      p.classList.toggle('active', p.dataset.variant === v);
+    });
+    if (v === 'b') startVariantBRotation();
+    else stopVariantBRotation();
+    if (v === 'c') startVariantCRotation();
+    else stopVariantCRotation();
+  }
+
+  buttons.forEach(b => {
+    b.addEventListener('click', () => {
+      const v = b.dataset.variant;
+      activate(v);
+      try {
+        history.replaceState(null, '', '#variant=' + v);
+      } catch (e) { /* ignore */ }
+    });
+  });
+
+  // Read URL hash on load
+  function readHash() {
+    const m = (location.hash || '').match(/variant=([abc])/);
+    return m ? m[1] : 'a';
+  }
+  activate(readHash());
+
+  window.addEventListener('hashchange', () => {
+    const m = (location.hash || '').match(/variant=([abc])/);
+    if (m) activate(m[1]);
+  });
+})();
+
+/* ============================================================ */
+/* VARIANT A — placeholder rotator + chip answer panel           */
+/* ============================================================ */
+(function variantA() {
+  const input = document.getElementById('vaInput');
+  const askBtn = document.getElementById('vaAskBtn');
+  const form = document.getElementById('vaInputForm');
+  const chipGrid = document.getElementById('vaChipGrid');
+  const answerWrap = document.getElementById('vaAnswerWrap');
+  const answerQ = document.getElementById('vaAnswerQ');
+  const answerBody = document.getElementById('vaAnswerBody');
+  const answerBars = document.getElementById('vaAnswerBars');
+  const answerStat = document.getElementById('vaAnswerStat');
+  const answerTools = document.getElementById('vaAnswerTools');
+  if (!input || !chipGrid) return;
+
+  const placeholders = [
+    'Why are my opens dropping?',
+    'Draft a Mother\u2019s Day campaign for VIPs.',
+    'Which segment converts best this month?',
+    'Build a cart-recovery flow for shoppers.',
+    'What\u2019s my forecasted revenue next month?'
+  ];
+  let phIdx = 0;
+  let phTimer = null;
+  function startPlaceholderRotation() {
+    if (prefersReducedMotion) return;
+    if (phTimer) clearInterval(phTimer);
+    phTimer = setInterval(() => {
+      if (document.activeElement === input || (input.value && input.value.length)) return;
+      phIdx = (phIdx + 1) % placeholders.length;
+      input.placeholder = placeholders[phIdx];
+    }, 3200);
+  }
+  startPlaceholderRotation();
+
+  // Chip data
+  const ANSWERS = {
+    'opens': {
+      q: 'Why did opens drop?',
+      body: 'Open rate fell <strong>−18%</strong> in the last 7 days, driven mostly by the "Repeat shoppers" segment. Subject-line tone shifted from question-led to declarative. Try the next send with a question subject and resend to non-openers after 24h.',
+      bars: [40, 52, 48, 55, 42, 36, 28, 30, 26, 24],
+      stat: { num: '\u221218%', label: 'vs prior 7 days' },
+      tools: ['Analytics AI', 'Audience Segmentation']
+    },
+    'mothers-day': {
+      q: 'Draft a Mother\u2019s Day email.',
+      body: 'Drafted a 3-block template using your top sellers and brand voice. Predicted open rate <strong>52%</strong>, predicted revenue <strong>$12,400</strong> if sent Mon 9am to VIP buyers.',
+      bars: [22, 28, 34, 40, 48, 56, 62, 70, 76, 82],
+      stat: { num: '$12.4k', label: 'predicted revenue' },
+      tools: ['Email Editor', 'Brand Kit', 'Audience Segmentation']
+    },
+    'vip': {
+      q: 'Build a VIP segment.',
+      body: 'Created a "VIP buyers" segment of <strong>1,847 contacts</strong>: 3+ orders in 90 days, average order value above $80, and opened 5+ campaigns. Average LTV is 4.2x your overall average.',
+      bars: [30, 36, 42, 50, 58, 66, 74, 80, 86, 92],
+      stat: { num: '1,847', label: 'contacts in segment' },
+      tools: ['Audience Segmentation', 'Predictive Insights']
+    },
+    'cart': {
+      q: 'Set up cart recovery.',
+      body: 'Built a 3-step automation: Abandoned Cart trigger \u00b7 wait 1 day \u00b7 send reminder with the exact items and a 10% recovery code. Estimated recovered revenue <strong>$4,800/mo</strong> at your current cart volumes.',
+      bars: [18, 22, 30, 36, 42, 50, 58, 66, 70, 76],
+      stat: { num: '$4.8k', label: 'recovered / month' },
+      tools: ['Automations', 'Email Editor']
+    },
+    'sms': {
+      q: 'Send via SMS.',
+      body: 'Drafted a 92-character SMS that mirrors your email tone and includes a short link. Sending 4h after the email to non-openers is predicted to lift click rate by <strong>+27%</strong>.',
+      bars: [28, 34, 40, 46, 52, 58, 64, 70, 76, 82],
+      stat: { num: '+27%', label: 'predicted lift' },
+      tools: ['SMS Marketing', 'Audience Segmentation']
+    },
+    'forecast': {
+      q: 'Forecast next month.',
+      body: 'Forecast revenue for next month is <strong>$78.2k</strong>, up 12% on last month. Largest driver is the cart-recovery flow you turned on April 12. Confidence band 70\u201385%.',
+      bars: [42, 46, 52, 56, 60, 66, 70, 74, 78, 82],
+      stat: { num: '$78.2k', label: 'forecast next month' },
+      tools: ['Analytics AI', 'Predictive Insights']
+    },
+    'brand': {
+      q: 'Apply brand kit.',
+      body: 'Applied your brand kit to your last 3 templates: deep-teal primary, Cavendish yellow accent, peppercorn body, Cooper Light headlines. <strong>9 templates</strong> updated.',
+      bars: [60, 64, 66, 68, 72, 74, 76, 78, 80, 82],
+      stat: { num: '9', label: 'templates re-skinned' },
+      tools: ['Brand Kit', 'Email Editor']
+    }
+  };
+
+  function renderAnswer(key) {
+    const a = ANSWERS[key];
+    if (!a) return;
+    answerQ.textContent = a.q;
+    answerBody.innerHTML = a.body;
+    answerBars.innerHTML = '';
+    a.bars.forEach((h, i) => {
+      const bar = document.createElement('div');
+      bar.className = 'va-answer-bar' + (key === 'opens' && i >= 6 ? ' hot' : '');
+      bar.style.height = '0%';
+      answerBars.appendChild(bar);
+      requestAnimationFrame(() => {
+        setTimeout(() => { bar.style.height = h + '%'; }, 30 + i * 40);
+      });
+    });
+    answerStat.querySelector('.num').textContent = a.stat.num;
+    answerStat.querySelector('.label').textContent = a.stat.label;
+    answerTools.innerHTML = a.tools.map(t =>
+      `<a href="#recommended" class="va-tool-chip" data-tool="${t}">${t}</a>`
+    ).join(' ');
+    answerWrap.classList.add('visible');
+  }
+
+  // Chip clicks
+  chipGrid.querySelectorAll('.va-chip').forEach(c => {
+    c.addEventListener('click', () => {
+      chipGrid.querySelectorAll('.va-chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      const k = c.dataset.chip;
+      input.value = ANSWERS[k] ? ANSWERS[k].q : '';
+      renderAnswer(k);
+    });
+  });
+
+  // Submitting the form (Enter key or Ask button)
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!input.value.trim()) {
+      input.focus();
+      return;
+    }
+    const v = input.value.trim().toLowerCase();
+    let matched = 'opens';
+    if (v.includes('mother') || v.includes('draft')) matched = 'mothers-day';
+    else if (v.includes('vip') || v.includes('segment')) matched = 'vip';
+    else if (v.includes('cart')) matched = 'cart';
+    else if (v.includes('sms') || v.includes('text')) matched = 'sms';
+    else if (v.includes('forecast') || v.includes('next month') || v.includes('revenue')) matched = 'forecast';
+    else if (v.includes('brand')) matched = 'brand';
+    chipGrid.querySelectorAll('.va-chip').forEach(x => {
+      x.classList.toggle('active', x.dataset.chip === matched);
+    });
+    renderAnswer(matched);
+  });
+
+  // Pre-render the default answer (opens) hidden so first chip click is snappy
+  renderAnswer('opens');
+  // Hide initially — will reveal on first chip click
+  if (answerWrap) answerWrap.classList.remove('visible');
+})();
+
+/* ============================================================ */
+/* VARIANT B — Persona pivot                                     */
+/* ============================================================ */
+let variantBTimer = null;
+function startVariantBRotation() {
+  if (prefersReducedMotion) return;
+  if (variantBTimer) clearInterval(variantBTimer);
+  const order = ['ecommerce','agency','nonprofit','b2b'];
+  let i = 0;
+  variantBTimer = setInterval(() => {
+    i = (i + 1) % order.length;
+    setPersona(order[i]);
+  }, 8000);
+}
+function stopVariantBRotation() {
+  if (variantBTimer) { clearInterval(variantBTimer); variantBTimer = null; }
+}
+
+const PERSONAS = {
+  ecommerce: {
+    headline: 'Sell more. Work less.',
+    subhead: 'For DTC brands shipping under 1,000 orders per month.',
+    features: [
+      { name: 'Email Editor',   desc: 'Create beautiful emails that sell.', svg: 'editor' },
+      { name: 'Cart Recovery',  desc: 'Win back more customers with automated emails.', svg: 'cart' },
+      { name: 'Analytics AI',   desc: 'Turn data into revenue with smart insights.', svg: 'chart' },
+    ],
+    ask: 'What should I send for Mother\u2019s Day?',
+    agent: 'Best send: Mon 9am to VIP segment. Draft and landing page ready.',
+    tools: ['Editor', 'Segments', 'Automations']
+  },
+  agency: {
+    headline: 'Manage every client. From one place.',
+    subhead: 'For independent agencies running 5\u201330 active client accounts.',
+    features: [
+      { name: 'Client Workspaces', desc: 'Switch contexts without losing your place.', svg: 'workspaces' },
+      { name: 'Risk Watchlist',     desc: 'Spot churning clients before they ask.', svg: 'risk' },
+      { name: 'Whitelabel Reports', desc: 'Branded weekly recaps in two clicks.', svg: 'report' },
+    ],
+    ask: 'Which client is at risk this week?',
+    agent: 'Acme Co: opens dropped 34% week over week. Domain warm-up plan ready.',
+    tools: ['Reports', 'Audiences', 'Deliverability']
+  },
+  nonprofit: {
+    headline: 'Tell stories. Move donors.',
+    subhead: 'For nonprofits raising under $5M and running 4+ appeals per year.',
+    features: [
+      { name: 'Story Templates', desc: 'Donor-led emails that read like a letter.', svg: 'letter' },
+      { name: 'Lapsed Win-back', desc: 'Bring back donors who haven\u2019t given in 12+ months.', svg: 'heart' },
+      { name: 'Impact Reports',  desc: 'Show outcomes, not just totals.', svg: 'impact' },
+    ],
+    ask: 'What moved the most donations last quarter?',
+    agent: 'Story-led emails to lapsed donors lifted gifts 2.4x. Replicating in this quarter\u2019s plan.',
+    tools: ['Templates', 'Audiences', 'Analytics AI']
+  },
+  b2b: {
+    headline: 'Find your buyers. Win the next deal.',
+    subhead: 'For B2B services teams running ABM and pipeline nurture.',
+    features: [
+      { name: 'Account Segments', desc: 'Group by firmographic + intent.', svg: 'segments' },
+      { name: 'Pipeline Nurture', desc: 'Multi-touch journeys synced with CRM.', svg: 'pipeline' },
+      { name: 'Convert AI',       desc: 'Predict the segment most likely to close.', svg: 'predict' },
+    ],
+    ask: 'Which segment converts best?',
+    agent: 'Mid-market SaaS segment converts 3.1x baseline. Recommend doubling spend on this audience.',
+    tools: ['Segments', 'Journeys', 'Analytics AI']
+  }
+};
+
+function featureSVG(kind) {
+  const stroke = '#241c15';
+  const w = 'stroke="' + stroke + '" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+  switch (kind) {
+    case 'editor':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <rect x="10" y="14" width="60" height="50" rx="4" fill="white"/>
+        <line x1="10" y1="22" x2="70" y2="22"/>
+        <circle cx="14" cy="18" r="1.2" fill="${stroke}"/>
+        <circle cx="18" cy="18" r="1.2" fill="${stroke}"/>
+        <circle cx="22" cy="18" r="1.2" fill="${stroke}"/>
+        <text x="20" y="42" fill="${stroke}" font-family="Helvetica" font-size="14" font-weight="700">T</text>
+        <rect x="32" y="32" width="22" height="14" fill="#FFE01B" stroke="${stroke}"/>
+        <line x1="20" y1="52" x2="58" y2="52"/>
+        <line x1="20" y1="56" x2="50" y2="56"/>
+        <rect x="50" y="46" width="6" height="6" fill="none"/>
+      </svg>`;
+    case 'cart':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <path d="M14 18 L20 18 L26 50 L62 50 L66 28 L26 28"/>
+        <circle cx="30" cy="60" r="3"/>
+        <circle cx="56" cy="60" r="3"/>
+        <circle cx="58" cy="20" r="6" fill="#FFE01B"/>
+        <text x="58" y="24" text-anchor="middle" fill="${stroke}" font-family="Helvetica" font-size="9" font-weight="700">1</text>
+        <path d="M58 36 L66 28 L70 32" />
+      </svg>`;
+    case 'chart':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <line x1="14" y1="62" x2="68" y2="62"/>
+        <rect x="18" y="40" width="6" height="20" fill="#007C89"/>
+        <rect x="28" y="32" width="6" height="28" fill="#00B9A6"/>
+        <rect x="38" y="46" width="6" height="14" fill="#007C89"/>
+        <rect x="48" y="36" width="6" height="24" fill="#FFE01B"/>
+        <rect x="58" y="30" width="6" height="30" fill="#00B9A6"/>
+        <path d="M16 36 L26 30 L36 32 L46 24 L56 26 L66 18"/>
+        <circle cx="66" cy="18" r="2.5" fill="${stroke}"/>
+        <path d="M64 12 l3 -6 m6 6 l-3 -6 m-3 12 l-6 0" stroke="${stroke}"/>
+      </svg>`;
+    case 'workspaces':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <rect x="10" y="22" width="40" height="40" rx="3" fill="white"/>
+        <rect x="22" y="14" width="40" height="40" rx="3" fill="#FFE01B"/>
+        <rect x="34" y="22" width="36" height="36" rx="3" fill="white"/>
+        <line x1="40" y1="32" x2="64" y2="32"/>
+        <line x1="40" y1="40" x2="58" y2="40"/>
+      </svg>`;
+    case 'risk':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <path d="M40 12 L70 64 L10 64 Z" fill="#FFE01B"/>
+        <line x1="40" y1="34" x2="40" y2="48"/>
+        <circle cx="40" cy="55" r="2" fill="${stroke}"/>
+      </svg>`;
+    case 'report':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <rect x="14" y="10" width="42" height="56" rx="3" fill="white"/>
+        <line x1="20" y1="22" x2="48" y2="22"/>
+        <line x1="20" y1="30" x2="44" y2="30"/>
+        <line x1="20" y1="38" x2="40" y2="38"/>
+        <rect x="20" y="46" width="28" height="14" fill="#00B9A6" stroke="${stroke}"/>
+      </svg>`;
+    case 'letter':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <rect x="10" y="22" width="60" height="40" rx="3" fill="white"/>
+        <path d="M10 22 L40 46 L70 22"/>
+        <path d="M30 32 q10 -8 22 0" stroke="#FF6B47" stroke-width="2"/>
+      </svg>`;
+    case 'heart':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <path d="M40 60 C 18 46 18 24 30 24 C 36 24 40 30 40 30 C 40 30 44 24 50 24 C 62 24 62 46 40 60 Z" fill="#FF6B47"/>
+        <path d="M16 56 q4 -2 8 0 m32 0 q4 -2 8 0" stroke="${stroke}"/>
+      </svg>`;
+    case 'impact':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <circle cx="40" cy="42" r="22" fill="white"/>
+        <circle cx="40" cy="42" r="22" stroke-dasharray="32 12"/>
+        <circle cx="40" cy="42" r="10" fill="#00B9A6"/>
+        <text x="40" y="46" text-anchor="middle" fill="white" font-family="Helvetica" font-size="11" font-weight="700">2.4x</text>
+      </svg>`;
+    case 'segments':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <circle cx="32" cy="40" r="18" fill="#FFE01B" opacity="0.7"/>
+        <circle cx="48" cy="40" r="18" fill="#00B9A6" opacity="0.7"/>
+        <circle cx="40" cy="50" r="3" fill="${stroke}"/>
+      </svg>`;
+    case 'pipeline':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <circle cx="14" cy="40" r="6" fill="white"/>
+        <circle cx="40" cy="40" r="6" fill="#FFE01B"/>
+        <circle cx="66" cy="40" r="6" fill="#00B9A6"/>
+        <line x1="20" y1="40" x2="34" y2="40"/>
+        <line x1="46" y1="40" x2="60" y2="40"/>
+        <text x="40" y="64" text-anchor="middle" fill="${stroke}" font-family="Helvetica" font-size="9">CRM Sync</text>
+      </svg>`;
+    case 'predict':
+      return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" ${w}>
+        <path d="M14 60 q14 -30 26 -20 q12 10 26 -16" stroke="#007C89" stroke-width="2" stroke-dasharray="3 3"/>
+        <circle cx="14" cy="60" r="3" fill="${stroke}"/>
+        <circle cx="40" cy="40" r="3" fill="${stroke}"/>
+        <circle cx="66" cy="24" r="4" fill="#FFE01B"/>
+        <path d="M60 18 l3 -6 m6 6 l-3 -6 m-3 12 l-6 0" stroke="${stroke}"/>
+      </svg>`;
+    default: return '';
+  }
+}
+
+function setPersona(p) {
+  const data = PERSONAS[p];
+  if (!data) return;
+  // Pills
+  const pills = document.querySelectorAll('.vb-pill');
+  pills.forEach(b => b.classList.toggle('active', b.dataset.persona === p));
+  // Dots
+  const dots = document.querySelectorAll('.vb-dot');
+  const order = ['ecommerce','agency','nonprofit','b2b'];
+  const idx = order.indexOf(p);
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  // Headline & subhead
+  const headline = document.getElementById('vbHeadline');
+  const subhead = document.getElementById('vbSubhead');
+  if (headline) headline.textContent = data.headline;
+  if (subhead) subhead.textContent = data.subhead;
+  // Features
+  const featRow = document.getElementById('vbFeatureRow');
+  if (featRow) {
+    featRow.innerHTML = data.features.map(f => `
+      <div class="vb-feature-card">
+        <div class="vb-feature-illo">${featureSVG(f.svg)}</div>
+        <h4>${f.name}</h4>
+        <p>${f.desc}</p>
+      </div>
+    `).join('');
+  }
+  // Ask + agent
+  const ask = document.getElementById('vbAskBubble');
+  const agent = document.getElementById('vbAgentBubble');
+  if (ask) ask.textContent = data.ask;
+  if (agent) agent.textContent = data.agent;
+  // Tools
+  const tools = document.getElementById('vbTools');
+  if (tools) {
+    const iconMap = {
+      'Editor':       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3 l5 5 -10 10 -5 1 1 -5 z"/></svg>',
+      'Segments':     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 19 c0 -3 3 -5 6 -5"/></svg>',
+      'Automations':  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 6 h8 M18 8 v8 M16 18 H8 a4 4 0 0 1 -4 -4 V8"/></svg>',
+      'Reports':      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1.5"/><line x1="8" y1="14" x2="8" y2="17"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="16" y1="8" x2="16" y2="17"/></svg>',
+      'Audiences':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3.5"/><path d="M3 19 c0 -3.5 3 -5.5 6 -5.5 s6 2 6 5.5"/><circle cx="17" cy="10" r="2.5"/></svg>',
+      'Deliverability':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12 l18 -8 -7 18 -3 -8 z"/></svg>',
+      'Templates':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1.5"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="10" x2="10" y2="20"/></svg>',
+      'Analytics AI': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 L13 9 L19 10 L13 11 L12 17 L11 11 L5 10 L11 9 Z"/></svg>',
+      'Journeys':     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 c4 -4 8 -4 16 -12"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="6" r="2"/></svg>'
+    };
+    tools.innerHTML = data.tools.map(t =>
+      `<a href="#" class="vb-tool-chip">${iconMap[t] || ''} ${t}</a>`
+    ).join('');
+  }
+}
+
+(function variantBInit() {
+  const pillRow = document.getElementById('vbPillRow');
+  if (!pillRow) return;
+  pillRow.querySelectorAll('.vb-pill').forEach(p => {
+    p.addEventListener('click', () => {
+      stopVariantBRotation();
+      setPersona(p.dataset.persona);
+    });
+  });
+  document.querySelectorAll('.vb-dot').forEach(d => {
+    d.addEventListener('click', () => {
+      stopVariantBRotation();
+      const order = ['ecommerce','agency','nonprofit','b2b'];
+      setPersona(order[parseInt(d.dataset.personaDot, 10)]);
+    });
+  });
+  const heroB = document.getElementById('variant-b');
+  if (heroB) {
+    heroB.addEventListener('mouseenter', stopVariantBRotation);
+  }
+  // Initial render of E-commerce features so the row is populated even before activation
+  setPersona('ecommerce');
+})();
+
+/* ============================================================ */
+/* VARIANT C — Watch the agent (scene cycler)                    */
+/* ============================================================ */
+const VC_SCENES = [
+  { label: 'Editor',     cmd: 'Agent: <strong>"Draft Mother\u2019s Day email"</strong>' },
+  { label: 'Segment',    cmd: 'Agent: <strong>"Show me my best segment"</strong>' },
+  { label: 'Analytics',  cmd: 'Agent: <strong>"Why did opens drop?"</strong>' },
+  { label: 'Automation', cmd: 'Agent: <strong>"Set up cart-recovery flow"</strong>' },
+  { label: 'SMS',        cmd: 'Agent: <strong>"Send this via SMS too"</strong>' },
+  { label: 'Brand kit',  cmd: 'Agent: <strong>"Apply our brand kit"</strong>' }
+];
+let vcTimer = null;
+let vcCurrent = 0;
+
+function setVCScene(i) {
+  vcCurrent = ((i % VC_SCENES.length) + VC_SCENES.length) % VC_SCENES.length;
+  document.querySelectorAll('.vc-scene').forEach((el, idx) => {
+    el.classList.toggle('active', idx === vcCurrent);
+  });
+  document.querySelectorAll('.vc-progress-bar').forEach((b, idx) => {
+    b.classList.remove('active', 'done');
+    if (idx < vcCurrent) b.classList.add('done');
+    if (idx === vcCurrent) b.classList.add('active');
+  });
+  document.querySelectorAll('.vc-label').forEach((l, idx) => {
+    l.classList.toggle('active', idx === vcCurrent);
+  });
+  const cmd = document.getElementById('vcCmdText');
+  if (cmd) cmd.innerHTML = VC_SCENES[vcCurrent].cmd;
+  const cmdBox = document.getElementById('vcCmd');
+  if (cmdBox) {
+    cmdBox.classList.remove('glow');
+    void cmdBox.offsetWidth; // restart glow animation
+    cmdBox.classList.add('glow');
+  }
+}
+
+function startVariantCRotation() {
+  setVCScene(0);
+  if (prefersReducedMotion) return;
+  if (vcTimer) clearInterval(vcTimer);
+  vcTimer = setInterval(() => {
+    setVCScene(vcCurrent + 1);
+  }, 3500);
+}
+function stopVariantCRotation() {
+  if (vcTimer) { clearInterval(vcTimer); vcTimer = null; }
+}
+
+(function variantCInit() {
+  document.querySelectorAll('.vc-progress-bar').forEach(b => {
+    b.addEventListener('click', () => {
+      stopVariantCRotation();
+      setVCScene(parseInt(b.dataset.bar, 10));
+    });
+  });
+  document.querySelectorAll('.vc-label').forEach(l => {
+    l.addEventListener('click', () => {
+      stopVariantCRotation();
+      setVCScene(parseInt(l.dataset.label, 10));
+    });
+  });
+  const heroC = document.getElementById('variant-c');
+  if (heroC) {
+    heroC.addEventListener('mouseenter', () => {
+      // pause but don't reset on hover
+      if (vcTimer) { clearInterval(vcTimer); vcTimer = null; }
+    });
+    heroC.addEventListener('mouseleave', () => {
+      if (heroC.classList.contains('active') && !prefersReducedMotion) startVariantCRotation();
+    });
+  }
+})();
+
+/* ============================================================ */
+/* Pricing — billing toggle + per-card contact-tier              */
+/* ============================================================ */
+(function pricing() {
+  function isAnnualBilling() {
+    const activeBtn = document.querySelector('.billing-toggle button.active');
+    return !activeBtn || activeBtn.dataset.billing === 'annual';
+  }
+  function safeJSON(s) { try { return s ? JSON.parse(s) : null; } catch(e) { return null; } }
+  function updateCard(card) {
+    if (!card) return;
+    const a = safeJSON(card.dataset.annual);
+    const m = safeJSON(card.dataset.monthly);
+    if (!a || !m) return;
+    const sel = card.querySelector('.contact-select');
+    const tier = sel ? sel.value : Object.keys(a)[0];
+    const ann = a[tier], mon = m[tier];
+    if (ann == null || mon == null) return;
+    const annual = isAnnualBilling();
+    const priceEl = card.querySelector('.price');
+    const strikeEl = card.querySelector('.price-strike');
+    const saveTag = card.querySelector('.save-tag');
+    if (priceEl) priceEl.textContent = '$' + (annual ? ann : mon);
+    if (strikeEl) strikeEl.textContent = annual ? '$' + mon : '';
+    if (saveTag) saveTag.style.display = annual ? 'inline-block' : 'none';
+  }
+  function updateAll() { document.querySelectorAll('.price-card').forEach(updateCard); }
+  document.querySelectorAll('.billing-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.billing-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateAll();
+    });
+  });
+  document.querySelectorAll('.price-card .contact-select').forEach(s => {
+    s.addEventListener('change', () => updateCard(s.closest('.price-card')));
+  });
+})();
+
+/* ============================================================ */
+/* FAQ accordion                                                 */
+/* ============================================================ */
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-question');
+  if (!q) return;
+  q.addEventListener('click', () => item.classList.toggle('open'));
+});
+
+/* ============================================================ */
+/* Smooth-scroll any in-page #anchor link (after variant loads)  */
+/* ============================================================ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  const href = a.getAttribute('href');
+  if (!href || href.length < 2) return;
+  if (href.startsWith('#variant')) return; // handled by switcher
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
