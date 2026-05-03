@@ -622,6 +622,22 @@
     transition: transform 0.4s ease;
   }
   .persona-card:hover .persona-emoji { transform: scale(1.06) rotate(-2deg); }
+  .persona-photo picture,
+  .persona-photo .persona-media {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .persona-photo .persona-media {
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.45s ease;
+  }
+  .persona-card:hover .persona-media { transform: scale(1.04); }
+  @media (prefers-reduced-motion: reduce) {
+    .persona-photo .persona-media { transition: none; }
+    .persona-card:hover .persona-media { transform: none; }
+  }
   .persona-body { padding: 18px 22px 22px; }
   .persona-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: white; }
   .persona-card .role { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 6px; }
@@ -2154,7 +2170,10 @@
       <div class="persona-picker">
         <div class="persona-card active" data-persona="ecommerce">
           <div class="persona-photo">
-            <span class="persona-emoji" aria-hidden="true">🛍️</span>
+            <picture>
+              <source srcset="assets/personas/persona-ecommerce.jpg" media="(prefers-reduced-motion: reduce)">
+              <img class="persona-media" src="assets/personas/persona-ecommerce.gif" alt="Mailchimp brand animation of a slingshot launching, representing an ecommerce founder growing their store" loading="lazy" decoding="async" width="640" height="400">
+            </picture>
           </div>
           <div class="persona-body">
             <h3>Ecommerce Founder</h3>
@@ -2163,8 +2182,11 @@
           </div>
         </div>
         <div class="persona-card" data-persona="agency">
-          <div class="persona-photo" style="background:#FFF1A8;">
-            <span class="persona-emoji" aria-hidden="true">🏃</span>
+          <div class="persona-photo">
+            <picture>
+              <source srcset="assets/personas/persona-agency.jpg" media="(prefers-reduced-motion: reduce)">
+              <img class="persona-media" src="assets/personas/persona-agency.gif" alt="Mailchimp brand animation of stairs ascending, representing an agency owner scaling work across multiple clients" loading="lazy" decoding="async" width="640" height="400">
+            </picture>
           </div>
           <div class="persona-body">
             <h3>Agency Owner</h3>
@@ -2174,7 +2196,10 @@
         </div>
         <div class="persona-card" data-persona="nonprofit">
           <div class="persona-photo">
-            <span class="persona-emoji" aria-hidden="true">❤️</span>
+            <picture>
+              <source srcset="assets/personas/persona-nonprofit.jpg" media="(prefers-reduced-motion: reduce)">
+              <img class="persona-media" src="assets/personas/persona-nonprofit.gif" alt="Mailchimp brand animation of an oversized donation check, representing a nonprofit director driving donor results" loading="lazy" decoding="async" width="640" height="400">
+            </picture>
           </div>
           <div class="persona-body">
             <h3>Nonprofit Director</h3>
