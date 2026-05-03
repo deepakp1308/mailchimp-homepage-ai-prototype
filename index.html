@@ -170,97 +170,352 @@
   .btn-secondary:hover { background: var(--mc-text); color: white; }
 
 
-  /* ===================== VARIANT B — Persona pivot ===================== */
-  .vb-hero {
-    padding: 36px 32px 80px;
+  /* ===================== HERO (new) ===================== */
+  .hero {
+    padding: 60px 32px 96px;
+    position: relative;
   }
-  .vb-eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.5em; text-transform: uppercase;
-    color: var(--mc-text);
-    margin-bottom: 18px;
+  .hero-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
   }
-  .vb-pillrow {
-    display: flex; gap: 14px;
-    margin-bottom: 56px;
-    flex-wrap: wrap;
-  }
-  .vb-pill {
+  .hero-eyebrow-pill {
+    display: inline-flex; align-items: center; gap: 8px;
     background: white;
     border: 1.5px solid var(--mc-text);
     color: var(--mc-text);
-    padding: 14px 32px;
+    padding: 7px 16px 7px 12px;
     border-radius: 999px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 14px rgba(36,28,21,0.05);
   }
-  .vb-pill:hover { background: var(--mc-bg-alt); }
-  .vb-pill.active {
-    background: var(--mc-pep);
-    color: white;
-    border-color: var(--mc-pep);
+  .hero-eyebrow-pill .he-spark { width: 16px; height: 16px; display: inline-flex; }
+  .hero-eyebrow-pill .he-spark svg { width: 16px; height: 16px; }
+  .hero-headline {
+    font-size: 76px;
+    line-height: 1.02;
+    letter-spacing: -0.018em;
+    color: var(--mc-text);
+    max-width: 1040px;
+    margin: 0 auto 18px;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .hero-subhead {
+    font-size: 19px;
+    color: var(--mc-text-secondary);
+    line-height: 1.5;
+    max-width: 720px;
+    margin: 0 auto 32px;
   }
 
-  .vb-grid {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 44px;
-    align-items: stretch;
+  /* CTA row */
+  .hero-cta-row {
+    display: inline-flex; flex-wrap: wrap; gap: 14px;
+    justify-content: center; align-items: center;
+    margin-bottom: 56px;
   }
-  .vb-left { display: flex; flex-direction: column; }
-  .vb-headline {
-    font-size: 56px;
+  .btn-primary-cta {
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    border: 1.5px solid var(--mc-text);
+    padding: 14px 26px;
+    font-size: 15px; font-weight: 700;
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(255, 224, 27, 0.35);
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 9px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  }
+  .btn-primary-cta:hover {
+    background: #ffec5b;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 224, 27, 0.45);
+  }
+  .btn-primary-cta:focus-visible {
+    outline: 3px solid var(--mc-cta);
+    outline-offset: 3px;
+  }
+  .btn-secondary-cta {
+    background: transparent;
+    color: var(--mc-text);
+    border: 1.5px solid var(--mc-text);
+    padding: 13px 24px;
+    font-size: 15px; font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: inherit;
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+  .btn-secondary-cta:hover {
+    background: var(--mc-text);
+    color: white;
+    transform: translateY(-2px);
+  }
+  .btn-secondary-cta:focus-visible {
+    outline: 3px solid var(--mc-cta);
+    outline-offset: 3px;
+  }
+
+  /* ICP eyebrow + chips */
+  .icp-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mc-text-muted);
+    margin-bottom: 14px;
+  }
+  .icp-chips {
+    display: inline-flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center;
+    margin: 0 auto 40px;
+    max-width: 940px;
+  }
+  .icp-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    border: 1.5px solid var(--mc-border);
+    color: var(--mc-text);
+    padding: 9px 16px 9px 12px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.18s ease;
+  }
+  .icp-chip:hover {
+    border-color: var(--mc-text);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  }
+  .icp-chip.active {
+    background: var(--mc-pep);
+    border-color: var(--mc-pep);
+    color: white;
+    box-shadow: 0 8px 22px rgba(36,28,21,0.16);
+  }
+  .icp-chip-icon { width: 18px; height: 18px; display: inline-flex; }
+  .icp-chip-icon svg { width: 18px; height: 18px; }
+  .icp-chip:focus-visible {
+    outline: 3px solid var(--mc-cta);
+    outline-offset: 2px;
+  }
+
+  /* Dynamic hero preview card (3 panes) */
+  .hero-preview {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.05fr 1.2fr 1fr;
+    gap: 18px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.12) 0%, rgba(0,185,166,0.10) 50%, rgba(255,224,27,0.10) 100%);
+    border: 1px solid rgba(36,28,21,0.08);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 30px 70px -28px rgba(36,28,21,0.18);
+    text-align: left;
+  }
+  .hp-pane {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(36,28,21,0.06);
+    border-radius: 16px;
+    padding: 20px 22px;
+    backdrop-filter: blur(6px);
+    display: flex; flex-direction: column;
+    transition: transform 0.45s cubic-bezier(.2,.7,.2,1), opacity 0.45s ease;
+  }
+  .hp-pane.hp-flash {
+    animation: hpFlash 0.7s ease;
+  }
+  @keyframes hpFlash {
+    0%   { transform: scale(0.985); opacity: 0.5; }
+    50%  { transform: scale(1.005); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .hp-pane-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--mc-cta);
+    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .hp-pane-eyebrow .hp-spark { color: var(--mc-yellow); -webkit-text-stroke: 0.5px var(--mc-text); font-size: 13px; }
+  .hp-pane-eyebrow .hp-pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mc-teal);
+    animation: hpPulse 1.6s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(0,185,166,0.6);
+  }
+  @keyframes hpPulse {
+    0%, 100% { opacity: 0.55; box-shadow: 0 0 0 0 rgba(0,185,166,0.6); }
+    50% { opacity: 1; box-shadow: 0 0 0 6px rgba(0,185,166,0); }
+  }
+  .hp-pane-prompts .hp-prompt-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 8px;
+    flex: 1;
+  }
+  .hp-pane-prompts .hp-prompt-list li {
+    background: var(--mc-bg-soft);
+    border: 1px solid var(--mc-border);
+    color: var(--mc-text);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13.5px; line-height: 1.35;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hp-pane-prompts .hp-prompt-list li::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mc-cta);
+    flex-shrink: 0;
+  }
+
+  .hp-insight-headline {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-size: 22px; font-weight: 300;
+    color: var(--mc-text);
+    line-height: 1.2;
     margin-bottom: 12px;
   }
-  .vb-subhead {
-    font-size: 16px;
-    color: var(--mc-text-secondary);
-    margin-bottom: 28px;
-  }
-  .vb-feature-row {
-    display: grid; grid-template-columns: 1fr; gap: 10px;
-    margin-top: auto;
-  }
-  .vb-feature-card {
-    background: white;
+  .hp-insight-viz {
+    background: var(--mc-bg-soft);
     border: 1px solid var(--mc-border);
-    border-radius: 12px;
-    padding: 14px 16px 14px 14px;
-    display: grid;
-    grid-template-columns: 44px 1fr;
-    gap: 12px;
-    align-items: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    min-height: 96px;
+    display: flex; align-items: center; justify-content: center;
   }
-  .vb-feature-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
-  }
-  .vb-feature-illo {
-    width: 44px; height: 44px;
-    display: grid; place-items: center;
-    color: var(--mc-text);
-  }
-  .vb-feature-illo svg { width: 44px; height: 44px; }
-  .vb-feature-card h4 {
-    font-family: 'Cooper Light', 'Georgia', serif;
-    font-weight: 300;
-    font-size: 17px;
-    margin-bottom: 2px;
-    line-height: 1.15;
-  }
-  .vb-feature-card p {
-    font-size: 12.5px;
-    color: var(--mc-text-secondary);
+  .hp-insight-viz svg { width: 100%; height: 92px; }
+  .hp-insight-byline {
+    font-size: 12px;
+    color: var(--mc-text-muted);
     line-height: 1.4;
   }
 
-  .vb-right {
-    display: flex; flex-direction: column;
-    min-width: 0;
+  .hp-action-title {
+    font-size: 15.5px; font-weight: 700;
+    color: var(--mc-text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .hp-action-desc {
+    font-size: 13px;
+    color: var(--mc-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .hp-action-btn {
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--mc-text);
+    color: white;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 13px; font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .hp-action-btn:hover { background: #15100A; transform: translateY(-1px); }
+  .hp-action-btn:focus-visible { outline: 3px solid var(--mc-cta); outline-offset: 2px; }
+
+  @media (max-width: 1040px) {
+    .hero-headline { font-size: 60px; }
+    .hero-preview { grid-template-columns: 1fr 1fr; }
+    .hp-pane-action { grid-column: 1 / -1; }
+  }
+  @media (max-width: 760px) {
+    .hero { padding: 36px 18px 64px; }
+    .hero-headline { font-size: 44px; }
+    .hero-subhead { font-size: 16px; }
+    .hero-preview { grid-template-columns: 1fr; padding: 14px; gap: 12px; }
+    .hp-pane-action { grid-column: auto; }
+    .icp-chip { padding: 8px 14px 8px 10px; font-size: 13px; }
+  }
+  @media (max-width: 480px) {
+    .hero-headline { font-size: 36px; }
+    .btn-primary-cta, .btn-secondary-cta { width: 100%; justify-content: center; }
+    .hero-cta-row { width: 100%; }
+  }
+
+  /* ===================== PLAYGROUND section wrapper ===================== */
+  .playground-section {
+    background: #0d0a08;
+    color: white;
+    padding: 96px 32px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .playground-section::before {
+    content: ''; position: absolute; top: -200px; left: 8%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,124,137,0.32) 0%, transparent 70%);
+    filter: blur(80px); pointer-events: none;
+  }
+  .playground-section::after {
+    content: ''; position: absolute; bottom: -160px; right: 4%;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,185,166,0.28) 0%, transparent 70%);
+    filter: blur(80px); pointer-events: none;
+  }
+  .playground-section > * { position: relative; z-index: 1; }
+  .playground-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 40px;
+  }
+  .playground-header .eyebrow {
+    color: var(--mc-teal);
+  }
+  .playground-header h2 {
+    font-size: 46px;
+    color: white;
+    line-height: 1.05;
+    margin: 14px 0;
+  }
+  .playground-header p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.55;
+  }
+  .pg-ds-wrap {
+    max-width: 1180px;
+    margin: 0 auto 16px;
+  }
+  /* (.pg-ds is the toggle itself; in this section it lives on dark bg, so
+     give it a translucent surface) */
+  .playground-section .pg-ds {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .playground-section .pg-ds-tab {
+    color: rgba(255,255,255,0.6);
+  }
+  .playground-section .pg-ds-tab:hover { color: rgba(255,255,255,0.9); }
+  .playground-section .pg-ds-tab.active {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    box-shadow: none;
+  }
+  .playground-section .pg-frame-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  /* Bigger min-height for the body in this dedicated section */
+  .playground-section .pg-body {
+    min-height: 520px;
+  }
+  .playground-section .pg-messages {
+    max-height: 380px;
+  }
+  @media (max-width: 720px) {
+    .playground-section { padding: 72px 18px 80px; }
+    .playground-header h2 { font-size: 34px; }
   }
 
   /* ===================== EMBEDDED ANALYTICS AI PLAYGROUND ===================== */
@@ -679,238 +934,529 @@
     margin-left: 8px;
   }
 
-  @media (max-width: 920px) {
-    .vb-grid { grid-template-columns: 1fr; gap: 28px; }
-    .vb-headline { font-size: 44px; }
-    .vb-pill { padding: 11px 18px; font-size: 12px; }
-    .vb-feature-row { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .vb-feature-card { padding: 18px 14px; }
-    .vb-feature-illo { width: 56px; height: 56px; }
-    .vb-feature-illo svg { width: 56px; height: 56px; }
-    .vb-feature-card h4 { font-size: 17px; }
-  }
-  @media (max-width: 540px) {
-    .vb-feature-row { grid-template-columns: 1fr; }
-    .vb-headline { font-size: 36px; }
-  }
+  /* (Variant B legacy responsive rules removed — superseded by .hero / .icp-* / .hero-preview rules above.) */
 
 
-  /* ===================== Recommended for your business ===================== */
-  .reco-section { background: white; padding: 96px 32px 64px; }
-  .reco-head {
-    max-width: 1280px; margin: 0 auto 40px;
-    display: flex; justify-content: space-between; align-items: flex-end;
-    gap: 32px;
+  /* ===================== RECOMMENDATION COCKPIT ===================== */
+  /* Personalized "Customize my experience" form (left) + dynamic
+     recommendation cards (right) that filter, reorder, and highlight
+     based on industry + goals selections. Cards retain the same content
+     and links as the previous reco grid. */
+  .cockpit-section { background: white; padding: 100px 32px; }
+  .cockpit-head { max-width: 1280px; margin: 0 auto 40px; text-align: center; }
+  .cockpit-pill {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.08), rgba(255,224,27,0.18));
+    color: var(--mc-text);
+    border: 1px solid rgba(0,124,137,0.18);
+    padding: 6px 14px 6px 12px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    margin-bottom: 14px;
   }
-  .reco-head h2 {
-    font-size: 44px;
+  .cockpit-pill .cp-spark { color: var(--mc-yellow); -webkit-text-stroke: 0.5px var(--mc-text); font-size: 13px; }
+  .cockpit-pill .cp-pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mc-teal);
+    animation: hpPulse 1.6s ease-in-out infinite;
+  }
+  .cockpit-head h2 {
+    font-size: 48px;
     letter-spacing: -0.01em;
-    line-height: 1.1;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .cockpit-head p {
+    font-size: 16px;
+    color: var(--mc-text-secondary);
     max-width: 720px;
-  }
-  .reco-head .reco-link {
-    font-size: 14px; font-weight: 700; color: var(--mc-cta);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .reco-head .reco-link:hover { text-decoration: underline; }
-  .reco-grid {
-    max-width: 1280px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    line-height: 1.55;
   }
-  .reco-card {
+
+  .cockpit-grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .cockpit-form {
     background: var(--mc-bg-soft);
-    border-radius: 14px;
-    padding: 28px 26px;
+    border: 1px solid var(--mc-border);
+    border-radius: 18px;
+    padding: 24px;
+    position: sticky;
+    top: 88px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.04);
+  }
+  .cf-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mc-cta);
+    margin-bottom: 16px;
+  }
+  .cf-field { display: block; margin-bottom: 18px; }
+  .cf-label {
+    display: block;
+    font-size: 13px; font-weight: 700;
+    color: var(--mc-text);
+    margin-bottom: 8px;
+  }
+  .cf-select-wrap { position: relative; display: block; }
+  .cf-select {
+    width: 100%;
+    appearance: none;
+    background: white;
+    border: 1.5px solid var(--mc-border);
+    color: var(--mc-text);
+    padding: 11px 36px 11px 14px;
+    border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .cf-select:hover { border-color: var(--mc-text); }
+  .cf-select:focus-visible {
+    outline: 3px solid var(--mc-cta);
+    outline-offset: 2px;
+  }
+  .cf-select-caret {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--mc-text);
+  }
+  .cf-goal-chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .cf-goal {
+    background: white;
+    border: 1.5px solid var(--mc-border);
+    color: var(--mc-text);
+    padding: 8px 13px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .cf-goal:hover { border-color: var(--mc-text); }
+  .cf-goal.active {
+    background: var(--mc-pep);
+    border-color: var(--mc-pep);
+    color: white;
+  }
+  .cf-goal:focus-visible {
+    outline: 3px solid var(--mc-cta);
+    outline-offset: 2px;
+  }
+  .cf-summary {
+    background: white;
+    border: 1px solid var(--mc-border);
+    color: var(--mc-text-secondary);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+  .cf-summary strong { color: var(--mc-text); font-weight: 700; }
+  .cf-cta {
+    width: 100%;
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    border: 1.5px solid var(--mc-text);
+    padding: 13px 20px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    box-shadow: 0 8px 24px rgba(255,224,27,0.35);
+    font-family: inherit;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .cf-cta:hover {
+    background: #ffec5b;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255,224,27,0.45);
+  }
+  .cf-cta:focus-visible { outline: 3px solid var(--mc-cta); outline-offset: 3px; }
+  .cf-cta-note {
+    margin-top: 9px;
+    font-size: 11.5px;
+    color: var(--mc-text-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .cockpit-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  /* Cards retain .reco-card / .reco-illo / .reco-cta classes from the
+     prior design so styling is shared. We re-declare them here to live
+     inside the cockpit. */
+  .cockpit-cards .reco-card {
+    background: var(--mc-bg-soft);
+    border-radius: 16px;
+    padding: 26px 24px;
     display: flex; flex-direction: column;
     border: 1px solid var(--mc-border);
-    transition: transform 0.2s, box-shadow 0.2s;
     text-decoration: none;
     color: inherit;
+    transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s, border-color 0.3s, opacity 0.3s;
+    position: relative;
   }
-  .reco-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+  .cockpit-cards .reco-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 38px rgba(0,0,0,0.08);
+    border-color: var(--mc-text);
   }
-  .reco-illo {
-    width: 84px; height: 84px;
-    margin-bottom: 20px;
+  .cockpit-cards .reco-card.matched {
+    border-color: var(--mc-cta);
+    box-shadow: 0 16px 36px rgba(0,124,137,0.16);
+  }
+  .cockpit-cards .reco-card.matched::before {
+    content: 'Matched to your goals';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--mc-cta);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .cockpit-cards .reco-card.dim { opacity: 0.55; filter: grayscale(0.2); }
+  .cockpit-cards .reco-card.hidden { display: none; }
+  .cockpit-cards .reco-illo {
+    width: 72px; height: 72px;
+    margin-bottom: 16px;
     color: var(--mc-text);
     display: grid; place-items: center;
   }
-  .reco-illo svg { width: 84px; height: 84px; }
-  .reco-card h3 {
+  .cockpit-cards .reco-illo svg { width: 72px; height: 72px; }
+  .cockpit-cards .reco-card h3 {
     font-family: 'Cooper Light', 'Georgia', serif;
     font-weight: 300;
-    font-size: 24px;
-    margin-bottom: 8px;
+    font-size: 22px;
+    margin-bottom: 6px;
     line-height: 1.15;
     letter-spacing: -0.005em;
   }
-  .reco-card p {
-    font-size: 14px;
+  .cockpit-cards .reco-card p {
+    font-size: 13.5px;
     color: var(--mc-text-secondary);
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     line-height: 1.5;
     flex: 1;
   }
-  .reco-card .reco-cta {
+  .cockpit-cards .reco-card .reco-cta {
     color: var(--mc-cta);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13.5px;
     text-decoration: none;
     display: inline-flex; align-items: center; gap: 4px;
   }
 
   @media (max-width: 980px) {
-    .reco-grid { grid-template-columns: repeat(2, 1fr); }
+    .cockpit-grid { grid-template-columns: 1fr; }
+    .cockpit-form { position: relative; top: 0; }
+    .cockpit-head h2 { font-size: 36px; }
   }
   @media (max-width: 600px) {
-    .reco-grid { grid-template-columns: 1fr; }
-    .reco-head { flex-direction: column; align-items: flex-start; }
-    .reco-head h2 { font-size: 32px; }
+    .cockpit-cards { grid-template-columns: 1fr; }
+    .cockpit-section { padding: 72px 18px; }
   }
 
-  /* ===================== Marketing that delivers ===================== */
-  .stats-section { background: var(--mc-bg-soft); padding: 96px 32px; }
-  .stats-head { max-width: 1280px; margin: 0 auto 56px; text-align: center; }
-  .stats-head h2 {
-    font-size: 48px;
-    letter-spacing: -0.01em;
-    line-height: 1.1;
+  /* ===================== RESULTS BIGBOARD ===================== */
+  .bigboard-section { background: var(--mc-bg-soft); padding: 100px 32px; }
+  .bigboard-head { max-width: 1280px; margin: 0 auto 44px; text-align: center; }
+  .bb-eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    color: var(--mc-text);
+    background: white;
+    border: 1px solid var(--mc-border);
+    padding: 6px 14px 6px 12px;
+    border-radius: 999px;
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .bb-pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mc-teal);
+    animation: hpPulse 1.6s ease-in-out infinite;
+  }
+  .bigboard-head h2 {
+    font-size: 48px; letter-spacing: -0.01em; line-height: 1.05;
     margin-bottom: 12px;
   }
-  .stats-head p {
+  .bigboard-head p {
     font-size: 17px;
     color: var(--mc-text-secondary);
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
+    line-height: 1.55;
   }
-  .stats-grid {
+  .bigboard-grid {
     max-width: 1280px;
-    margin: 0 auto;
+    margin: 0 auto 32px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 18px;
   }
-  .stat-card {
+  .bb-card {
     background: white;
-    border-radius: 14px;
-    padding: 32px 28px;
     border: 1px solid var(--mc-border);
+    border-radius: 18px;
+    padding: 24px 22px;
+    display: flex; flex-direction: column;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .stat-card .stat-num {
+  .bb-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.08);
+  }
+  .bb-card.bb-ai {
+    background: linear-gradient(135deg, white 0%, #FFF8E0 100%);
+    border-color: rgba(255,224,27,0.5);
+  }
+  .bb-tag {
+    display: inline-block;
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--mc-cta);
+    margin-bottom: 14px;
+  }
+  .bb-card.bb-ai .bb-tag { color: var(--mc-text); }
+  .bb-num {
     font-family: 'Cooper Light', 'Georgia', serif;
     font-weight: 300;
     font-style: italic;
-    font-size: 56px;
-    color: var(--mc-text);
+    font-size: 60px;
     line-height: 1;
-    margin-bottom: 14px;
-    letter-spacing: -0.02em;
-  }
-  .stat-card h4 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 8px;
     color: var(--mc-text);
+    letter-spacing: -0.022em;
+    margin-bottom: 12px;
+    font-variant-numeric: tabular-nums;
   }
-  .stat-card p {
+  .bb-count { display: inline-block; }
+  .bb-card h4 {
+    font-size: 16px; font-weight: 700;
+    color: var(--mc-text);
+    margin-bottom: 8px;
+  }
+  .bb-card p {
     font-size: 13px;
     color: var(--mc-text-secondary);
     line-height: 1.55;
+    margin-bottom: 16px;
+    flex: 1;
   }
-  .stats-footnote {
-    text-align: center;
-    margin-top: 28px;
-    font-size: 12px;
+  .bb-spark {
+    margin-top: auto;
+    width: 100%;
+  }
+  .bb-spark svg { width: 100%; height: 36px; display: block; }
+
+  .bigboard-footer { max-width: 1280px; margin: 0 auto; }
+  .bb-impact {
+    background: white;
+    border: 1px solid var(--mc-border);
+    border-radius: 18px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.04);
+  }
+  .bb-impact-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--mc-text-muted);
-    max-width: 1000px;
-    margin-left: auto; margin-right: auto;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .bb-impact-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .bb-impact-cell {
+    padding: 18px 22px;
+    border-radius: 14px;
+    line-height: 1.55;
+  }
+  .bb-impact-cell.bb-before {
+    background: rgba(255,107,71,0.08);
+    border: 1px solid rgba(255,107,71,0.25);
+  }
+  .bb-impact-cell.bb-after {
+    background: rgba(63,181,142,0.10);
+    border: 1px solid rgba(63,181,142,0.30);
+  }
+  .bb-impact-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .bb-impact-cell.bb-before .bb-impact-label { color: var(--mc-coral); }
+  .bb-impact-cell.bb-after .bb-impact-label { color: var(--mc-sage); }
+  .bb-impact-line {
+    font-size: 13.5px;
+    color: var(--mc-text);
+    margin-bottom: 6px;
+  }
+  .bb-impact-line:last-child { margin-bottom: 0; }
+  .bb-impact-arrow {
+    color: var(--mc-text);
+    display: flex; align-items: center; justify-content: center;
   }
 
   @media (max-width: 980px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .stats-head h2 { font-size: 36px; }
-    .stat-card .stat-num { font-size: 44px; }
+    .bigboard-grid { grid-template-columns: repeat(2, 1fr); }
+    .bigboard-head h2 { font-size: 36px; }
+    .bb-num { font-size: 48px; }
+    .bb-impact-row { grid-template-columns: 1fr; }
+    .bb-impact-arrow { transform: rotate(90deg); }
   }
   @media (max-width: 540px) {
-    .stats-grid { grid-template-columns: 1fr; }
+    .bigboard-grid { grid-template-columns: 1fr; }
+    .bb-impact { padding: 22px 18px; }
   }
 
-  /* ===================== Personalized tour callout ===================== */
+  /* ===================== TOUR TIMELINE ===================== */
   .tour-section {
-    padding: 80px 32px;
+    padding: 100px 32px;
     background: white;
   }
-  .tour-card {
-    max-width: 1100px;
-    margin: 0 auto;
-    background: var(--mc-pep);
-    color: white;
-    border-radius: 22px;
-    padding: 56px 64px;
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 48px;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .tour-card::before {
-    content: '';
-    position: absolute;
-    right: -60px; bottom: -60px;
-    width: 240px; height: 240px;
-    background: var(--mc-yellow);
-    border-radius: 50%;
-    opacity: 0.95;
-  }
-  .tour-card::after {
-    content: '';
-    position: absolute;
-    right: 60px; top: -40px;
-    width: 80px; height: 80px;
-    background: var(--mc-teal);
-    border-radius: 50%;
-    opacity: 0.85;
-  }
-  .tour-text { position: relative; z-index: 2; }
-  .tour-text h2 {
-    font-size: 40px;
-    line-height: 1.1;
-    margin-bottom: 14px;
-    letter-spacing: -0.01em;
-  }
-  .tour-text p {
-    font-size: 16px;
-    color: rgba(255,255,255,0.78);
-    margin-bottom: 24px;
-    line-height: 1.55;
-  }
-  .tour-text .btn-spin {
-    background: var(--mc-yellow);
-    color: var(--mc-text);
-    border-color: var(--mc-yellow);
-  }
-  .tour-illo {
-    position: relative; z-index: 2;
+  .tour-head {
+    max-width: 900px;
+    margin: 0 auto 48px;
     text-align: center;
   }
-  .tour-illo img {
-    max-width: 220px;
-    margin: 0 auto;
-    mix-blend-mode: screen;
-    opacity: 0.92;
-    filter: brightness(1.4) contrast(1.1);
+  .tour-head h2 {
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
   }
-  @media (max-width: 880px) {
-    .tour-card { grid-template-columns: 1fr; padding: 36px 28px; gap: 24px; text-align: center; }
-    .tour-text h2 { font-size: 30px; }
-    .tour-illo img { max-width: 160px; }
+  .tour-head p {
+    font-size: 16px;
+    color: var(--mc-text-secondary);
+    line-height: 1.55;
+  }
+  .tour-timeline {
+    list-style: none;
+    max-width: 1280px;
+    margin: 0 auto 36px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    counter-reset: ts;
+  }
+  .tour-step {
+    display: flex; flex-direction: column;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .tour-step.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .ts-rail {
+    position: relative;
+    height: 32px;
+    margin-bottom: 12px;
+    display: flex; align-items: center;
+  }
+  .ts-rail::after {
+    content: '';
+    position: absolute;
+    left: 30px; right: 0;
+    top: 50%; height: 2px; transform: translateY(-50%);
+    background: linear-gradient(90deg, var(--mc-cta), rgba(0,124,137,0.18));
+  }
+  .ts-rail.no-line::after { display: none; }
+  .ts-num {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--mc-pep);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+    z-index: 1;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+  .tour-step:nth-child(1) .ts-num { background: var(--mc-cta); }
+  .tour-step:nth-child(2) .ts-num { background: var(--mc-teal); }
+  .tour-step:nth-child(3) .ts-num { background: var(--mc-text); }
+  .tour-step:nth-child(4) .ts-num { background: var(--mc-yellow); color: var(--mc-text); border: 1.5px solid var(--mc-text); }
+
+  .ts-card {
+    background: var(--mc-bg-soft);
+    border: 1px solid var(--mc-border);
+    border-radius: 16px;
+    padding: 22px 22px 18px;
+    flex: 1;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .ts-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+  }
+  .ts-icon {
+    width: 38px; height: 38px;
+    color: var(--mc-text);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+    background: white;
+    border: 1px solid var(--mc-border);
+    border-radius: 10px;
+  }
+  .ts-icon svg { width: 22px; height: 22px; }
+  .ts-card h3 {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 1.18;
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .ts-card p {
+    font-size: 13.5px;
+    color: var(--mc-text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .ts-chip {
+    display: inline-block;
+    background: white;
+    border: 1px solid var(--mc-border);
+    color: var(--mc-text-muted);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+
+  .tour-cta-row {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    justify-content: center; align-items: center;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 980px) {
+    .tour-timeline { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .tour-step:nth-child(2) .ts-rail::after { display: none; }
+    .tour-head h2 { font-size: 36px; }
+  }
+  @media (max-width: 540px) {
+    .tour-timeline { grid-template-columns: 1fr; }
+    .ts-rail::after { display: none; }
+    .tour-section { padding: 72px 18px; }
   }
 
   /* ===================== Pricing (carried over) ===================== */
@@ -1078,79 +1624,137 @@
   .cust-logo:hover { opacity: 1; }
   .cust-logo img { height: 32px; width: auto; max-width: 140px; object-fit: contain; }
 
-  /* ===================== Testimonials (3-up editorial) ===================== */
-  .testimonial-section { background: white; padding: 112px 32px; }
-  .testimonial-section .testimonial-intro {
-    max-width: 1280px; margin: 0 auto 56px;
+  /* ===================== TESTIMONIALS — Analytics AI focus ===================== */
+  .testi-modern-section {
+    background: white;
+    padding: 112px 32px;
+  }
+  .testi-modern-head {
+    max-width: 1280px; margin: 0 auto 48px;
     text-align: center;
   }
-  .testimonial-section .testimonial-intro .eyebrow {
-    color: var(--mc-cta); margin-bottom: 12px; display: block;
+  .testi-modern-head h2 {
+    font-size: 46px; letter-spacing: -0.01em; line-height: 1.05;
+    color: var(--mc-text); margin: 12px 0 12px;
   }
-  .testimonial-section .testimonial-intro h2 {
-    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif; font-weight: 300;
-    font-size: 48px; letter-spacing: -0.01em; line-height: 1.05;
-    color: var(--mc-text); margin: 0 0 12px;
+  .testi-modern-head p {
+    font-size: 17px; color: var(--mc-text-secondary); max-width: 700px;
+    margin: 0 auto; line-height: 1.55;
   }
-  .testimonial-section .testimonial-intro p {
-    font-size: 17px; color: var(--mc-text-secondary); max-width: 640px;
-    margin: 0 auto;
-  }
-  .testimonial-grid {
+  .testi-modern-grid {
     max-width: 1280px; margin: 0 auto;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    align-items: stretch;
   }
-  .testimonial-card {
+  .testi-modern-card {
     background: var(--mc-bg-soft);
-    border-radius: 18px;
-    padding: 36px 32px 32px;
+    border-radius: 20px;
+    padding: 32px 28px 26px;
     border: 1px solid var(--mc-border);
     display: flex; flex-direction: column;
-    transition: all 0.25s;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   }
-  .testimonial-card:hover {
+  .testi-modern-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+    box-shadow: 0 26px 60px rgba(0,0,0,0.08);
+    border-color: var(--mc-text);
   }
-  .testimonial-card .quote-mark {
+  .testi-modern-card.tm-featured {
+    background: linear-gradient(160deg, white 0%, #FFF8E0 100%);
+    border-color: rgba(255,224,27,0.65);
+  }
+  .testi-modern-card .tm-quote-mark {
     font-family: 'Cooper Light', 'Georgia', serif;
-    font-size: 80px; line-height: 0.6;
+    font-size: 64px; line-height: 0.5;
     color: var(--mc-yellow);
-    margin-bottom: 6px;
+    margin-bottom: 14px;
     letter-spacing: -0.04em;
+    -webkit-text-stroke: 1px var(--mc-text);
   }
-  .testimonial-card .quote-text {
+  .testi-modern-card .tm-quote {
     font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
-    font-size: 22px; font-weight: 300;
+    font-size: 19px; font-weight: 300;
     line-height: 1.4;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
     color: var(--mc-text);
-    margin-bottom: 28px;
+    margin-bottom: 22px;
     flex: 1;
   }
-  .testimonial-attr-row {
-    display: flex; align-items: center; gap: 14px;
-    padding-top: 24px;
+  .testi-modern-card .tm-attr {
+    display: flex; align-items: center; gap: 12px;
+    padding-top: 18px;
     border-top: 1px solid var(--mc-border);
+    margin-bottom: 14px;
   }
-  .testimonial-photo {
-    width: 52px; height: 52px; border-radius: 50%;
+  .testi-modern-card .tm-photo {
+    width: 44px; height: 44px; border-radius: 50%;
     background-size: cover; background-position: center;
     flex-shrink: 0;
     border: 2px solid white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
-  .testimonial-attr-text { flex: 1; min-width: 0; }
-  .testimonial-attr-text .name { font-size: 14px; font-weight: 700; color: var(--mc-text); }
-  .testimonial-attr-text .role {
-    font-size: 12px; color: var(--mc-text-muted);
-    line-height: 1.4; margin-top: 2px;
+  .testi-modern-card .tm-attr-text { flex: 1; min-width: 0; }
+  .testi-modern-card .tm-name { font-size: 14px; font-weight: 700; color: var(--mc-text); }
+  .testi-modern-card .tm-role { font-size: 12px; color: var(--mc-text-muted); margin-top: 2px; }
+  .testi-modern-card .tm-outcome {
+    background: white;
+    border: 1px solid var(--mc-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex; flex-direction: column;
+    gap: 2px;
   }
-  .testimonial-attr-text .role .company { color: var(--mc-text); font-weight: 600; }
-  @media (max-width: 960px) {
-    .testimonial-grid { grid-template-columns: 1fr; }
-    .testimonial-section .testimonial-intro h2 { font-size: 36px; }
+  .testi-modern-card.tm-featured .tm-outcome {
+    background: rgba(255,224,27,0.18);
+    border-color: rgba(255,224,27,0.55);
   }
+  .testi-modern-card .tm-outcome-num {
+    font-family: 'Cooper Light', 'Georgia', serif;
+    font-style: italic; font-weight: 300;
+    font-size: 32px;
+    color: var(--mc-cta);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .testi-modern-card .tm-outcome-label {
+    font-size: 12px;
+    color: var(--mc-text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .testi-modern-cta-row {
+    max-width: 1280px;
+    margin: 36px auto 0;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .testi-modern-cta-note {
+    font-size: 13px;
+    color: var(--mc-text-muted);
+  }
+
+  @media (max-width: 980px) {
+    .testi-modern-grid { grid-template-columns: 1fr; }
+    .testi-modern-head h2 { font-size: 36px; }
+  }
+
+  /* ===================== Pricing eyebrow ===================== */
+  .pricing-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    border: 1px solid rgba(0,124,137,0.25);
+    color: var(--mc-cta);
+    padding: 6px 14px 6px 12px;
+    border-radius: 999px;
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .pricing-eyebrow .pe-spark {
+    color: var(--mc-yellow);
+    -webkit-text-stroke: 0.5px var(--mc-text);
+  }
+  .pricing-section { text-align: center; }
 
   /* ===================== FAQ ===================== */
   .faq-section { background: var(--mc-bg-alt); padding: 100px 32px; scroll-margin-top: 110px; }
@@ -1237,13 +1841,13 @@
     .price-card.recommended { transform: none; }
     .nav-links { display: none; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
-    .reco-head h2 { font-size: 32px; }
-    .stats-head h2 { font-size: 32px; }
+    .cockpit-head h2 { font-size: 32px; }
+    .bigboard-head h2 { font-size: 32px; }
   }
   @media (max-width: 600px) {
     .pricing-grid { grid-template-columns: 1fr; }
-    .vb-pillrow { flex-direction: column; }
-    .vb-pill { width: 100%; text-align: center; }
+    .icp-chips { flex-direction: column; align-items: stretch; }
+    .icp-chip { width: 100%; justify-content: center; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1253,6 +1857,7 @@
       transition-duration: 0.001ms !important;
     }
     .int-marquee, .int-marquee.reverse { animation: none; }
+    .tour-step { opacity: 1 !important; transform: none !important; }
   }
 </style>
 </head>
@@ -1283,279 +1888,570 @@
 </header>
 
 <!-- ============================================================ -->
-<!-- HERO — persona-pivot with embedded Analytics AI playground   -->
+<!-- HERO — Analytics AI value prop + 2 CTAs + 6 ICP chips         -->
+<!-- The hero is conversion-first: a primary CTA that scrolls to    -->
+<!-- pricing, a secondary CTA that reveals the playground demo.    -->
+<!-- The 6 ICP chips power both this hero's dynamic preview card    -->
+<!-- AND the embedded playground in the section below.             -->
 <!-- ============================================================ -->
 <div class="hero-shell">
-<section class="vb-hero" id="hero">
-  <div class="container" style="max-width: 1280px;">
-    <div class="vb-eyebrow">I am a . . .</div>
-    <div class="vb-pillrow" id="vbPillRow">
-      <button class="vb-pill active" data-persona="ecommerce">E-commerce founder</button>
-      <button class="vb-pill" data-persona="agency">Agency</button>
-      <button class="vb-pill" data-persona="nonprofit">Nonprofit</button>
-      <button class="vb-pill" data-persona="b2b">B2B services</button>
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow-pill">
+      <span class="he-spark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2 L13.8 10.2 L22 12 L13.8 13.8 L12 22 L10.2 13.8 L2 12 L10.2 10.2 Z" fill="#FFE01B" stroke="#241c15" stroke-width="0.8" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      Powered by Analytics AI · 70% off Standard for 3 months
     </div>
 
-    <div class="vb-grid">
-      <div class="vb-left">
-        <h2 class="hero-h1 vb-headline" id="vbHeadline">Sell more. Work less.</h2>
-        <p class="vb-subhead" id="vbSubhead">For DTC brands shipping under 1,000 orders per month.</p>
-        <div class="vb-feature-row" id="vbFeatureRow">
-          <!-- Feature cards injected by JS based on persona -->
+    <h1 class="hero-h1 hero-headline" id="heroHeadline">Turn your marketing data into the next best move.</h1>
+    <p class="hero-sub hero-subhead" id="heroSubhead">Mailchimp's Analytics AI answers the questions you'd ask a marketing analyst. Tailored to your business, grounded in your real data.</p>
+
+    <div class="hero-cta-row">
+      <button type="button" class="btn-spin btn-primary-cta" data-scroll-to="pricing">
+        <span>Get 70% off Standard + Analytics AI</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+      </button>
+      <button type="button" class="btn-secondary-cta" data-scroll-to="playground">
+        <span>Take Analytics AI for a spin</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+      </button>
+    </div>
+
+    <div class="icp-eyebrow">Choose your business to personalize the demo</div>
+    <div class="icp-chips" role="tablist" aria-label="Industry">
+      <button class="icp-chip active" type="button" data-icp="retail" role="tab" aria-selected="true">
+        <span class="icp-chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L5 4 H19 L21 9"/><path d="M3 9 V20 H21 V9"/><path d="M9 14 H15"/></svg>
+        </span>
+        Retail &amp; e-commerce
+      </button>
+      <button class="icp-chip" type="button" data-icp="hospitality" role="tab" aria-selected="false">
+        <span class="icp-chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 V12 a7 7 0 0 0 14 0 V4"/><path d="M9 4 V8"/><path d="M15 4 V8"/><path d="M12 19 V22"/></svg>
+        </span>
+        Hospitality
+      </button>
+      <button class="icp-chip" type="button" data-icp="nonprofit" role="tab" aria-selected="false">
+        <span class="icp-chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21 C 5 16 3 11 7 8 c 2 -1.5 4 -0.5 5 1 c 1 -1.5 3 -2.5 5 -1 c 4 3 2 8 -5 13 z"/></svg>
+        </span>
+        Non-profit
+      </button>
+      <button class="icp-chip" type="button" data-icp="services" role="tab" aria-selected="false">
+        <span class="icp-chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7 V5 a2 2 0 0 1 2 -2 h2 a2 2 0 0 1 2 2 V7"/><path d="M3 13 h18"/></svg>
+        </span>
+        Professional services
+      </button>
+      <button class="icp-chip" type="button" data-icp="creators" role="tab" aria-selected="false">
+        <span class="icp-chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10,9 16,12 10,15"/></svg>
+        </span>
+        Content creators
+      </button>
+      <button class="icp-chip" type="button" data-icp="other" role="tab" aria-selected="false">
+        <span class="icp-chip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3 2"/></svg>
+        </span>
+        Other
+      </button>
+    </div>
+
+    <!-- Dynamic, ICP-aware preview card. Three glass panes: prompts to try,
+         a generated insight preview, and a recommended next action. JS
+         updates the contents on chip click. -->
+    <div class="hero-preview" id="heroPreview" aria-live="polite">
+      <div class="hp-pane hp-pane-prompts">
+        <div class="hp-pane-eyebrow">
+          <span class="hp-spark" aria-hidden="true">✦</span>
+          Prompts to try for <span id="hpBizName">Oat Lord</span>
         </div>
+        <ul class="hp-prompt-list" id="hpPromptList">
+          <!-- injected by JS -->
+        </ul>
       </div>
-
-      <aside class="vb-right">
-        <!-- Data source toggle: Sample data (default) | Upload Excel / CSV -->
-        <div class="pg-ds" role="tablist" aria-label="Data source">
-          <button class="pg-ds-tab active" data-pg-tab="sample" role="tab" aria-selected="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            Sample data
-          </button>
-          <button class="pg-ds-tab" data-pg-tab="upload" role="tab" aria-selected="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            Upload Excel / CSV
-          </button>
+      <div class="hp-pane hp-pane-insight">
+        <div class="hp-pane-eyebrow"><span class="hp-pulse"></span> Insight preview</div>
+        <div class="hp-insight-headline" id="hpInsightHeadline">Revenue dropped 18% last week.</div>
+        <div class="hp-insight-viz" id="hpInsightViz" aria-hidden="true">
+          <!-- injected by JS: small chart per ICP -->
         </div>
-
-        <!-- The playground frame. Persona-aware: toolbar / greeting / suggestions / sample chart all swap on persona change. -->
-        <div class="pg-frame-wrap" id="pgFrameWrap">
-          <div class="pg-app">
-            <div class="pg-toolbar">
-              <div class="pg-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-              <div class="pg-title">
-                <span class="pg-pill">Analytics AI</span>
-                <span class="pg-title-name" id="pgTitle">Oat Lord · Live demo</span>
-              </div>
-              <div class="pg-toolbar-spacer" aria-hidden="true"></div>
-            </div>
-            <div class="pg-body">
-              <div class="pg-chat">
-                <div class="pg-messages" id="pgMessages" aria-live="polite">
-                  <!-- Greeting injected by JS per persona -->
-                </div>
-                <div class="pg-suggested" id="pgSuggested">
-                  <span class="pg-suggested-label">Try a question</span>
-                  <!-- Chips injected by JS per persona -->
-                </div>
-                <form class="pg-input" id="pgInputForm" autocomplete="off" onsubmit="return false;">
-                  <input type="text" id="pgInput" placeholder="Ask Analytics AI anything…" aria-label="Ask Analytics AI" />
-                  <button type="submit" id="pgSendBtn">Send</button>
-                </form>
-              </div>
-              <div class="pg-viz">
-                <div class="pg-viz-eyebrow">Live visualization</div>
-                <div class="pg-viz-title" id="pgVizTitle">Sample insight</div>
-                <div class="pg-metric-row" id="pgMetricRow" style="display:none;">
-                  <div class="pg-metric"><div class="val" id="pgM1Val">·</div><div class="lbl" id="pgM1Lbl">Metric</div><div class="delta" id="pgM1Delta"></div></div>
-                  <div class="pg-metric"><div class="val" id="pgM2Val">·</div><div class="lbl" id="pgM2Lbl">Metric</div><div class="delta" id="pgM2Delta"></div></div>
-                </div>
-                <div class="pg-canvas" id="pgCanvas">
-                  <!-- Pre-loaded persona "sample insight" injected by JS -->
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Upload mode replaces the dark frame body -->
-          <div class="pg-upload-wrap" id="pgUploadWrap">
-            <div class="pg-upload-zone" id="pgUploadZone">
-              <input type="file" id="pgFileInput" accept=".csv,.xlsx,.xls,.tsv" style="display:none;" />
-              <div class="pg-upload-icon" aria-hidden="true">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              </div>
-              <h4>Drop your spreadsheet here</h4>
-              <p>Excel (.xlsx, .xls), CSV, or TSV. Up to 50MB. Your data stays in your browser. Nothing is uploaded to our servers in this demo.</p>
-              <div class="pg-upload-actions">
-                <button type="button" class="pg-browse" id="pgBrowseBtn">Browse files</button>
-                <span>The agent will detect columns and auto-generate insights.</span>
-              </div>
-            </div>
-            <div class="pg-upload-error" id="pgUploadError" role="alert"></div>
-          </div>
-        </div>
-      </aside>
-    </div>
-
-    <div class="vb-dotrow">
-      <button class="vb-dot active" data-persona-dot="0" aria-label="E-commerce"></button>
-      <button class="vb-dot" data-persona-dot="1" aria-label="Agency"></button>
-      <button class="vb-dot" data-persona-dot="2" aria-label="Nonprofit"></button>
-      <button class="vb-dot" data-persona-dot="3" aria-label="B2B"></button>
-      <span class="vb-rotate-note">Auto-rotates every 8 seconds</span>
+        <div class="hp-insight-byline" id="hpInsightByline">From your last 14 days of campaign and order data.</div>
+      </div>
+      <div class="hp-pane hp-pane-action">
+        <div class="hp-pane-eyebrow">Recommended next action</div>
+        <div class="hp-action-title" id="hpActionTitle">Restart your abandoned-cart automation.</div>
+        <div class="hp-action-desc" id="hpActionDesc">Pausing it on Tuesday cost roughly $4,200 in recovered revenue. Restarting closes most of the gap within 7 to 10 days.</div>
+        <button type="button" class="hp-action-btn" data-scroll-to="playground">
+          <span>Try this in the live demo</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
-
-
 </div><!-- /.hero-shell -->
+
+<!-- ============================================================ -->
+<!-- PLAYGROUND SECTION — full Analytics AI demo, ICP-aware       -->
+<!-- The dark navy frame from the analytics prototype, persona-    -->
+<!-- aware for all 6 ICPs, with a Sample data / Upload toggle.     -->
+<!-- ============================================================ -->
+<section class="playground-section" id="playground">
+  <div class="playground-header">
+    <span class="eyebrow">Try Analytics AI · No signup required</span>
+    <h2 class="display-serif">Take Analytics AI for a spin.</h2>
+    <p>Pick a question, see the agent's answer with a live chart in seconds. Same experience as ChatGPT, grounded in your marketing data.</p>
+  </div>
+
+  <!-- Sample data | Upload Excel / CSV toggle (above the frame) -->
+  <div class="pg-ds-wrap">
+    <div class="pg-ds" role="tablist" aria-label="Data source">
+      <button class="pg-ds-tab active" data-pg-tab="sample" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Sample data
+      </button>
+      <button class="pg-ds-tab" data-pg-tab="upload" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Upload Excel / CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- ICP-aware playground frame. Toolbar business, greeting, suggested
+       chips, sample insight, and per-question chart renders all swap
+       when an ICP chip is clicked or the upload zone activates a
+       custom dataset. -->
+  <div class="pg-frame-wrap" id="pgFrameWrap">
+    <div class="pg-app">
+      <div class="pg-toolbar">
+        <div class="pg-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="pg-title">
+          <span class="pg-pill">Analytics AI</span>
+          <span class="pg-title-name" id="pgTitle">Oat Lord · Live demo</span>
+        </div>
+        <div class="pg-toolbar-spacer" aria-hidden="true"></div>
+      </div>
+      <div class="pg-body">
+        <div class="pg-chat">
+          <div class="pg-messages" id="pgMessages" aria-live="polite">
+            <!-- greeting injected by JS per ICP -->
+          </div>
+          <div class="pg-suggested" id="pgSuggested">
+            <span class="pg-suggested-label">Try a question</span>
+            <!-- chips injected by JS per ICP -->
+          </div>
+          <form class="pg-input" id="pgInputForm" autocomplete="off" onsubmit="return false;">
+            <input type="text" id="pgInput" placeholder="Ask Analytics AI anything…" aria-label="Ask Analytics AI" />
+            <button type="submit" id="pgSendBtn">Send</button>
+          </form>
+        </div>
+        <div class="pg-viz">
+          <div class="pg-viz-eyebrow">Live visualization</div>
+          <div class="pg-viz-title" id="pgVizTitle">Sample insight</div>
+          <div class="pg-metric-row" id="pgMetricRow" style="display:none;">
+            <div class="pg-metric"><div class="val" id="pgM1Val">·</div><div class="lbl" id="pgM1Lbl">Metric</div><div class="delta" id="pgM1Delta"></div></div>
+            <div class="pg-metric"><div class="val" id="pgM2Val">·</div><div class="lbl" id="pgM2Lbl">Metric</div><div class="delta" id="pgM2Delta"></div></div>
+          </div>
+          <div class="pg-canvas" id="pgCanvas">
+            <!-- pre-loaded sample insight injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Upload mode replaces the dark frame body when "Upload Excel/CSV" is selected -->
+    <div class="pg-upload-wrap" id="pgUploadWrap">
+      <div class="pg-upload-zone" id="pgUploadZone">
+        <input type="file" id="pgFileInput" accept=".csv,.xlsx,.xls,.tsv" style="display:none;" />
+        <div class="pg-upload-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h4>Drop your spreadsheet here</h4>
+        <p>Excel (.xlsx, .xls), CSV, or TSV. Up to 50MB. Your data stays in your browser. Nothing is uploaded to our servers in this demo.</p>
+        <div class="pg-upload-actions">
+          <button type="button" class="pg-browse" id="pgBrowseBtn">Browse files</button>
+          <span>The agent will detect columns and auto-generate insights.</span>
+        </div>
+      </div>
+      <div class="pg-upload-error" id="pgUploadError" role="alert"></div>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================ -->
 <!-- BELOW THE FOLD — shared across all variants                  -->
 <!-- ============================================================ -->
 
-<!-- ===== Recommended for your business ===== -->
-<section class="reco-section" id="recommended">
-  <div class="reco-head">
+<!-- ============================================================ -->
+<!-- RECOMMENDATION COCKPIT — personalized "Customize my           -->
+<!-- experience" form on the left, dynamic recommendation cards    -->
+<!-- on the right that filter / re-order / highlight based on the  -->
+<!-- selected industry + goals.                                    -->
+<!-- ============================================================ -->
+<section class="cockpit-section" id="recommended">
+  <div class="cockpit-head">
+    <span class="cockpit-pill">
+      <span class="cp-spark" aria-hidden="true">✦</span>
+      <span class="cp-pulse" aria-hidden="true"></span>
+      Updated based on your goals
+    </span>
     <h2 class="display-serif">Recommended for your business.</h2>
-    <a href="#" class="reco-link">Customize my experience →</a>
+    <p>Pick your industry and goals on the left. The cards on the right reorder, filter, and highlight to match what's likely to move the needle for you.</p>
   </div>
-  <div class="reco-grid">
-    <a class="reco-card" href="#">
-      <div class="reco-illo">
-        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="20" y="14" width="44" height="58" rx="6" fill="#FFF1A8"/>
-          <line x1="32" y1="26" x2="52" y2="26"/>
-          <line x1="32" y1="34" x2="48" y2="34"/>
-          <line x1="32" y1="42" x2="44" y2="42"/>
-          <circle cx="42" cy="58" r="3" fill="#241c15"/>
-          <path d="M14 28 q-4 4 -2 8 q3 5 8 4" stroke="#007C89"/>
-          <path d="M70 30 q4 4 2 8 q-3 5 -8 4" stroke="#007C89"/>
-        </svg>
-      </div>
-      <h3>Reach more customers with SMS</h3>
-      <p>Send timely texts that land alongside your campaigns. SMS shows higher open rates than any other channel.</p>
-      <span class="reco-cta">Explore SMS →</span>
-    </a>
 
-    <a class="reco-card" href="#">
-      <div class="reco-illo">
-        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 64 L26 50 L36 56 L48 38 L58 46 L70 22" fill="none" stroke="#007C89" stroke-width="2.2"/>
-          <circle cx="14" cy="64" r="3" fill="#241c15"/>
-          <circle cx="26" cy="50" r="3" fill="#241c15"/>
-          <circle cx="36" cy="56" r="3" fill="#241c15"/>
-          <circle cx="48" cy="38" r="3" fill="#241c15"/>
-          <circle cx="58" cy="46" r="3" fill="#241c15"/>
-          <circle cx="70" cy="22" r="3" fill="#FFE01B"/>
-          <path d="M64 16 l3 -8 m6 8 l-3 -8 m-3 16 l-8 0 m11 -3 l8 -3" stroke="#FFE01B" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <h3>Discover new ways to drive sales</h3>
-      <p>AI tools surface hidden patterns in your data and recommend the next best action for every customer.</p>
-      <span class="reco-cta">Try Analytics AI →</span>
-    </a>
+  <div class="cockpit-grid">
+    <!-- LEFT: Customize my experience form -->
+    <aside class="cockpit-form" aria-label="Customize my experience">
+      <div class="cf-eyebrow">Customize my experience</div>
+      <label class="cf-field">
+        <span class="cf-label">Industry</span>
+        <span class="cf-select-wrap">
+          <select id="cfIndustry" class="cf-select">
+            <option value="retail">Retail &amp; e-commerce</option>
+            <option value="hospitality">Hospitality</option>
+            <option value="nonprofit">Non-profit</option>
+            <option value="services">Professional services</option>
+            <option value="creators">Content creators</option>
+            <option value="other">Other</option>
+          </select>
+          <svg class="cf-select-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </label>
 
-    <a class="reco-card" href="#">
-      <div class="reco-illo">
-        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="20" cy="22" r="9" fill="#FFE01B"/>
-          <circle cx="62" cy="22" r="9" fill="white"/>
-          <circle cx="42" cy="62" r="9" fill="#00B9A6"/>
-          <path d="M28 24 H54" stroke="#241c15"/>
-          <path d="M22 32 L40 54" stroke="#241c15"/>
-          <path d="M60 32 L46 54" stroke="#241c15"/>
-          <path d="M22 18 l-4 -4 m6 -2 l-2 -6" stroke="#241c15" stroke-width="1.2"/>
-        </svg>
+      <div class="cf-field">
+        <span class="cf-label">My top goals</span>
+        <div class="cf-goal-chips" id="cfGoalChips" role="group" aria-label="Goals">
+          <button class="cf-goal active" type="button" data-goal="grow">Grow revenue</button>
+          <button class="cf-goal active" type="button" data-goal="save-time">Save time</button>
+          <button class="cf-goal" type="button" data-goal="retain">Retain customers</button>
+          <button class="cf-goal" type="button" data-goal="reach">Reach new audiences</button>
+          <button class="cf-goal" type="button" data-goal="personalize">Personalize sends</button>
+          <button class="cf-goal" type="button" data-goal="insights">Better insights</button>
+        </div>
       </div>
-      <h3>Save time on repetitive tasks</h3>
-      <p>Automate welcome series, abandoned carts, win-backs and birthdays in a single visual canvas.</p>
-      <span class="reco-cta">See automations →</span>
-    </a>
 
-    <a class="reco-card" href="#">
-      <div class="reco-illo">
-        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="14" y="18" width="56" height="40" rx="4" fill="white"/>
-          <line x1="14" y1="28" x2="70" y2="28"/>
-          <circle cx="20" cy="23" r="1.5" fill="#FF6B47"/>
-          <circle cx="26" cy="23" r="1.5" fill="#FFE01B"/>
-          <circle cx="32" cy="23" r="1.5" fill="#3FB58E"/>
-          <line x1="22" y1="38" x2="62" y2="38"/>
-          <line x1="22" y1="44" x2="56" y2="44"/>
-          <line x1="22" y1="50" x2="48" y2="50"/>
-          <path d="M30 70 q12 -8 24 0" stroke="#FFE01B" stroke-width="2"/>
-        </svg>
+      <div class="cf-summary" id="cfSummary">
+        Showing 6 recommendations for <strong id="cfIndustryName">Retail &amp; e-commerce</strong> teams focused on <strong id="cfGoalNames">growing revenue, saving time</strong>.
       </div>
-      <h3>Send high-quality content with ease</h3>
-      <p>Pre-built templates, brand kit, and AI assist help you draft, design and send beautiful emails fast.</p>
-      <span class="reco-cta">Explore the editor →</span>
-    </a>
 
-    <a class="reco-card" href="#">
-      <div class="reco-illo">
-        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="12" y="20" width="60" height="44" rx="4" fill="#FAFAF7"/>
-          <rect x="20" y="44" width="6" height="14" fill="#007C89"/>
-          <rect x="30" y="36" width="6" height="22" fill="#00B9A6"/>
-          <rect x="40" y="28" width="6" height="30" fill="#FFE01B"/>
-          <rect x="50" y="40" width="6" height="18" fill="#007C89"/>
-          <rect x="60" y="32" width="6" height="26" fill="#00B9A6"/>
-          <path d="M18 30 L28 26 L38 22 L48 24 L58 18 L68 20" stroke="#241c15" stroke-width="1.5"/>
-        </svg>
-      </div>
-      <h3>See what's working at a glance</h3>
-      <p>Daily insight cards, revenue forecasts and benchmark comparisons surface what changed and why.</p>
-      <span class="reco-cta">View dashboards →</span>
-    </a>
+      <button type="button" class="cf-cta btn-spin" data-scroll-to="pricing">
+        <span>Get 70% off Standard + Analytics AI</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+      </button>
+      <div class="cf-cta-note">Limited intro offer for new Standard customers. Cancel anytime.</div>
+    </aside>
 
-    <a class="reco-card" href="#">
-      <div class="reco-illo">
-        <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="42" cy="42" r="22" fill="white"/>
-          <circle cx="42" cy="42" r="22" fill="none" stroke-dasharray="34 14"/>
-          <circle cx="42" cy="32" r="5" fill="#FFE01B"/>
-          <path d="M30 56 q12 -10 24 0" stroke="#241c15"/>
-          <circle cx="22" cy="22" r="3" fill="#00B9A6"/>
-          <circle cx="62" cy="22" r="3" fill="#FF6B47"/>
-          <circle cx="22" cy="62" r="3" fill="#007C89"/>
-          <circle cx="62" cy="62" r="3" fill="#3FB58E"/>
-        </svg>
-      </div>
-      <h3>Personalize every interaction</h3>
-      <p>Predictive segments and dynamic content adapt every send to where each customer is in their journey.</p>
-      <span class="reco-cta">Build a segment →</span>
-    </a>
+    <!-- RIGHT: Dynamic recommendation cards. Each card carries data-tags
+         (industry + goals it serves) so the cockpit can filter, reorder,
+         and highlight matches based on form selections. -->
+    <div class="cockpit-cards" id="cockpitCards">
+      <a class="reco-card" href="#" data-reco="sms" data-goals="reach grow personalize" data-industries="retail hospitality creators other">
+        <div class="reco-illo">
+          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="20" y="14" width="44" height="58" rx="6" fill="#FFF1A8"/>
+            <line x1="32" y1="26" x2="52" y2="26"/>
+            <line x1="32" y1="34" x2="48" y2="34"/>
+            <line x1="32" y1="42" x2="44" y2="42"/>
+            <circle cx="42" cy="58" r="3" fill="#241c15"/>
+            <path d="M14 28 q-4 4 -2 8 q3 5 8 4" stroke="#007C89"/>
+            <path d="M70 30 q4 4 2 8 q-3 5 -8 4" stroke="#007C89"/>
+          </svg>
+        </div>
+        <h3>Reach more customers with SMS</h3>
+        <p>Send timely texts that land alongside your campaigns. SMS shows higher open rates than any other channel.</p>
+        <span class="reco-cta">Explore SMS →</span>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="ai" data-goals="grow insights personalize" data-industries="retail hospitality nonprofit services creators other">
+        <div class="reco-illo">
+          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 64 L26 50 L36 56 L48 38 L58 46 L70 22" fill="none" stroke="#007C89" stroke-width="2.2"/>
+            <circle cx="14" cy="64" r="3" fill="#241c15"/>
+            <circle cx="26" cy="50" r="3" fill="#241c15"/>
+            <circle cx="36" cy="56" r="3" fill="#241c15"/>
+            <circle cx="48" cy="38" r="3" fill="#241c15"/>
+            <circle cx="58" cy="46" r="3" fill="#241c15"/>
+            <circle cx="70" cy="22" r="3" fill="#FFE01B"/>
+            <path d="M64 16 l3 -8 m6 8 l-3 -8 m-3 16 l-8 0 m11 -3 l8 -3" stroke="#FFE01B" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>Discover new ways to drive sales</h3>
+        <p>AI tools surface hidden patterns in your data and recommend the next best action for every customer.</p>
+        <span class="reco-cta">Try Analytics AI →</span>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="automations" data-goals="save-time grow retain" data-industries="retail hospitality services creators other">
+        <div class="reco-illo">
+          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="20" cy="22" r="9" fill="#FFE01B"/>
+            <circle cx="62" cy="22" r="9" fill="white"/>
+            <circle cx="42" cy="62" r="9" fill="#00B9A6"/>
+            <path d="M28 24 H54" stroke="#241c15"/>
+            <path d="M22 32 L40 54" stroke="#241c15"/>
+            <path d="M60 32 L46 54" stroke="#241c15"/>
+            <path d="M22 18 l-4 -4 m6 -2 l-2 -6" stroke="#241c15" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <h3>Save time on repetitive tasks</h3>
+        <p>Automate welcome series, abandoned carts, win-backs and birthdays in a single visual canvas.</p>
+        <span class="reco-cta">See automations →</span>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="content" data-goals="save-time personalize" data-industries="retail hospitality nonprofit services creators other">
+        <div class="reco-illo">
+          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="14" y="18" width="56" height="40" rx="4" fill="white"/>
+            <line x1="14" y1="28" x2="70" y2="28"/>
+            <circle cx="20" cy="23" r="1.5" fill="#FF6B47"/>
+            <circle cx="26" cy="23" r="1.5" fill="#FFE01B"/>
+            <circle cx="32" cy="23" r="1.5" fill="#3FB58E"/>
+            <line x1="22" y1="38" x2="62" y2="38"/>
+            <line x1="22" y1="44" x2="56" y2="44"/>
+            <line x1="22" y1="50" x2="48" y2="50"/>
+            <path d="M30 70 q12 -8 24 0" stroke="#FFE01B" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Send high-quality content with ease</h3>
+        <p>Pre-built templates, brand kit, and AI assist help you draft, design and send beautiful emails fast.</p>
+        <span class="reco-cta">Explore the editor →</span>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="dashboards" data-goals="insights grow" data-industries="retail hospitality nonprofit services creators other">
+        <div class="reco-illo">
+          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="12" y="20" width="60" height="44" rx="4" fill="#FAFAF7"/>
+            <rect x="20" y="44" width="6" height="14" fill="#007C89"/>
+            <rect x="30" y="36" width="6" height="22" fill="#00B9A6"/>
+            <rect x="40" y="28" width="6" height="30" fill="#FFE01B"/>
+            <rect x="50" y="40" width="6" height="18" fill="#007C89"/>
+            <rect x="60" y="32" width="6" height="26" fill="#00B9A6"/>
+            <path d="M18 30 L28 26 L38 22 L48 24 L58 18 L68 20" stroke="#241c15" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3>See what's working at a glance</h3>
+        <p>Daily insight cards, revenue forecasts and benchmark comparisons surface what changed and why.</p>
+        <span class="reco-cta">View dashboards →</span>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="segments" data-goals="personalize retain reach" data-industries="retail nonprofit services creators other">
+        <div class="reco-illo">
+          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="42" cy="42" r="22" fill="white"/>
+            <circle cx="42" cy="42" r="22" fill="none" stroke-dasharray="34 14"/>
+            <circle cx="42" cy="32" r="5" fill="#FFE01B"/>
+            <path d="M30 56 q12 -10 24 0" stroke="#241c15"/>
+            <circle cx="22" cy="22" r="3" fill="#00B9A6"/>
+            <circle cx="62" cy="22" r="3" fill="#FF6B47"/>
+            <circle cx="22" cy="62" r="3" fill="#007C89"/>
+            <circle cx="62" cy="62" r="3" fill="#3FB58E"/>
+          </svg>
+        </div>
+        <h3>Personalize every interaction</h3>
+        <p>Predictive segments and dynamic content adapt every send to where each customer is in their journey.</p>
+        <span class="reco-cta">Build a segment →</span>
+      </a>
+    </div>
   </div>
 </section>
 
-<!-- ===== Marketing that delivers results ===== -->
-<section class="stats-section">
-  <div class="stats-head">
+<!-- ============================================================ -->
+<!-- RESULTS BIGBOARD — animated count-up metrics with sparkline   -->
+<!-- viz, anchored to an "Analytics AI helps turn this data into   -->
+<!-- next-best actions" message. Numbers count up when scrolled    -->
+<!-- into view via IntersectionObserver. prefers-reduced-motion    -->
+<!-- skips the animation and shows final values immediately.       -->
+<!-- ============================================================ -->
+<section class="bigboard-section" id="results">
+  <div class="bigboard-head">
+    <span class="bb-eyebrow">
+      <span class="bb-pulse" aria-hidden="true"></span>
+      Analytics AI · turns performance data into next-best actions
+    </span>
     <h2 class="display-serif">Marketing that delivers results.</h2>
-    <p>Mailchimp customers grow faster, send smarter, and reach more customers in more places.</p>
+    <p>Mailchimp customers grow faster, send smarter, and reach more customers in more places. Analytics AI surfaces the signal in your data so you act on what matters.</p>
   </div>
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-num">97%</div>
+
+  <div class="bigboard-grid">
+    <article class="bb-card">
+      <div class="bb-tag">Email + SMS</div>
+      <div class="bb-num"><span class="bb-count" data-count="97" data-suffix="%">0%</span></div>
       <h4>more clicks</h4>
       <p>Customers saw up to 97% higher click rates when they used both email and SMS together.</p>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">30x</div>
-      <h4>ROI</h4>
+      <div class="bb-spark" aria-hidden="true">
+        <svg viewBox="0 0 120 36" preserveAspectRatio="none">
+          <path d="M0,28 L20,24 L40,22 L60,16 L80,14 L100,8 L120,4" stroke="var(--mc-cta)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <circle cx="120" cy="4" r="3" fill="var(--mc-yellow)" stroke="#241c15" stroke-width="0.8"/>
+        </svg>
+      </div>
+    </article>
+
+    <article class="bb-card">
+      <div class="bb-tag">E-commerce</div>
+      <div class="bb-num"><span class="bb-count" data-count="30" data-suffix="x">0x</span></div>
+      <h4>ROI on Standard</h4>
       <p>E-commerce businesses see up to 30x ROI using Mailchimp's Standard Plan.</p>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">99.99%</div>
+      <div class="bb-spark" aria-hidden="true">
+        <svg viewBox="0 0 120 36" preserveAspectRatio="none">
+          <rect x="6"  y="22" width="10" height="10" rx="2" fill="var(--mc-cta)" opacity="0.55"/>
+          <rect x="22" y="18" width="10" height="14" rx="2" fill="var(--mc-cta)" opacity="0.65"/>
+          <rect x="38" y="14" width="10" height="18" rx="2" fill="var(--mc-cta)" opacity="0.75"/>
+          <rect x="54" y="10" width="10" height="22" rx="2" fill="var(--mc-cta)" opacity="0.85"/>
+          <rect x="70" y="6"  width="10" height="26" rx="2" fill="var(--mc-cta)"/>
+          <rect x="86" y="2"  width="10" height="30" rx="2" fill="var(--mc-yellow)"/>
+        </svg>
+      </div>
+    </article>
+
+    <article class="bb-card">
+      <div class="bb-tag">Deliverability</div>
+      <div class="bb-num"><span class="bb-count" data-count="99.99" data-decimals="2" data-suffix="%">0%</span></div>
       <h4>delivery rate</h4>
       <p>Customers experience 99.99% transactional email delivery rates across millions of sends a day.</p>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">9.8B</div>
+      <div class="bb-spark" aria-hidden="true">
+        <svg viewBox="0 0 120 36" preserveAspectRatio="none">
+          <path d="M2,18 L12,18 L20,14 L30,16 L40,10 L52,12 L62,8 L74,9 L84,6 L96,7 L108,5 L118,5" stroke="var(--mc-sage)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <line x1="0" y1="34" x2="120" y2="34" stroke="rgba(36,28,21,0.15)" stroke-width="0.6" stroke-dasharray="2 3"/>
+        </svg>
+      </div>
+    </article>
+
+    <article class="bb-card bb-ai">
+      <div class="bb-tag">Analytics AI</div>
+      <div class="bb-num"><span class="bb-count" data-count="9.8" data-decimals="1" data-suffix="B">0B</span></div>
       <h4>AI emails sent</h4>
       <p>Our customers have sent over 9.8 billion emails with AI-generated content.</p>
-    </div>
+      <div class="bb-spark" aria-hidden="true">
+        <svg viewBox="0 0 120 36" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="bbAreaG" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#FFE01B" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#FFE01B" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,30 L20,28 L40,22 L60,16 L80,10 L100,6 L120,2 L120,36 L0,36 Z" fill="url(#bbAreaG)"/>
+          <path d="M0,30 L20,28 L40,22 L60,16 L80,10 L100,6 L120,2" stroke="#241c15" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </article>
   </div>
-  <p class="stats-footnote">Performance data based on Mailchimp customer aggregates measured in the last 12 months. Individual results vary.</p>
+
+  <div class="bigboard-footer">
+    <div class="bb-impact">
+      <div class="bb-impact-eyebrow">Before / After Analytics AI</div>
+      <div class="bb-impact-row">
+        <div class="bb-impact-cell bb-before">
+          <div class="bb-impact-label">Without Analytics AI</div>
+          <div class="bb-impact-line">Quarterly review takes <strong>4-6 hours</strong></div>
+          <div class="bb-impact-line">"Why did opens drop?" needs a data team</div>
+          <div class="bb-impact-line">Send-time picked from a hunch</div>
+        </div>
+        <div class="bb-impact-arrow" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </div>
+        <div class="bb-impact-cell bb-after">
+          <div class="bb-impact-label">With Analytics AI</div>
+          <div class="bb-impact-line">Same review in <strong>under 5 minutes</strong></div>
+          <div class="bb-impact-line">Ask the agent. Get a chart and the action.</div>
+          <div class="bb-impact-line">Send-time backed by your real engagement</div>
+        </div>
+      </div>
+    </div>
+    <p class="stats-footnote">Performance data based on Mailchimp customer aggregates measured in the last 12 months. Individual results vary.</p>
+  </div>
 </section>
 
-<!-- ===== Personalized tour callout ===== -->
-<section class="tour-section">
-  <div class="tour-card">
-    <div class="tour-text">
-      <h2 class="display-serif">Get started easily with a personalized product tour.</h2>
-      <p>Tell us about your business and we'll surface the templates, automations, and audiences most likely to drive growth for you.</p>
-      <a href="#" class="btn-spin"><span>Take the 60-second tour</span> →</a>
-    </div>
-    <div class="tour-illo" aria-hidden="true">
-      <img src="assets/mc-brand/spot-magicbear.jpg" alt="" />
-    </div>
+<!-- ============================================================ -->
+<!-- TOUR TIMELINE — 4-step animated walkthrough that ties the     -->
+<!-- onboarding flow to the Analytics AI / Standard plan story.   -->
+<!-- Steps animate in when scrolled into view (IntersectionObserver). -->
+<!-- ============================================================ -->
+<section class="tour-section" id="tour">
+  <div class="tour-head">
+    <span class="bb-eyebrow">
+      <span class="bb-pulse" aria-hidden="true"></span>
+      Personalized onboarding · included with Standard
+    </span>
+    <h2 class="display-serif">Get started easily with a personalized product tour.</h2>
+    <p>Tell us about your business once. Mailchimp surfaces the right templates, audiences, and Analytics AI prompts for your goals on day one.</p>
+  </div>
+
+  <ol class="tour-timeline" id="tourTimeline">
+    <li class="tour-step" data-step="1">
+      <div class="ts-rail" aria-hidden="true">
+        <span class="ts-num">1</span>
+      </div>
+      <div class="ts-card">
+        <div class="ts-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6 v6 c0 1.7 3.6 3 8 3 s8 -1.3 8 -3 V6"/><path d="M4 12 v6 c0 1.7 3.6 3 8 3 s8 -1.3 8 -3 V12"/></svg>
+        </div>
+        <h3>Connect your data</h3>
+        <p>Plug in Shopify, Stripe, your CRM, or upload a CSV. Mailchimp reads the columns automatically.</p>
+        <div class="ts-chip">2-minute setup</div>
+      </div>
+    </li>
+    <li class="tour-step" data-step="2">
+      <div class="ts-rail" aria-hidden="true">
+        <span class="ts-num">2</span>
+      </div>
+      <div class="ts-card">
+        <div class="ts-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4" fill="#FFE01B"/><path d="M12 2 v3 M12 19 v3 M2 12 h3 M19 12 h3"/></svg>
+        </div>
+        <h3>Pick your business goals</h3>
+        <p>Grow revenue, save time, or retain customers. Pick the goals that matter and we tune the recommendations.</p>
+        <div class="ts-chip">3 quick chips</div>
+      </div>
+    </li>
+    <li class="tour-step" data-step="3">
+      <div class="ts-rail" aria-hidden="true">
+        <span class="ts-num">3</span>
+      </div>
+      <div class="ts-card">
+        <div class="ts-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L13.8 10.2 L22 12 L13.8 13.8 L12 22 L10.2 13.8 L2 12 L10.2 10.2 Z" fill="#FFE01B"/></svg>
+        </div>
+        <h3>Get Analytics AI recommendations</h3>
+        <p>The agent answers your first questions with a chart and a recommended next action, grounded in your data.</p>
+        <div class="ts-chip">In under 60 seconds</div>
+      </div>
+    </li>
+    <li class="tour-step" data-step="4">
+      <div class="ts-rail no-line" aria-hidden="true">
+        <span class="ts-num">4</span>
+      </div>
+      <div class="ts-card">
+        <div class="ts-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 l4 4 L19 6"/></svg>
+        </div>
+        <h3>Launch campaigns with confidence</h3>
+        <p>Send the right message, to the right segment, at the right time. With proof on the dashboard the next morning.</p>
+        <div class="ts-chip">Ready when you are</div>
+      </div>
+    </li>
+  </ol>
+
+  <div class="tour-cta-row">
+    <a href="#" class="btn-spin"><span>Take the 60-second tour</span> →</a>
+    <button type="button" class="btn-secondary-cta" data-scroll-to="pricing">
+      <span>Get 70% off Standard + Analytics AI</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+    </button>
   </div>
 </section>
 
 <!-- ===== Pricing module ===== -->
-<section class="pricing-section" id="pricing">
-  <h2>Find the right plan</h2>
+<!-- (Plan-card content, billing toggle, contact-tier selectors, currency
+     handling, and disclaimers are intentionally untouched. Only the
+     section heading copy is updated to mention Analytics AI per spec.) -->
+<section class="pricing-section" id="pricing" tabindex="-1">
+  <span class="pricing-eyebrow">
+    <span class="pe-spark" aria-hidden="true">✦</span>
+    70% off your first 3 months on Standard
+  </span>
+  <h2>Try our Standard plan with Analytics AI for free.</h2>
   <p class="sub">Start free, scale as you grow. Every paid plan now includes Analytics AI with unlimited prompts.</p>
 
   <div class="pricing-controls">
@@ -1747,47 +2643,80 @@
   </div>
 </section>
 
-<!-- ===== Testimonials (3-up) ===== -->
-<section class="testimonial-section">
-  <div class="testimonial-intro">
-    <span class="eyebrow">Customer stories</span>
-    <h2>Millions of users trust us.</h2>
-    <p>Marketers, founders, and operators across e-commerce, agencies, nonprofits, and B2B services choose Mailchimp to grow their businesses.</p>
+<!-- ============================================================ -->
+<!-- TESTIMONIALS — Analytics-AI-focused module. Each card pairs a -->
+<!-- quote, customer + role, and an outcome metric. CTA scrolls to -->
+<!-- the pricing table.                                            -->
+<!-- ============================================================ -->
+<section class="testi-modern-section" id="testimonials">
+  <div class="testi-modern-head">
+    <span class="bb-eyebrow">
+      <span class="bb-pulse" aria-hidden="true"></span>
+      How teams use Analytics AI
+    </span>
+    <h2 class="display-serif">Marketers ship faster with the agent in the loop.</h2>
+    <p>Real Mailchimp customers, real outcomes. Analytics AI turns weekly reporting into a 5-minute conversation and surfaces the one move that actually grew the business.</p>
   </div>
-  <div class="testimonial-grid">
-    <div class="testimonial-card">
-      <div class="quote-mark">&ldquo;</div>
-      <p class="quote-text">Quarterly performance reviews used to take me 4 to 6 hours. With Analytics AI, I get the same insights in minutes.</p>
-      <div class="testimonial-attr-row">
-        <div class="testimonial-photo" style="background-image: url('assets/testimonial-anuj.jpg');"></div>
-        <div class="testimonial-attr-text">
-          <div class="name">Anuj Chaudhry</div>
-          <div class="role">Chief Growth Officer<br><span class="company">Faris Team Real Estate Brokerage</span></div>
+
+  <div class="testi-modern-grid">
+    <!-- Card 1 -->
+    <article class="testi-modern-card">
+      <div class="tm-quote-mark" aria-hidden="true">&ldquo;</div>
+      <p class="tm-quote">Quarterly performance reviews used to take me 4 to 6 hours. With Analytics AI, I get the same insights in minutes.</p>
+      <div class="tm-attr">
+        <div class="tm-photo" style="background-image: url('assets/testimonial-anuj.jpg');"></div>
+        <div class="tm-attr-text">
+          <div class="tm-name">Anuj Chaudhry</div>
+          <div class="tm-role">Chief Growth Officer · Faris Team</div>
         </div>
       </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="quote-mark">&ldquo;</div>
-      <p class="quote-text">Mailchimp gave me a marketing plan I could act on. Instead of constantly chasing my audience, I can focus on my work. It felt like an exhale.</p>
-      <div class="testimonial-attr-row">
-        <div class="testimonial-photo" style="background-image: url('assets/testimonial-suskia.jpg');"></div>
-        <div class="testimonial-attr-text">
-          <div class="name">Suskia Strafella</div>
-          <div class="role">Founder<br><span class="company">I Am Wild Woman</span></div>
+      <div class="tm-outcome">
+        <div class="tm-outcome-num">−92%</div>
+        <div class="tm-outcome-label">time on quarterly review</div>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="testi-modern-card tm-featured">
+      <div class="tm-quote-mark" aria-hidden="true">&ldquo;</div>
+      <p class="tm-quote">Mailchimp gave me a marketing plan I could act on. Instead of constantly chasing my audience, I can focus on my work. It felt like an exhale.</p>
+      <div class="tm-attr">
+        <div class="tm-photo" style="background-image: url('assets/testimonial-suskia.jpg');"></div>
+        <div class="tm-attr-text">
+          <div class="tm-name">Suskia Strafella</div>
+          <div class="tm-role">Founder · I Am Wild Woman</div>
         </div>
       </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="quote-mark">&ldquo;</div>
-      <p class="quote-text">It's like getting to hire a marketing specialist, for free.</p>
-      <div class="testimonial-attr-row">
-        <div class="testimonial-photo" style="background-image: url('assets/testimonial-damon.jpg');"></div>
-        <div class="testimonial-attr-text">
-          <div class="name">Damon Runnals</div>
-          <div class="role">CEO and Owner<br><span class="company">Minnesota Playlist</span></div>
+      <div class="tm-outcome">
+        <div class="tm-outcome-num">2.3x</div>
+        <div class="tm-outcome-label">campaign revenue, quarter over quarter</div>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="testi-modern-card">
+      <div class="tm-quote-mark" aria-hidden="true">&ldquo;</div>
+      <p class="tm-quote">It's like getting to hire a marketing specialist, for free. The agent tells me which segment to send to and what to say. I just hit send.</p>
+      <div class="tm-attr">
+        <div class="tm-photo" style="background-image: url('assets/testimonial-damon.jpg');"></div>
+        <div class="tm-attr-text">
+          <div class="tm-name">Damon Runnals</div>
+          <div class="tm-role">CEO · Minnesota Playlist</div>
         </div>
       </div>
-    </div>
+      <div class="tm-outcome">
+        <div class="tm-outcome-num">+38%</div>
+        <div class="tm-outcome-label">click-through rate after restructured sends</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="testi-modern-cta-row">
+    <button type="button" class="btn-spin" data-scroll-to="pricing">
+      <span>Get 70% off Standard + Analytics AI</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+    </button>
+    <span class="testi-modern-cta-note">Limited intro offer for new Standard customers · 14-day free trial · Cancel anytime.</span>
   </div>
 </section>
 
@@ -1899,29 +2828,27 @@
 const prefersReducedMotion = window.matchMedia &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* Persona-rotation state. The hero is "the hero" now (Variants A and C
-   are gone), so this state controls the embedded Analytics AI playground. */
+/* ICP rotation state. The hero shows a default ICP (retail) and auto-cycles
+   through all 6 every 8s until the user interacts with anything (chip click,
+   prompt list, cockpit form, scroll-to-pricing, playground input, file
+   upload, etc.). variantBTimer + pgInteracted are kept under those names
+   to minimize rename churn but they now drive ICP rotation, not Variant B. */
 var variantBTimer = null;
 var pgInteracted = false;
 
-/* ============================================================ */
-/* HERO — Persona pivot + embedded Analytics AI playground       */
-/* ============================================================ */
+/* ICP order is the same as the order of .icp-chip buttons in the hero. */
+const ICP_ORDER = ['retail', 'hospitality', 'nonprofit', 'services', 'creators', 'other'];
 
-// Auto-rotation through personas; pauses on hover and on first manual
-// interaction (chip click, persona pill, dot, input typing, mode toggle,
-// or file upload).
 function startVariantBRotation() {
   if (prefersReducedMotion) return;
   if (pgInteracted) return;
   if (variantBTimer) clearInterval(variantBTimer);
-  const order = ['ecommerce','agency','nonprofit','b2b'];
   variantBTimer = setInterval(() => {
     if (pgInteracted) { stopVariantBRotation(); return; }
-    const cur = (typeof currentPersona === 'string' && order.indexOf(currentPersona) >= 0)
-      ? order.indexOf(currentPersona) : 0;
-    const next = (cur + 1) % order.length;
-    setPersona(order[next]);
+    const cur = (typeof currentPersona === 'string' && ICP_ORDER.indexOf(currentPersona) >= 0)
+      ? ICP_ORDER.indexOf(currentPersona) : 0;
+    const next = (cur + 1) % ICP_ORDER.length;
+    setPersona(ICP_ORDER[next]);
   }, 8000);
 }
 function stopVariantBRotation() {
@@ -1939,18 +2866,40 @@ function markInteracted() {
 //   - greeting paragraph in the chat pane
 //   - 4 suggested chips with rich pre-baked answers + chart renders
 //   - a default "sample insight" pre-loaded in the right pane
+/* ---------- ICP_DATA / PERSONAS ----------
+   Keyed by the 6 ICP slugs used by .icp-chip[data-icp]:
+     retail, hospitality, nonprofit, services, creators, other.
+   Each entry powers BOTH:
+     - the hero preview card (heroPrompts, heroInsight, heroAction, plus
+       the toolbar business name shown in the hero)
+     - the playground frame below (pgTitle / pgGreet / sample / questions)
+   The previous 4 personas (ecommerce/agency/nonprofit/b2b) were collapsed:
+     - retail        ← original e-commerce dataset (Oat Lord / DTC oats)
+     - nonprofit     ← original nonprofit dataset (Reach Out)
+     - services      ← original B2B dataset (Sundial SaaS), retitled for
+                       a service-firm framing
+     - hospitality   ← new dataset (Hearth & Vine)
+     - creators      ← new dataset (Field Notes by Maya)
+     - other         ← generic engagement / conversion dataset (Brightline)  */
 const PERSONAS = {
-  ecommerce: {
-    headline: 'Sell more. Work less.',
-    subhead: 'For DTC brands shipping under 1,000 orders per month.',
-    features: [
-      { name: 'Email Editor',   desc: 'Create beautiful emails that sell.', svg: 'editor' },
-      { name: 'Cart Recovery',  desc: 'Win back more customers with automated emails.', svg: 'cart' },
-      { name: 'Analytics AI',   desc: 'Turn data into revenue with smart insights.', svg: 'chart' }
-    ],
+  retail: {
     pgTitle: 'Oat Lord · Live demo',
     pgGreetName: 'Oat Lord',
     pgGreetData: "campaigns, audience segments, revenue, and automations",
+    heroPrompts: [
+      'Why did revenue drop last week?',
+      'What are my top 3 SKUs this month?',
+      'Forecast next month\u2019s revenue'
+    ],
+    heroInsight: {
+      headline: 'Revenue dropped 18% last week.',
+      byline: 'From Oat Lord\u2019s last 14 days of campaign and order data.',
+      vizType: 'line-anomaly'
+    },
+    heroAction: {
+      title: 'Restart your abandoned-cart automation.',
+      desc: 'Pausing it on Tuesday cost roughly $4,200 in recovered revenue. Restarting closes most of the gap within 7 to 10 days.'
+    },
     sample: {
       eyebrow: 'Sample insight',
       title: 'Top 5 campaigns by open rate',
@@ -2015,92 +2964,113 @@ const PERSONAS = {
     ]
   },
 
-  agency: {
-    headline: 'Manage every client. From one place.',
-    subhead: 'For independent agencies running 10 to 30 active client accounts.',
-    features: [
-      { name: 'Client Workspaces',  desc: 'Switch contexts without losing your place.', svg: 'workspaces' },
-      { name: 'Risk Watchlist',     desc: 'Spot churning clients before they ask.',     svg: 'risk' },
-      { name: 'Whitelabel Reports', desc: 'Branded weekly recaps in two clicks.',       svg: 'report' }
+  hospitality: {
+    pgTitle: 'Hearth & Vine · Live demo',
+    pgGreetName: 'Hearth & Vine',
+    pgGreetData: "8,200 reservation guests, table-fill rate, weekend revenue, and repeat-guest cohorts",
+    heroPrompts: [
+      'Why is Sunday brunch underbooked this month?',
+      'Who are my best repeat guests for the new tasting menu?',
+      'Forecast revenue for Valentine\u2019s weekend'
     ],
-    pgTitle: 'PixelEdge Agency',
-    pgGreetName: 'PixelEdge Agency',
-    pgGreetData: "17 active client accounts: campaigns, audiences, revenue attribution, and deliverability scores",
+    heroInsight: {
+      headline: 'Sunday brunch is running 24% below capacity.',
+      byline: 'From Hearth & Vine\u2019s OpenTable + POS data, last 6 weeks.',
+      vizType: 'line-bookings'
+    },
+    heroAction: {
+      title: 'Promote brunch to repeat weekday guests.',
+      desc: 'A 1-touch SMS to your 642 weekday regulars on Friday lifts Sunday covers by an estimated 18 to 22 reservations, worth ~$2,100 in food and beverage.'
+    },
     sample: {
-      eyebrow: 'Client portfolio',
-      title: 'Open rate · last 30 days',
+      eyebrow: 'This month',
+      title: 'Table-fill rate by service',
       type: 'sample-bars',
       rows: [
-        { label: 'Acme Co',  val: '\u221234%', pct: 18, fill: 'red',  flagged: true },
-        { label: 'Sundial',  val: '42%',       pct: 92, fill: 'teal' },
-        { label: 'Mavenly',  val: '38%',       pct: 78, fill: 'teal' },
-        { label: 'Vela',     val: '35%',       pct: 70, fill: 'cta'  },
-        { label: 'Glow',     val: '28%',       pct: 56, fill: 'cta'  }
+        { label: 'Sat dinner',     val: '94%', pct: 94, fill: 'teal' },
+        { label: 'Fri dinner',     val: '88%', pct: 88, fill: 'teal' },
+        { label: 'Tue tasting',    val: '72%', pct: 72, fill: 'cta'  },
+        { label: 'Thu wine night', val: '58%', pct: 58, fill: 'cta'  },
+        { label: 'Sun brunch',     val: '\u221224%', pct: 30, fill: 'red', flagged: true }
       ],
-      callout: { tone: 'warn', html: '<strong>Acme Co flagged</strong> · open rate down 34% week over week. Sender reputation fell from 92 to 71 after a bulk send Mon.' }
+      callout: { tone: 'warn', html: '<strong>Sunday brunch flagged.</strong> Down 24% vs the same week last year. Weather-adjusted, this is a demand signal, not a one-off.' }
     },
     questions: [
-      { q: "Which client had the worst week?",
-        chartTitle: 'Client performance · last 7 days',
-        type: 'h-bars-flagged',
+      { q: "Why is Sunday brunch underbooked this month?",
+        chartTitle: 'Sunday brunch covers · last 8 weeks',
+        type: 'line-anomaly',
         metrics: [
-          { val: 'Acme Co', lbl: 'Underperformer', delta: '\u221234% opens', dir: 'down' },
-          { val: '\u2212$2.4K', lbl: 'Lost revenue', delta: 'vs forecast', dir: 'down' }
+          { val: '46', lbl: 'Avg covers / Sun', delta: '\u221224% YoY', dir: 'down' },
+          { val: '$1,840', lbl: 'Lost revenue / week', delta: 'at avg ticket', dir: 'down' }
         ],
-        answer: "<p><strong>Acme Co</strong> dropped 34% week over week. Their last 3 campaigns landed in spam at unusually high rates.</p><p>Root cause: sender reputation fell from <strong>92 to 71</strong> after a bulk send to an unverified list on Monday. Recommend pausing sends for 48 hours and running a domain warm-up sequence before resuming.</p>",
+        answer: "<p>Sunday brunch covers are running 24% below the same period last year. Two signals stand out: your Friday SMS reminder stopped sending after a tag mismatch on Mar 28, and the new fixed-price menu raised the average ticket but cut walk-ins.</p><p>Repeat-guest cohort is intact, the gap is in re-activation. A targeted SMS to <strong>642 weekday regulars</strong> on Friday is the highest-leverage fix this week.</p>",
+        action: 'Restart Friday SMS reminder'
+      },
+      { q: "Who are my best repeat guests for the new tasting menu?",
+        chartTitle: 'Tasting-menu fit by guest segment',
+        type: 'h-bars-money',
+        metrics: [
+          { val: '312 guests', lbl: 'Strong fit', delta: 'avg ticket $148', dir: 'up' },
+          { val: '4.2x', lbl: 'vs casual diner', delta: 'spend per visit', dir: 'up' }
+        ],
+        answer: "<p><strong>Wine-club members</strong> are your strongest fit (312 guests, avg ticket $148, 4.2x casual diners). \"Birthday-month\" diners ($118) and Special-occasion guests ($104) round out the top 3.</p><p>A 3-touch sequence to wine-club members 14 days before each tasting seating typically books out 2 of every 3 services. Worth pre-releasing March seatings to them first.</p>",
         chartData: [
-          { label: 'Acme Co',  val: 14, flagged: true },
-          { label: 'Glow',     val: 28 },
-          { label: 'Vela',     val: 35 },
-          { label: 'Mavenly',  val: 38 },
-          { label: 'Sundial',  val: 42 }
+          { label: 'Wine-club members',   val: 148, fmt: '$148' },
+          { label: 'Birthday-month',      val: 118, fmt: '$118' },
+          { label: 'Special occasion',    val: 104, fmt: '$104' },
+          { label: 'Walk-in regulars',    val:  72, fmt: '$72'  },
+          { label: 'First-time visitors', val:  58, fmt: '$58'  }
         ],
-        action: 'Pause Acme sends, run warm-up'
+        action: 'Pre-release tasting to wine club'
       },
-      { q: "Rank my clients by deliverability risk",
-        chartTitle: 'Deliverability heat · 17 accounts',
-        type: 'heat-grid',
+      { q: "Forecast revenue for Valentine\u2019s weekend",
+        chartTitle: 'Valentine\u2019s weekend revenue forecast',
+        type: 'forecast-fan',
         metrics: [
-          { val: '4', lbl: 'High-risk clients', delta: 'Acme + 3', dir: 'down' },
-          { val: '11', lbl: 'Healthy', delta: 'reputation > 85', dir: 'up' }
+          { val: '$28.4K', lbl: 'Weekend forecast', delta: '+11% YoY', dir: 'up' },
+          { val: '\u00b1$2.1K', lbl: 'Confidence band', delta: '82% conf.', dir: 'flat' }
         ],
-        answer: "<p>Of your 17 client accounts, <strong>4 are in the high-risk band</strong> (sender reputation under 75): Acme Co (71), Riverbed Coffee (73), Halwell &amp; Co (74), Pinedale (75).</p><p>The pattern across the high-risk four: bulk sends to lists with <strong>over 0.4% hard bounces</strong> in the prior 30 days. A list-hygiene pass on each is the highest-leverage move this week.</p>",
-        action: 'Run list-hygiene on top 4'
+        answer: "<p>Valentine\u2019s weekend forecast: <strong>$28.4K (\u00b1$2.1K), 82% confidence</strong>. That\u2019s an 11% lift over last year, driven by 2 extra dinner seatings and the new prix-fixe menu.</p><p>One opportunity: 71% of last year\u2019s tickets came from couples who booked the prior weekend. Releasing booking 14 days out instead of 7 should pull in ~12 more reservations and tighten the forecast band.</p>",
+        action: 'Open booking 14 days early'
       },
-      { q: "What's pulling down our portfolio open rate?",
-        chartTitle: 'Portfolio open rate · 90 days',
-        type: 'line-portfolio',
+      { q: "Which weekday should I add a special on?",
+        chartTitle: 'Weekday revenue gap',
+        type: 'h-bars-money',
         metrics: [
-          { val: '31.4%', lbl: 'Portfolio open', delta: '\u22122.8 pp', dir: 'down' },
-          { val: '2 of 17', lbl: 'Drag accounts', delta: 'Acme + Riverbed', dir: 'down' }
+          { val: 'Tue', lbl: 'Biggest opportunity', delta: '+ $640 / week', dir: 'up' },
+          { val: '$2.6K', lbl: 'Annualized lift', dir: 'up' }
         ],
-        answer: "<p>Portfolio open rate fell from <strong>34.2% to 31.4%</strong> over the past 90 days. Strip out two accounts (Acme Co and Riverbed Coffee) and the portfolio number rises to <strong>34.6%</strong>, slightly above your 90-day baseline.</p><p>The two drag accounts share a pattern: both shifted to twice-weekly sends in March. Returning either to a weekly cadence should recover roughly <strong>1.6 portfolio points</strong>.</p>",
-        action: 'Recommend cadence reset'
-      },
-      { q: "Which client should I upsell first?",
-        chartTitle: 'Upsell scoring · revenue \u00d7 engagement',
-        type: 'scatter-upsell',
-        metrics: [
-          { val: 'Sundial', lbl: 'Top score', delta: '94/100', dir: 'up' },
-          { val: '+$8K/mo', lbl: 'Total upsell pot.', delta: '4 ready clients', dir: 'up' }
+        answer: "<p><strong>Tuesday</strong> is your biggest weekday gap (62% capacity vs 88% on Friday). Adding a $42 wine-pairing special would unlock an estimated <strong>$640 / week</strong> in incremental revenue, or roughly $2,600 over a 4-week trial.</p><p>Pair it with a midweek SMS to wine-club members 24 hours out. Historically that audience converts on midweek specials at 3.4x your overall list.</p>",
+        chartData: [
+          { label: 'Tue', val: 62 },
+          { label: 'Wed', val: 71 },
+          { label: 'Thu', val: 76 },
+          { label: 'Fri', val: 88 },
+          { label: 'Sat', val: 94 }
         ],
-        answer: "<p><strong>Sundial Apparel</strong> is your strongest upsell candidate, scoring 94/100. They've maxed Standard's 5-audience limit, revenue is up <strong>38% QoQ</strong>, and they've asked support about Premium features twice in the last month.</p><p>Bundle Premium with 4 onboarding sessions and your win probability is <strong>87%</strong>. Total estimated value across all 4 upsell-ready clients: <strong>around $8K MRR</strong>.</p>",
-        action: 'Draft Sundial upsell pitch'
+        action: 'Pilot Tuesday wine pairing'
       }
     ]
   },
 
   nonprofit: {
-    headline: 'Tell stories. Move donors.',
-    subhead: 'For nonprofits with up to 5K active donors and 4+ appeals per year.',
-    features: [
-      { name: 'Story Templates', desc: 'Donor-led emails that read like a letter.',          svg: 'letter' },
-      { name: 'Lapsed Win-back', desc: 'Bring back donors who haven\u2019t given in 12+ months.', svg: 'heart' },
-      { name: 'Impact Reports',  desc: 'Show outcomes, not just totals.',                    svg: 'impact' }
-    ],
     pgTitle: 'Reach Out · Live demo',
     pgGreetName: 'Reach Out',
     pgGreetData: "5,124 donors, 28 campaigns, gift history, and major-donor scoring signals",
+    heroPrompts: [
+      'Which appeal moved the most donations?',
+      'Identify donors with major-gift potential',
+      'Is donor retention improving?'
+    ],
+    heroInsight: {
+      headline: 'Holiday Drive: 62% above target.',
+      byline: 'From Reach Out\u2019s last 12 months of donor and gift data.',
+      vizType: 'v-bars-mini'
+    },
+    heroAction: {
+      title: 'Replicate the Holiday Drive playbook for Spring.',
+      desc: 'Story-led emails with named beneficiaries outperformed generic appeals 2.3x. Build Spring Drive around 3 to 4 specific recipient stories.'
+    },
     sample: {
       eyebrow: 'Year-to-date',
       title: 'Top campaigns by donations',
