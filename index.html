@@ -400,21 +400,44 @@
     gap: 8px;
   }
   .hero-feature-chip {
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    pointer-events: auto;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.22);
     background: rgba(0, 0, 0, 0.34);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85);
     padding: 9px 8px;
     font-size: 11px;
     line-height: 1.25;
     text-align: center;
-    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .hero-feature-chip:hover {
+    border-color: rgba(255, 255, 255, 0.55);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    transform: translateY(-1px);
   }
   .hero-feature-chip.active {
     border-color: rgba(255, 224, 27, 0.95);
     background: rgba(255, 224, 27, 0.24);
     color: #fff;
     box-shadow: inset 0 0 0 1px rgba(255, 224, 27, 0.5);
+  }
+  .hero-feature-chip:focus-visible {
+    outline: 3px solid var(--mc-yellow);
+    outline-offset: 3px;
+  }
+  .hero-feature-media {
+    transition: opacity 0.28s ease;
+    background: #15100A;
+  }
+  .hero-feature-media.is-swapping {
+    opacity: 0.35;
   }
   .hero-video-reduce-note {
     position: absolute;
@@ -2080,32 +2103,26 @@
         </div>
       </div>
       <div class="hero-video-wrap" id="heroVideoModule" aria-live="polite">
-        <video
-          id="heroVideo"
-          class="hero-video"
-          src="assets/hero/hero-demo-loop.mp4"
-          poster="assets/hero/hero-video-poster.jpg"
-          muted
-          autoplay
-          loop
-          playsinline
-          preload="metadata"
-          aria-label="Product tour showing Mailchimp campaign tools"
-        ></video>
-        <button type="button" id="heroVideoPlayButton" class="hero-video-reduce-note" hidden>
-          Play hero video
-        </button>
+        <img
+          id="heroFeatureMedia"
+          class="hero-video hero-feature-media"
+          src="assets/hero/features/email-builder.jpg"
+          alt="Mailchimp drag-and-drop email builder open on a laptop"
+          role="img"
+          decoding="async"
+          fetchpriority="high"
+        />
         <div class="hero-video-overlay">
           <div class="hero-video-top">
             <div id="heroSegmentLabel" class="hero-video-segment">Ecommerce</div>
-            <p id="heroSegmentOutcome" class="hero-video-outcome">Scale every launch into repeat purchases and stronger LTV.</p>
+            <p id="heroSegmentOutcome" class="hero-video-outcome">Drag-and-drop builder with brand-safe templates baked in.</p>
           </div>
-          <div class="hero-feature-timeline" id="heroFeatureChips">
-            <div class="hero-feature-chip active" data-feature-index="0">Email brand campaign builder</div>
-            <div class="hero-feature-chip" data-feature-index="1">Smart Segmentation</div>
-            <div class="hero-feature-chip" data-feature-index="2">SMS Campaigns</div>
-            <div class="hero-feature-chip" data-feature-index="3">Journey Automations</div>
-            <div class="hero-feature-chip" data-feature-index="4">Reporting &amp; Analytics</div>
+          <div class="hero-feature-timeline" id="heroFeatureChips" role="tablist" aria-label="Hero feature stories">
+            <button type="button" class="hero-feature-chip active" data-feature-index="0" data-feature-key="email-builder" role="tab" aria-selected="true" tabindex="0">Email brand campaign builder</button>
+            <button type="button" class="hero-feature-chip" data-feature-index="1" data-feature-key="segmentation" role="tab" aria-selected="false" tabindex="-1">Smart Segmentation</button>
+            <button type="button" class="hero-feature-chip" data-feature-index="2" data-feature-key="sms" role="tab" aria-selected="false" tabindex="-1">SMS Campaigns</button>
+            <button type="button" class="hero-feature-chip" data-feature-index="3" data-feature-key="automations" role="tab" aria-selected="false" tabindex="-1">Journey Automations</button>
+            <button type="button" class="hero-feature-chip" data-feature-index="4" data-feature-key="analytics" role="tab" aria-selected="false" tabindex="-1">Reporting &amp; Analytics</button>
           </div>
         </div>
       </div>
@@ -3891,34 +3908,173 @@ function renderHeroInsightViz(vizType) {
   </svg>`;
 }
 
-let heroVideoTimelineFrame = null;
+/* ----------------------------------------------------------------- */
+/* Hero feature media: swap the right-side visual when a feature      */
+/* chip is clicked AND when a segment pill is changed. Each (segment, */
+/* feature) pair can override the default with a segment-flavored     */
+/* asset so the hero feels segment-aware. Falls back to a still image */
+/* when prefers-reduced-motion is on.                                 */
+/* ----------------------------------------------------------------- */
+const HERO_FEATURE_DEFINITIONS = [
+  {
+    key: 'email-builder',
+    label: 'Email brand campaign builder',
+    src: 'assets/hero/features/email-builder.jpg',
+    alt: 'Mailchimp drag-and-drop email builder open on a laptop in a backyard.',
+    caption: 'Drag-and-drop builder with brand-safe templates baked in.',
+    animated: false
+  },
+  {
+    key: 'segmentation',
+    label: 'Smart Segmentation',
+    src: 'assets/hero/features/segmentation.jpg',
+    alt: 'Mailchimp Smart Segmentation hero illustration.',
+    caption: 'Predictive segments that find your highest-LTV audiences.',
+    animated: false
+  },
+  {
+    key: 'sms',
+    label: 'SMS Campaigns',
+    src: 'assets/hero/features/sms.jpg',
+    alt: 'Marketer holding a phone with an SMS campaign on screen.',
+    caption: 'Two-way SMS campaigns that convert in your customer\u2019s pocket.',
+    animated: false
+  },
+  {
+    key: 'automations',
+    label: 'Journey Automations',
+    src: 'assets/hero/features/automations.gif',
+    still: 'assets/hero/features/automations--still.jpg',
+    alt: 'Animated stairs illustration representing a multi-step customer journey.',
+    caption: 'Multi-step journeys that nurture every lead 24/7.',
+    animated: true
+  },
+  {
+    key: 'analytics',
+    label: 'Reporting & Analytics',
+    src: 'assets/hero/features/analytics.gif',
+    still: 'assets/hero/features/analytics--still.jpg',
+    alt: 'Animated benchmarks illustration for Reporting & Analytics.',
+    caption: 'Analytics AI surfaces the next best move from your real data.',
+    animated: true
+  }
+];
 
-function updateHeroFeatureTimeline(activeIdx) {
-  document.querySelectorAll('#heroFeatureChips .hero-feature-chip').forEach((chip, idx) => {
-    chip.classList.toggle('active', idx === activeIdx);
-  });
+const HERO_FEATURE_OVERRIDES = {
+  'small-business': {
+    'email-builder': {
+      src: 'assets/hero/features/email-builder--small-business.gif',
+      still: 'assets/hero/features/email-builder.jpg',
+      animated: true,
+      alt: 'Animated ad campaign for a small business.',
+      caption: 'Send a polished campaign in 10 minutes — no designer needed.'
+    },
+    'automations': {
+      src: 'assets/hero/features/automations--small-business.jpg',
+      animated: false,
+      alt: 'Small-business team reviewing an automation in their shop.',
+      caption: 'Welcome, birthday, and winback flows running while you serve customers.'
+    },
+    'analytics': {
+      src: 'assets/hero/features/analytics--small-business.jpg',
+      animated: false,
+      alt: 'Mailchimp business growth illustration.',
+      caption: 'See exactly which campaign brought in revenue this week.'
+    }
+  },
+  'ecommerce': {
+    'sms': {
+      src: 'assets/hero/features/sms--ecommerce.gif',
+      still: 'assets/hero/features/sms.jpg',
+      animated: true,
+      alt: 'Animated SMS send and receive for ecommerce.',
+      caption: 'Recover abandoned carts and announce drops with two-way SMS.'
+    },
+    'segmentation': {
+      src: 'assets/hero/features/segmentation--ecommerce.jpg',
+      animated: false,
+      alt: 'Mini-spot ink illustration of audience segmentation.',
+      caption: 'Auto-segment VIPs, repeat buyers, and at-risk shoppers.'
+    }
+  },
+  'nonprofit': {
+    'email-builder': {
+      src: 'assets/hero/features/email-builder--nonprofit.jpg',
+      animated: false,
+      alt: 'Mailchimp email builder on an iMac in a community office.',
+      caption: 'Donor-ready appeals, on-brand, sent in minutes.'
+    },
+    'segmentation': {
+      src: 'assets/hero/features/segmentation--nonprofit.jpg',
+      animated: false,
+      alt: 'Illustration of people connecting around a star — community segmentation.',
+      caption: 'Group sustainers, lapsed donors, and first-time givers automatically.'
+    },
+    'automations': {
+      src: 'assets/hero/features/automations--nonprofit.jpg',
+      animated: false,
+      alt: 'Nonprofit team reviewing automations on iMac with volunteers.',
+      caption: 'Recurring giving and thank-you journeys for every supporter.'
+    }
+  },
+  'b2c': {
+    'segmentation': {
+      src: 'assets/hero/features/segmentation--b2c.jpg',
+      animated: false,
+      alt: 'Spot illustration of customers online.',
+      caption: 'Reach buying stages with predictive lookalike segments.'
+    },
+    'automations': {
+      src: 'assets/hero/features/automations--b2c.jpg',
+      animated: false,
+      alt: 'Marketer on a laptop building automations outdoors.',
+      caption: 'Always-on welcome and winback flows across every channel.'
+    },
+    'analytics': {
+      src: 'assets/hero/features/analytics--b2c.jpg',
+      animated: false,
+      alt: 'Spot analytics illustration.',
+      caption: 'See what\u2019s working across email, SMS, and social in one view.'
+    }
+  }
+};
+
+let currentHeroFeatureIdx = 0;
+
+function resolveHeroFeature(persona, idx) {
+  const base = HERO_FEATURE_DEFINITIONS[idx] || HERO_FEATURE_DEFINITIONS[0];
+  const override = (HERO_FEATURE_OVERRIDES[persona] || {})[base.key] || {};
+  const merged = Object.assign({}, base, override);
+  if (prefersReducedMotion && merged.animated && merged.still) {
+    merged.src = merged.still;
+    merged.animated = false;
+  }
+  return merged;
 }
 
-function syncHeroFeatureTimeline(data) {
-  const video = document.getElementById('heroVideo');
-  if (!video || !data) return;
-  const ticks = Array.isArray(data.heroFeatureTimes) && data.heroFeatureTimes.length === 5
-    ? data.heroFeatureTimes
-    : [0.02, 0.23, 0.42, 0.66, 0.84];
-
-  if (video.paused || !Number.isFinite(video.duration) || video.duration <= 0) {
-    updateHeroFeatureTimeline(0);
-    heroVideoTimelineFrame = null;
-    return;
+function setHeroFeature(idx) {
+  if (idx == null || idx < 0 || idx >= HERO_FEATURE_DEFINITIONS.length) idx = 0;
+  currentHeroFeatureIdx = idx;
+  const data = resolveHeroFeature(currentPersona, idx);
+  const media = document.getElementById('heroFeatureMedia');
+  if (media) {
+    if (media.getAttribute('src') !== data.src) {
+      media.classList.add('is-swapping');
+      const clear = () => media.classList.remove('is-swapping');
+      media.addEventListener('load', clear, { once: true });
+      media.addEventListener('error', clear, { once: true });
+      media.setAttribute('src', data.src);
+    }
+    media.setAttribute('alt', data.alt || '');
   }
-
-  const progress = (video.currentTime % video.duration) / video.duration;
-  let activeIdx = 0;
-  for (let i = 0; i < ticks.length; i += 1) {
-    if (progress >= ticks[i]) activeIdx = i;
-  }
-  updateHeroFeatureTimeline(activeIdx);
-  heroVideoTimelineFrame = requestAnimationFrame(() => syncHeroFeatureTimeline(data));
+  const outcome = document.getElementById('heroSegmentOutcome');
+  if (outcome) outcome.textContent = data.caption || '';
+  document.querySelectorAll('#heroFeatureChips .hero-feature-chip').forEach((chip, i) => {
+    const isActive = i === idx;
+    chip.classList.toggle('active', isActive);
+    chip.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    chip.setAttribute('tabindex', isActive ? '0' : '-1');
+  });
 }
 
 function renderHeroPreview(data) {
@@ -3927,15 +4083,10 @@ function renderHeroPreview(data) {
   const segment = document.getElementById('heroSegmentLabel');
   if (segment) segment.textContent = data.heroSegmentLabel || 'Segment';
 
-  const outcome = document.getElementById('heroSegmentOutcome');
-  if (outcome) outcome.textContent = data.heroProsperityOutcome || 'Grow with smarter campaigns and clear analytics.';
-
-  if (heroVideoTimelineFrame) {
-    cancelAnimationFrame(heroVideoTimelineFrame);
-    heroVideoTimelineFrame = null;
-  }
-  updateHeroFeatureTimeline(0);
-  syncHeroFeatureTimeline(data);
+  // Reset to chip 0 (Email brand campaign builder) on segment change so the
+  // hero feels like a fresh, segment-flavored story. The outcome line is
+  // updated by setHeroFeature using the per-segment caption.
+  setHeroFeature(0);
 }
 
 function renderSampleInsight(sample) {
@@ -4685,9 +4836,6 @@ function generatePgInsightsFromData(rows, cols) {
 
 /* ---------- Hero init: render default persona + start auto-rotation ---------- */
 (function heroInit() {
-  const heroVideo = document.getElementById('heroVideo');
-  const reducedMotionPlayButton = document.getElementById('heroVideoPlayButton');
-
   document.querySelectorAll('.hero-segment-pill').forEach(chip => {
     chip.addEventListener('click', () => {
       markInteracted();
@@ -4695,29 +4843,30 @@ function generatePgInsightsFromData(rows, cols) {
     });
   });
 
-  if (heroVideo) {
-    heroVideo.addEventListener('loadedmetadata', () => {
-      const active = PERSONAS[currentPersona];
-      if (active) renderHeroPreview(active);
+  // Wire feature chips: clicking a chip swaps the hero media and overlay
+  // caption immediately. Keyboard left/right arrows move between chips
+  // (standard tablist pattern); Home/End jump to first/last.
+  const chipNodes = Array.from(document.querySelectorAll('#heroFeatureChips .hero-feature-chip'));
+  chipNodes.forEach((chip, idx) => {
+    chip.addEventListener('click', () => {
+      markInteracted();
+      setHeroFeature(idx);
     });
-  }
-
-  if (prefersReducedMotion && heroVideo) {
-    heroVideo.pause();
-    heroVideo.removeAttribute('autoplay');
-    if (reducedMotionPlayButton) {
-      reducedMotionPlayButton.hidden = false;
-      reducedMotionPlayButton.addEventListener('click', () => {
-        heroVideo.play().then(() => {
-          renderHeroPreview(PERSONAS[currentPersona]);
-          reducedMotionPlayButton.hidden = true;
-        }).catch(() => {
-          // Keep fallback button visible if playback is blocked.
-          reducedMotionPlayButton.hidden = false;
-        });
-      });
-    }
-  }
+    chip.addEventListener('keydown', (e) => {
+      let nextIdx = null;
+      if (e.key === 'ArrowRight') nextIdx = (idx + 1) % chipNodes.length;
+      else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + chipNodes.length) % chipNodes.length;
+      else if (e.key === 'Home') nextIdx = 0;
+      else if (e.key === 'End') nextIdx = chipNodes.length - 1;
+      if (nextIdx !== null) {
+        e.preventDefault();
+        markInteracted();
+        setHeroFeature(nextIdx);
+        const target = chipNodes[nextIdx];
+        if (target) target.focus();
+      }
+    });
+  });
 
   const hero = document.getElementById('hero');
   if (hero) {
