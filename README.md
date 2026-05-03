@@ -1,44 +1,35 @@
 # Mailchimp Homepage AI Prototype
 
-A pre-auth Mailchimp homepage prototype with **three switchable hero variants** and the **full homepage flow** beneath each. Built for stakeholder review.
+A pre-auth Mailchimp homepage prototype with a single **persona-pivot hero** that embeds the **full Analytics AI playground**, plus the complete homepage flow underneath. Built for stakeholder review.
 
 ## Live URL
 
 **https://deepakp1308.github.io/mailchimp-homepage-ai-prototype/**
 
-Deep links:
-
-- Variant A · Ask Mailchimp → `#variant=a`
-- Variant B · Persona pivot → `#variant=b`
-- Variant C · Watch the agent → `#variant=c`
-
 ## What's here
 
-- **Three heroes**, switchable from a sticky bar at the top of the page:
-  1. **Ask Mailchimp** · conversational input with rotating prompts, 7 chip suggestions, and a streamed answer panel that explains which Mailchimp tools were used.
-  2. **Persona pivot** · 4 persona pills (E-commerce / Agency / Nonprofit / B2B), each with its own headline, hand-drawn feature trio, agent demo card, and auto-rotating dots.
-  3. **Watch the agent** · cinematic browser-frame mockup that auto-cycles 6 scenes (Editor / Segment / Analytics / Automation / SMS / Brand kit).
-- **Shared below the fold**: Recommended for your business · Marketing that delivers results · Personalized tour · Pricing · 300+ integrations · Customer testimonials · FAQ · Final CTA · Footer.
+- **The hero** · 4 persona pills (E-commerce founder · Agency · Nonprofit · B2B services) sit above a 2-column layout: persona-specific headline + feature trio on the left, and the **embedded Analytics AI playground** on the right (dark navy frame, Analytics AI pill, two-column chat plus live visualization). A `Sample data | Upload Excel / CSV` toggle sits above the playground, with drag-drop CSV / XLSX parsing that auto-generates insights from any uploaded file.
+- **Persona-aware playground** · clicking a persona instantly swaps the toolbar business name (Oat Lord · Live demo / PixelEdge Agency / Reach Out · Live demo / Sundial SaaS), the greeting, the four suggested-question chips, and the pre-loaded sample insight chart. Each suggested question renders a rich, persona-specific answer + chart (line+anomaly, donut, forecast fan, ranked horizontal bars, deliverability heat grid, bubble scatter, retention trend, donor cohort table, churn-risk tier card).
+- **Auto-rotation** · personas auto-cycle every 8s and pause on hover or first manual interaction (chip click, persona pill, dot, input typing, mode toggle, or file upload).
+- **Shared below the fold** · Recommended for your business · Marketing that delivers results · Personalized tour · Pricing · 300+ integrations · Customer testimonials · FAQ · Final CTA · Footer.
 
 ## Stack
 
-Plain HTML / CSS / vanilla JS, single `index.html`. No framework, no build step. Works directly on GitHub Pages.
+Plain HTML / CSS / vanilla JS, single `index.html`, plus PapaParse and SheetJS loaded from jsDelivr for the upload zone. No framework, no build step. Works directly on GitHub Pages.
 
 ## Brand consistency
 
 - Same color tokens as `mailchimp-analytics-ai-prototype` (peppercorn, Cavendish yellow, deep teal, etc.)
 - Cooper Light italic for hero headlines, Helvetica Neue for body
-- Mini-spot ink illustrations carried over from the Mailchimp brand library
 - Yellow Cavendish primary CTAs, dark peppercorn secondary
-- No em/en dashes in copy; no emojis; no rainbow gradient text
+- The playground frame is intentionally dark navy `#15100A` so it reads as a "live tool" embedded in the cream homepage canvas
+- No em/en dashes in user-facing copy; no emojis; no rainbow gradient text
 
 ## Implementation notes
 
-- Variant switcher is sticky and always visible (this is a stakeholder review build).
-- URL hash deep-links: `#variant=a|b|c` so PMs can share specific variants.
-- Persona auto-rotation pauses on hover and stops on first manual click.
-- Cinematic scene cycler honors `prefers-reduced-motion`.
-- All event listeners guard for null nodes — clicking a variant tab will never throw.
+- One hero, no variant switcher. Earlier review builds shipped 3 hero variants (A · Ask Mailchimp, B · Persona pivot, C · Watch the agent); the persona-pivot hero with the embedded playground was the strongest, so the other two were removed.
+- All event listeners guard for null nodes; uploading a file in the playground works without page reload.
+- Cinematic scenes (the auto-rotation between personas and the chip / chart animations) honor `prefers-reduced-motion`.
 
 ## Sibling prototype
 

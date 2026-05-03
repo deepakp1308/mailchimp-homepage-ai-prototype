@@ -4,7 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mailchimp · The marketing platform that grows your business</title>
-<meta name="description" content="Mailchimp homepage prototype with three switchable AI hero variants. Stakeholder review build." />
+<meta name="description" content="Mailchimp homepage prototype with the persona-pivot hero and an embedded Analytics AI playground. Stakeholder review build." />
+<!-- Real data parsers for the embedded Analytics AI playground -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
   /* ============================================================ */
   /* === Mailchimp Design System (carried from analytics build) === */
@@ -58,57 +61,12 @@
   img { max-width: 100%; display: block; }
   button { font-family: inherit; }
 
-  /* ===================== Variant switcher (sticky top bar) ===================== */
-  .variant-switcher {
-    position: sticky; top: 0; z-index: 200;
-    background: var(--mc-pep);
-    color: white;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 9px 16px;
-    font-size: 13px;
-    flex-wrap: wrap;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.06);
-  }
-  .variant-switcher .vs-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--mc-yellow); color: var(--mc-text);
-    padding: 4px 10px; border-radius: 999px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-    margin-right: 4px;
-  }
-  .variant-switcher .vs-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.62);
-    margin-right: 4px;
-  }
-  .variant-switcher button {
-    border: 1px solid rgba(255,255,255,0.28);
-    background: transparent;
-    color: white;
-    padding: 7px 14px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.18s;
-    white-space: nowrap;
-  }
-  .variant-switcher button:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.5); }
-  .variant-switcher button.active {
-    background: white; color: var(--mc-text); border-color: white;
-  }
-  .variant-switcher .vs-meta {
-    margin-left: 8px; font-size: 11px; color: rgba(255,255,255,0.55);
-  }
-
   /* ===================== Header ===================== */
   header.site {
     position: sticky; top: 0; z-index: 100;
     background: var(--mc-bg-soft);
     border-bottom: 1px solid transparent;
   }
-  /* When variant switcher is present, header sits below it. We layer with offsets. */
-  .variant-switcher + header.site { top: 41px; }
   header.site .nav {
     max-width: 1380px; margin: 0 auto;
     display: flex; align-items: center;
@@ -169,8 +127,6 @@
     overflow: hidden;
     position: relative;
   }
-  .hero-variant { display: none; }
-  .hero-variant.active { display: block; }
 
   /* Hero common typography */
   .hero-h1 {
@@ -213,244 +169,6 @@
   }
   .btn-secondary:hover { background: var(--mc-text); color: white; }
 
-  /* ===================== VARIANT A — Ask Mailchimp ===================== */
-  .va-hero {
-    padding: 56px 32px 96px;
-    position: relative;
-  }
-  .va-inner {
-    max-width: 1100px; margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-  .va-eyebrow-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(0, 185, 166, 0.18);
-    color: var(--mc-cta);
-    padding: 7px 16px;
-    border-radius: 999px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 28px;
-  }
-  .va-eyebrow-pill .va-spark { color: var(--mc-cta); font-size: 13px; line-height: 1; }
-  .va-headline {
-    font-size: 88px;
-    margin-bottom: 36px;
-    max-width: 920px;
-    margin-left: auto; margin-right: auto;
-  }
-  .va-input-wrap {
-    max-width: 680px; margin: 0 auto 28px;
-    position: relative;
-  }
-  .va-input-row {
-    background: white;
-    border: 1.5px solid var(--mc-border);
-    border-radius: 18px;
-    padding: 8px 8px 8px 18px;
-    display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 4px 18px rgba(36,28,21,0.06);
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .va-input-row:focus-within {
-    border-color: var(--mc-cta);
-    box-shadow: 0 4px 24px rgba(0, 124, 137, 0.15);
-  }
-  .va-spark-icon {
-    width: 32px; height: 32px;
-    flex-shrink: 0;
-    display: grid; place-items: center;
-    color: var(--mc-yellow);
-  }
-  .va-spark-icon svg { width: 28px; height: 28px; }
-  .va-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: 16px;
-    color: var(--mc-text);
-    padding: 14px 4px;
-    background: transparent;
-  }
-  .va-input::placeholder { color: var(--mc-text-muted); }
-  .va-ask-btn {
-    background: var(--mc-pep);
-    color: white;
-    border: none;
-    padding: 13px 28px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .va-ask-btn:hover { background: #000; transform: translateY(-1px); }
-
-  .va-chip-grid {
-    max-width: 920px; margin: 0 auto;
-    display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 10px;
-  }
-  .va-chip {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: white;
-    border: 1px solid var(--mc-border);
-    border-radius: 999px;
-    padding: 10px 18px;
-    font-size: 13px; font-weight: 600;
-    color: var(--mc-text);
-    cursor: pointer;
-    transition: all 0.18s;
-    box-shadow: 0 1px 3px rgba(36,28,21,0.04);
-  }
-  .va-chip:hover {
-    border-color: var(--mc-text);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(36,28,21,0.08);
-  }
-  .va-chip.active {
-    background: var(--mc-text);
-    color: white;
-    border-color: var(--mc-text);
-  }
-  .va-chip-icon {
-    width: 18px; height: 18px;
-    display: grid; place-items: center;
-    color: var(--mc-text-muted);
-  }
-  .va-chip.active .va-chip-icon { color: var(--mc-yellow); }
-  .va-chip-icon svg { width: 16px; height: 16px; stroke-width: 1.8; }
-
-  /* Variant A — answer panel that slides in below chip cluster */
-  .va-answer-wrap {
-    max-width: 820px; margin: 32px auto 0;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.45s ease, opacity 0.45s ease, margin 0.45s ease;
-  }
-  .va-answer-wrap.visible {
-    max-height: 600px;
-    opacity: 1;
-  }
-  .va-answer {
-    background: white;
-    border: 1px solid var(--mc-border);
-    border-radius: 18px;
-    padding: 24px;
-    text-align: left;
-    box-shadow: var(--shadow-md);
-  }
-  .va-answer-head {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--mc-border);
-  }
-  .va-answer-avatar {
-    width: 32px; height: 32px;
-    background: var(--mc-cta);
-    border-radius: 50%;
-    display: grid; place-items: center;
-    color: var(--mc-yellow);
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-  .va-answer-q { font-size: 14px; font-weight: 600; color: var(--mc-text); }
-  .va-answer-body { font-size: 15px; color: var(--mc-text); line-height: 1.6; margin-bottom: 16px; }
-  .va-answer-body strong { color: var(--mc-cta); font-weight: 700; }
-  .va-answer-viz {
-    background: var(--mc-bg-soft);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .va-answer-bars { display: flex; align-items: flex-end; gap: 4px; height: 40px; flex: 1; }
-  .va-answer-bar {
-    flex: 1;
-    background: var(--mc-cta);
-    border-radius: 3px 3px 0 0;
-    transition: height 0.35s;
-  }
-  .va-answer-bar.hot { background: var(--mc-coral); }
-  .va-answer-stat {
-    flex-shrink: 0;
-    text-align: right;
-    font-family: 'Cooper Light', 'Georgia', serif;
-    font-size: 24px; font-weight: 300;
-    color: var(--mc-text);
-  }
-  .va-answer-stat .num { display: block; }
-  .va-answer-stat .label { font-size: 11px; color: var(--mc-text-muted); font-family: 'Helvetica Neue', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
-  .va-answer-tools {
-    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-    font-size: 12px; color: var(--mc-text-muted);
-  }
-  .va-answer-tools .lbl { letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; font-size: 10px; }
-  .va-tool-chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--mc-bg-soft);
-    border: 1px solid var(--mc-border);
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 12px; font-weight: 600;
-    color: var(--mc-text);
-    cursor: pointer; text-decoration: none;
-    transition: all 0.18s;
-  }
-  .va-tool-chip:hover { background: var(--mc-text); color: white; border-color: var(--mc-text); }
-
-  /* Variant A — corner ink illustrations */
-  .va-corner {
-    position: absolute;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.95;
-  }
-  .va-corner.left {
-    left: 32px;
-    top: 80px;
-    width: 200px;
-  }
-  .va-corner.right {
-    right: 32px;
-    top: 80px;
-    width: 200px;
-  }
-  .va-corner img {
-    width: 100%;
-    height: auto;
-    mix-blend-mode: multiply;
-    filter: contrast(1.05);
-  }
-  .va-sparkle {
-    position: absolute;
-    font-size: 20px;
-    color: var(--mc-text);
-    line-height: 1;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .va-sparkle.s1 { top: 130px; left: 16%; font-size: 24px; }
-  .va-sparkle.s2 { top: 200px; left: 12%; font-size: 14px; }
-  .va-sparkle.s3 { top: 130px; right: 16%; font-size: 18px; color: var(--mc-yellow); -webkit-text-stroke: 1px var(--mc-text); }
-
-  @media (max-width: 1100px) {
-    .va-corner.left, .va-corner.right { width: 130px; opacity: 0.7; }
-  }
-  @media (max-width: 820px) {
-    .va-corner { display: none; }
-    .va-sparkle { display: none; }
-    .va-headline { font-size: 48px; }
-    .va-input-row { padding: 6px 6px 6px 14px; }
-    .va-ask-btn { padding: 10px 18px; font-size: 13px; }
-  }
-  @media (max-width: 480px) {
-    .va-headline { font-size: 36px; }
-    .va-hero { padding: 36px 18px 64px; }
-  }
 
   /* ===================== VARIANT B — Persona pivot ===================== */
   .vb-hero {
@@ -488,116 +206,460 @@
 
   .vb-grid {
     display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: 56px;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 44px;
     align-items: stretch;
   }
   .vb-left { display: flex; flex-direction: column; }
   .vb-headline {
-    font-size: 64px;
+    font-size: 56px;
     margin-bottom: 12px;
   }
   .vb-subhead {
     font-size: 16px;
     color: var(--mc-text-secondary);
-    margin-bottom: 36px;
+    margin-bottom: 28px;
   }
   .vb-feature-row {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    display: grid; grid-template-columns: 1fr; gap: 10px;
     margin-top: auto;
   }
   .vb-feature-card {
     background: white;
     border: 1px solid var(--mc-border);
-    border-radius: 14px;
-    padding: 22px 20px 24px;
+    border-radius: 12px;
+    padding: 14px 16px 14px 14px;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 12px;
+    align-items: center;
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .vb-feature-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
   }
   .vb-feature-illo {
-    width: 80px; height: 80px;
-    margin-bottom: 14px;
+    width: 44px; height: 44px;
     display: grid; place-items: center;
     color: var(--mc-text);
   }
-  .vb-feature-illo svg { width: 80px; height: 80px; }
+  .vb-feature-illo svg { width: 44px; height: 44px; }
   .vb-feature-card h4 {
     font-family: 'Cooper Light', 'Georgia', serif;
     font-weight: 300;
-    font-size: 22px;
-    margin-bottom: 6px;
+    font-size: 17px;
+    margin-bottom: 2px;
     line-height: 1.15;
   }
   .vb-feature-card p {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--mc-text-secondary);
-    line-height: 1.45;
+    line-height: 1.4;
   }
 
   .vb-right {
-    background: var(--mc-pep);
-    color: white;
-    border-radius: 22px;
-    padding: 32px;
     display: flex; flex-direction: column;
-    min-height: 420px;
+    min-width: 0;
   }
-  .vb-card-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--mc-teal);
-    margin-bottom: 8px;
-  }
-  .vb-ask-bubble {
-    background: white;
-    color: var(--mc-text);
-    border-radius: 22px 22px 22px 4px;
-    padding: 16px 22px;
-    font-size: 16px; font-weight: 500;
-    margin-bottom: 24px;
-    max-width: 90%;
-    align-self: flex-start;
-    line-height: 1.4;
-  }
-  .vb-agent-row {
-    display: flex; gap: 14px; margin-bottom: auto;
-  }
-  .vb-agent-avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--mc-teal);
-    flex-shrink: 0;
-    display: grid; place-items: center;
-    color: white;
-    font-size: 22px;
-  }
-  .vb-agent-bubble {
-    background: var(--mc-pep-soft);
-    border-radius: 4px 22px 22px 22px;
-    padding: 16px 22px;
-    font-size: 15px; line-height: 1.45;
-    color: white;
-    max-width: 100%;
-  }
-  .vb-tools {
-    margin-top: 28px;
-    display: flex; gap: 10px; flex-wrap: wrap;
-  }
-  .vb-tool-chip {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0, 185, 166, 0.18);
-    color: var(--mc-teal);
-    border: 1px solid rgba(0, 185, 166, 0.4);
+
+  /* ===================== EMBEDDED ANALYTICS AI PLAYGROUND ===================== */
+  /* Compact playground that lives inside Variant B's right column. Visual
+     intent: dark-navy frame contrasts against the cream homepage canvas so it
+     reads as a "live tool" embedded in the page. Persona-aware: toolbar,
+     greeting, suggested chips, sample chart all swap on persona change. */
+
+  /* Data-source toggle (sample / upload) — sits above the frame */
+  .pg-ds {
+    display: flex; gap: 0; padding: 3px;
+    background: rgba(36, 28, 21, 0.06);
+    border: 1px solid rgba(36, 28, 21, 0.10);
     border-radius: 12px;
-    padding: 9px 16px;
-    font-size: 13px; font-weight: 700;
-    cursor: pointer;
-    transition: all 0.18s;
-    text-decoration: none;
+    margin-bottom: 14px;
+    width: fit-content;
   }
-  .vb-tool-chip:hover { background: rgba(0, 185, 166, 0.28); border-color: var(--mc-teal); }
-  .vb-tool-chip svg { width: 14px; height: 14px; }
+  .pg-ds-tab {
+    background: none; border: none;
+    padding: 8px 16px; border-radius: 9px;
+    color: var(--mc-text-muted);
+    font-size: 12.5px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: all 0.15s;
+  }
+  .pg-ds-tab:hover { color: var(--mc-text); }
+  .pg-ds-tab.active {
+    background: white; color: var(--mc-text);
+    box-shadow: 0 1px 2px rgba(36,28,21,0.06);
+  }
+  .pg-ds-tab svg { width: 14px; height: 14px; }
+
+  /* Premium gradient frame around the dark playground app */
+  .pg-frame-wrap {
+    padding: 1px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.55), rgba(0,185,166,0.4) 50%, rgba(0,185,166,0.5));
+    box-shadow:
+      0 24px 60px rgba(0,0,0,0.18),
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 40px 100px rgba(0,124,137,0.14);
+  }
+  .pg-app {
+    background: #15100A;
+    border-radius: 17px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .pg-toolbar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 16px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .pg-dots { display: flex; gap: 6px; flex-shrink: 0; }
+  .pg-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .pg-dots span:nth-child(1) { background: #ff5f57; }
+  .pg-dots span:nth-child(2) { background: #ffbd2e; }
+  .pg-dots span:nth-child(3) { background: #28c840; }
+  .pg-title {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.7);
+    flex: 1; justify-content: center;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .pg-title-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pg-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.22), rgba(0,185,166,0.22));
+    border: 1px solid rgba(0,124,137,0.35);
+    font-size: 10.5px; font-weight: 700;
+    color: white;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .pg-toolbar-spacer { width: 50px; flex-shrink: 0; }
+
+  /* Body — chat left, viz right */
+  .pg-body {
+    display: grid; grid-template-columns: 1fr 1fr; min-height: 460px;
+  }
+  .pg-chat {
+    padding: 20px 18px 16px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column;
+    background: #15100A;
+    min-width: 0;
+  }
+  .pg-messages {
+    flex: 1; overflow-y: auto; max-height: 320px; padding-right: 4px;
+    margin-bottom: 14px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent;
+  }
+  .pg-messages::-webkit-scrollbar { width: 5px; }
+  .pg-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+  .pg-msg {
+    margin-bottom: 18px; animation: pgFade 0.35s ease-out;
+  }
+  @keyframes pgFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .pg-msg.user { display: flex; justify-content: flex-end; }
+  .pg-msg.user .pg-bubble {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.95);
+    padding: 10px 14px;
+    border-radius: 16px 16px 4px 16px;
+    font-size: 13.5px;
+    max-width: 90%;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .pg-msg.ai { display: block; }
+  .pg-msg.ai .pg-bubble {
+    color: rgba(255,255,255,0.92);
+    font-size: 13.5px;
+    line-height: 1.55;
+    padding-top: 2px;
+  }
+  .pg-msg.ai .pg-bubble strong { color: white; font-weight: 600; }
+  .pg-msg.ai .pg-bubble code {
+    background: rgba(255,255,255,0.06);
+    padding: 1px 5px; border-radius: 4px;
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+  }
+  .pg-msg.ai .pg-bubble p { margin-bottom: 8px; }
+  .pg-msg.ai .pg-bubble p:last-child { margin-bottom: 0; }
+  .pg-action {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 10px;
+    background: white;
+    color: #15100A;
+    padding: 7px 13px;
+    border-radius: 7px;
+    font-size: 12px; font-weight: 600;
+    border: none; cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .pg-action:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
+  .pg-action::before { content: '→'; }
+
+  .pg-typing {
+    display: inline-block; width: 7px; height: 14px;
+    background: rgba(0,124,137,0.9);
+    margin-left: 2px; vertical-align: text-bottom;
+    animation: pgBlink 0.9s infinite;
+    border-radius: 1px;
+  }
+  @keyframes pgBlink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+
+  .pg-suggested {
+    display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;
+  }
+  .pg-suggested-label {
+    font-size: 10px; color: rgba(255,255,255,0.42); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .pg-chip {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 9px 13px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 12.5px; text-align: left;
+    transition: all 0.15s;
+    color: rgba(255,255,255,0.85);
+    font-family: inherit;
+    line-height: 1.3;
+  }
+  .pg-chip:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(0,124,137,0.45);
+    color: white;
+  }
+
+  .pg-input {
+    display: flex; gap: 6px; align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 4px 4px 4px 14px;
+    transition: border-color 0.15s;
+  }
+  .pg-input:focus-within {
+    border-color: rgba(0,124,137,0.55);
+    background: rgba(255,255,255,0.07);
+  }
+  .pg-input input {
+    flex: 1; padding: 8px 0;
+    border: none; background: transparent;
+    font-size: 13.5px; font-family: inherit;
+    color: white;
+    outline: none;
+    min-width: 0;
+  }
+  .pg-input input::placeholder { color: rgba(255,255,255,0.4); }
+  .pg-input button {
+    background: white;
+    color: #15100A;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .pg-input button:hover { background: rgba(255,255,255,0.92); }
+
+  /* Right pane — visualization */
+  .pg-viz {
+    padding: 20px 20px 18px;
+    background: #241C15;
+    display: flex; flex-direction: column;
+    min-width: 0;
+  }
+  .pg-viz-eyebrow {
+    font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4);
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .pg-viz-title {
+    font-size: 17px; font-weight: 600; margin-bottom: 14px; color: white;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .pg-metric-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .pg-metric {
+    flex: 1; min-width: 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  .pg-metric .val {
+    font-size: 19px; font-weight: 700; color: white; letter-spacing: -0.02em;
+    line-height: 1.1;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .pg-metric .lbl {
+    font-size: 9.5px; color: rgba(255,255,255,0.45);
+    margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .pg-metric .delta { font-size: 11px; font-weight: 600; margin-top: 5px; }
+  .pg-metric .delta.up { color: var(--mc-sage); }
+  .pg-metric .delta.down { color: var(--mc-coral); }
+  .pg-metric .delta.flat { color: rgba(255,255,255,0.55); }
+
+  .pg-canvas {
+    flex: 1;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 11px;
+    padding: 14px;
+    display: flex; flex-direction: column;
+    min-height: 200px;
+    overflow: hidden;
+  }
+  .pg-canvas svg { width: 100%; flex: 1; min-height: 0; }
+
+  /* Persona "sample insight" pre-load card content (shown before the user
+     interacts). Each persona renders its own card; we just show whichever
+     is active inside the canvas. */
+  .pg-sample {
+    display: flex; flex-direction: column; gap: 10px; flex: 1;
+  }
+  .pg-sample-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--mc-teal); display: flex; align-items: center; gap: 6px;
+  }
+  .pg-sample-eyebrow .pg-pulse {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--mc-teal);
+    animation: pgPulse 2s ease-in-out infinite;
+  }
+  @keyframes pgPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+  .pg-sample-title {
+    font-size: 14.5px; font-weight: 600; color: white; line-height: 1.35;
+  }
+  .pg-sample-rows { display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: center; }
+  .pg-bar-row { display: flex; align-items: center; gap: 9px; }
+  .pg-bar-label {
+    font-size: 11px; color: rgba(255,255,255,0.62); width: 96px; text-align: right;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pg-bar-track {
+    flex: 1; height: 13px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px; overflow: hidden;
+    position: relative;
+  }
+  .pg-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .pg-bar-fill.teal { background: var(--mc-teal); }
+  .pg-bar-fill.cta  { background: var(--mc-cta); }
+  .pg-bar-fill.gold { background: var(--mc-gold); }
+  .pg-bar-fill.red  { background: var(--mc-coral); }
+  .pg-bar-val {
+    font-size: 11.5px; font-weight: 700; color: white;
+    width: 50px; font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .pg-bar-row.flagged .pg-bar-label { color: var(--mc-coral); font-weight: 700; }
+  .pg-callout {
+    margin-top: 6px;
+    background: rgba(0,185,166,0.10);
+    border: 1px solid rgba(0,185,166,0.30);
+    color: rgba(255,255,255,0.85);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 11.5px; line-height: 1.45;
+  }
+  .pg-callout strong { color: var(--mc-teal); font-weight: 700; }
+  .pg-callout.warn { background: rgba(255,107,71,0.10); border-color: rgba(255,107,71,0.30); }
+  .pg-callout.warn strong { color: var(--mc-coral); }
+
+  /* Upload zone (replaces the dark frame body when "Upload Excel/CSV" tab is on) */
+  .pg-upload-wrap { display: none; }
+  .pg-upload-wrap.active { display: block; }
+  .pg-frame-wrap.upload-mode .pg-app { display: none; }
+  .pg-upload-zone {
+    background: white;
+    border: 2px dashed rgba(36,28,21,0.18);
+    border-radius: 18px;
+    padding: 36px 24px;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    min-height: 460px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.05);
+  }
+  .pg-upload-zone:hover, .pg-upload-zone.dragover {
+    background: #FFF8E0;
+    border-color: var(--mc-cta);
+    border-style: solid;
+  }
+  .pg-upload-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.12), rgba(0,185,166,0.12));
+    border: 1px solid rgba(0,124,137,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--mc-cta);
+  }
+  .pg-upload-zone h4 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 17px; font-weight: 700; color: var(--mc-text);
+    margin-bottom: 6px;
+  }
+  .pg-upload-zone p {
+    font-size: 13.5px; color: var(--mc-text-secondary); line-height: 1.5;
+    max-width: 380px; margin: 0 auto;
+  }
+  .pg-upload-zone .pg-upload-actions {
+    margin-top: 14px;
+    display: inline-flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center;
+    font-size: 12.5px; color: var(--mc-text-muted);
+  }
+  .pg-upload-zone .pg-browse {
+    background: var(--mc-text); color: white;
+    padding: 9px 18px; border-radius: 8px;
+    font-weight: 600; font-size: 13px;
+    border: none; cursor: pointer; font-family: inherit;
+  }
+  .pg-upload-zone .pg-browse:hover { background: #15100A; }
+  .pg-upload-error {
+    background: rgba(255, 107, 71, 0.10);
+    border: 1px solid rgba(255, 107, 71, 0.35);
+    color: #b04d34;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12.5px; margin-top: 12px;
+    display: none;
+  }
+  .pg-upload-error.visible { display: block; }
+
+  @media (max-width: 1080px) {
+    .pg-body { min-height: 0; }
+  }
+  @media (max-width: 920px) {
+    .pg-body { grid-template-columns: 1fr; }
+    .pg-chat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .pg-viz { padding: 18px 16px; }
+  }
+  @media (max-width: 540px) {
+    .pg-toolbar { padding: 9px 12px; gap: 8px; }
+    .pg-toolbar-spacer { display: none; }
+    .pg-title { font-size: 11px; }
+    .pg-chat { padding: 16px 14px 12px; }
+    .pg-viz { padding: 14px 12px; }
+    .pg-bar-label { width: 80px; font-size: 10.5px; }
+  }
 
   .vb-dotrow {
     display: flex; justify-content: center; align-items: center; gap: 12px;
@@ -632,421 +694,6 @@
     .vb-headline { font-size: 36px; }
   }
 
-  /* ===================== VARIANT C — Watch the agent ===================== */
-  .vc-hero { padding: 28px 32px 80px; text-align: center; }
-  .vc-eyebrow {
-    color: var(--mc-cta);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    display: inline-block;
-  }
-  .vc-headline {
-    font-size: 76px;
-    margin-bottom: 36px;
-    max-width: 1000px;
-    margin-left: auto; margin-right: auto;
-  }
-  .vc-frame {
-    max-width: 1080px;
-    margin: 0 auto;
-    background: var(--mc-pep);
-    border-radius: 22px;
-    padding: 28px 32px 32px;
-    box-shadow: 0 30px 80px -30px rgba(36,28,21,0.35);
-    text-align: left;
-    position: relative;
-  }
-  .vc-traffic {
-    display: flex; gap: 8px; margin-bottom: 22px;
-  }
-  .vc-traffic span {
-    width: 12px; height: 12px; border-radius: 50%;
-  }
-  .vc-traffic .dot1 { background: #FF5F57; }
-  .vc-traffic .dot2 { background: #FEBC2E; }
-  .vc-traffic .dot3 { background: #28C840; }
-
-  .vc-cmd {
-    background: var(--mc-pep-deep);
-    border: 1.5px solid var(--mc-teal);
-    border-radius: 14px;
-    padding: 14px 18px;
-    display: flex; align-items: center; gap: 14px;
-    color: white;
-    font-size: 15px;
-    margin-bottom: 22px;
-    box-shadow: 0 0 0 0 rgba(0, 185, 166, 0.0);
-    transition: box-shadow 0.4s;
-  }
-  .vc-cmd.glow { box-shadow: 0 0 0 4px rgba(0, 185, 166, 0.18); }
-  .vc-cmd-spark {
-    color: var(--mc-teal);
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-  .vc-cmd-text {
-    flex: 1;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-weight: 500;
-  }
-  .vc-cmd-text strong { color: var(--mc-teal); font-weight: 700; }
-  .vc-cmd-key {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-family: ui-monospace, Menlo, Consolas, monospace;
-    font-size: 12px;
-    color: rgba(255,255,255,0.85);
-    flex-shrink: 0;
-  }
-
-  .vc-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    background: var(--mc-pep-deep);
-    border-radius: 14px;
-    padding: 20px;
-    min-height: 320px;
-    position: relative;
-    overflow: hidden;
-  }
-  .vc-pane {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 18px;
-    display: flex; flex-direction: column;
-    color: rgba(255,255,255,0.85);
-    min-height: 260px;
-    position: relative;
-  }
-  .vc-pane-label {
-    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    margin-bottom: 14px;
-  }
-
-  /* Scene-specific content. Each scene has 2 panes: left + right. */
-  .vc-scene {
-    display: none;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    width: 100%;
-    animation: vcSceneFade 0.5s ease;
-  }
-  .vc-scene.active { display: grid; }
-  @keyframes vcSceneFade {
-    0% { opacity: 0; transform: translateY(6px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Editor scene */
-  .vc-email-mock {
-    background: white;
-    border-radius: 8px;
-    padding: 18px 16px;
-    color: var(--mc-text);
-    font-family: 'Helvetica Neue', sans-serif;
-    width: 100%;
-    align-self: center;
-  }
-  .vc-email-mock h5 {
-    font-family: 'Cooper Light', 'Georgia', serif;
-    font-weight: 300;
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 4px;
-  }
-  .vc-email-mock h6 {
-    font-family: 'Cooper Light', 'Georgia', serif;
-    font-weight: 300;
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-  .vc-email-mock p.lead {
-    text-align: center;
-    font-size: 11px;
-    color: var(--mc-text-secondary);
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
-  .vc-email-product {
-    background: var(--mc-bg-soft);
-    border-radius: 6px;
-    padding: 10px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .vc-email-product-img {
-    width: 44px; height: 44px;
-    background: linear-gradient(135deg, #2d4a3d, #1a2e26);
-    border-radius: 4px;
-    display: grid; place-items: center;
-    color: white; font-size: 18px;
-    flex-shrink: 0;
-  }
-  .vc-email-product-info { flex: 1; min-width: 0; }
-  .vc-email-product-info .name { font-size: 11px; font-weight: 700; line-height: 1.2; }
-  .vc-email-product-info .price { font-size: 11px; color: var(--mc-text-muted); }
-  .vc-email-product-info .btn {
-    margin-top: 4px;
-    background: var(--mc-yellow);
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 9px; font-weight: 700;
-    display: inline-block;
-  }
-  .vc-template-block {
-    background: white;
-    border-radius: 8px;
-    padding: 16px;
-    color: var(--mc-text);
-  }
-  .vc-template-row {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 10px;
-    border: 1px dashed var(--mc-border);
-    border-radius: 6px;
-    margin-bottom: 8px;
-    font-size: 11px;
-    color: var(--mc-text-muted);
-  }
-  .vc-template-row.has {
-    border-style: solid;
-    background: var(--mc-bg-soft);
-    color: var(--mc-text);
-    font-weight: 600;
-  }
-  .vc-template-row .pill-tag {
-    background: var(--mc-yellow);
-    color: var(--mc-text);
-    padding: 2px 6px;
-    border-radius: 999px;
-    font-size: 9px; font-weight: 700;
-    margin-left: auto;
-  }
-  .vc-handle {
-    width: 16px; height: 16px;
-    border-radius: 50%; background: var(--mc-cta);
-    color: white; display: grid; place-items: center;
-    font-size: 10px; flex-shrink: 0;
-  }
-
-  /* Segment scene */
-  .vc-seg-list {
-    display: flex; flex-direction: column; gap: 8px;
-    width: 100%;
-  }
-  .vc-seg-row {
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 10px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
-  }
-  .vc-seg-row.hot {
-    background: rgba(0, 185, 166, 0.12);
-    border-color: var(--mc-teal);
-    color: white;
-  }
-  .vc-seg-bar {
-    flex: 1; height: 6px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 999px; overflow: hidden;
-  }
-  .vc-seg-bar-fill {
-    height: 100%; background: rgba(255,255,255,0.4);
-  }
-  .vc-seg-row.hot .vc-seg-bar-fill { background: var(--mc-teal); }
-  .vc-seg-pct { font-weight: 700; color: white; min-width: 30px; text-align: right; }
-  .vc-seg-name { font-weight: 600; min-width: 90px; }
-
-  /* Analytics scene */
-  .vc-chart {
-    width: 100%; height: 180px;
-    align-self: center;
-  }
-  .vc-chart svg { width: 100%; height: 100%; }
-  .vc-anomaly-callout {
-    background: rgba(255, 107, 71, 0.16);
-    border: 1px solid var(--mc-coral);
-    border-radius: 10px;
-    padding: 12px 14px;
-    color: white;
-    font-size: 12px;
-    align-self: center;
-    line-height: 1.5;
-  }
-  .vc-anomaly-callout strong { color: var(--mc-coral); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
-
-  /* Automation scene */
-  .vc-flow {
-    display: flex; align-items: center; justify-content: center;
-    gap: 10px; flex-wrap: wrap;
-    width: 100%;
-    align-self: center;
-    padding: 12px;
-  }
-  .vc-flow-node {
-    width: 70px; height: 70px;
-    border-radius: 50%;
-    display: grid; place-items: center;
-    color: white;
-    font-size: 24px;
-    flex-shrink: 0;
-    position: relative;
-  }
-  .vc-flow-node.cart { background: var(--mc-yellow); color: var(--mc-text); }
-  .vc-flow-node.wait { width: auto; height: 36px; padding: 0 16px; border-radius: 999px; background: var(--mc-teal); font-size: 12px; font-weight: 700; gap: 4px; display: flex; align-items: center; }
-  .vc-flow-node.send { background: var(--mc-cta); }
-  .vc-flow-node-label {
-    position: absolute;
-    bottom: -22px; left: 50%; transform: translateX(-50%);
-    font-size: 10px; color: rgba(255,255,255,0.7); white-space: nowrap;
-  }
-  .vc-flow-arrow {
-    width: 22px; height: 2px; background: var(--mc-teal); position: relative;
-    flex-shrink: 0;
-  }
-  .vc-flow-arrow::after {
-    content: '';
-    position: absolute; right: -4px; top: -3px;
-    border-left: 6px solid var(--mc-teal);
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-  }
-  .vc-canvas-controls {
-    position: absolute;
-    bottom: 14px; left: 14px;
-    display: flex; gap: 4px;
-  }
-  .vc-canvas-controls button {
-    width: 26px; height: 26px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 4px;
-    color: rgba(255,255,255,0.7);
-    cursor: pointer;
-    font-size: 12px;
-  }
-
-  /* SMS scene */
-  .vc-sms-card {
-    background: white;
-    border-radius: 12px;
-    padding: 18px;
-    color: var(--mc-text);
-    width: 100%;
-    align-self: center;
-    border: 1px solid rgba(0,0,0,0.05);
-  }
-  .vc-sms-bubble {
-    background: var(--mc-cta);
-    color: white;
-    border-radius: 14px 14px 14px 4px;
-    padding: 12px 14px;
-    font-size: 13px;
-    line-height: 1.45;
-    margin-bottom: 12px;
-  }
-  .vc-sms-meta {
-    display: flex; justify-content: space-between; font-size: 11px; color: var(--mc-text-muted);
-  }
-
-  /* Brand kit scene */
-  .vc-bk-row { display: flex; gap: 8px; margin-bottom: 10px; }
-  .vc-bk-swatch {
-    width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
-    border: 2px solid white;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
-  }
-  .vc-bk-card {
-    background: white;
-    border-radius: 8px;
-    padding: 14px;
-    color: var(--mc-text);
-  }
-  .vc-bk-card .h {
-    font-family: 'Cooper Light', 'Georgia', serif;
-    font-size: 18px;
-    font-weight: 300;
-    margin-bottom: 6px;
-  }
-  .vc-bk-card p {
-    font-size: 11px; color: var(--mc-text-secondary); margin-bottom: 10px; line-height: 1.5;
-  }
-  .vc-bk-card .btn {
-    background: var(--mc-pep);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 700;
-    display: inline-block;
-  }
-
-  .vc-progress-row {
-    max-width: 1080px;
-    margin: 24px auto 0;
-    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
-  }
-  .vc-progress-bar {
-    height: 8px;
-    background: var(--mc-bg-alt);
-    border-radius: 999px;
-    border: 1px solid var(--mc-border);
-    position: relative;
-    overflow: hidden;
-  }
-  .vc-progress-bar.active {
-    background: white;
-  }
-  .vc-progress-bar.done {
-    background: var(--mc-cta);
-    border-color: var(--mc-cta);
-  }
-  .vc-progress-bar.active::after {
-    content: '';
-    position: absolute;
-    left: 50%; top: 50%;
-    width: 6px; height: 6px;
-    background: var(--mc-pep);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .vc-labels-row {
-    max-width: 1080px;
-    margin: 10px auto 0;
-    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
-    text-align: center;
-  }
-  .vc-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    color: var(--mc-text-muted);
-  }
-  .vc-label.active {
-    color: var(--mc-cta);
-  }
-
-  @media (max-width: 880px) {
-    .vc-headline { font-size: 44px; }
-    .vc-frame { padding: 18px; }
-    .vc-body { grid-template-columns: 1fr; padding: 14px; }
-    .vc-progress-row, .vc-labels-row { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 540px) {
-    .vc-headline { font-size: 32px; }
-    .vc-progress-row, .vc-labels-row { grid-template-columns: repeat(2, 1fr); }
-  }
 
   /* ===================== Recommended for your business ===================== */
   .reco-section { background: white; padding: 96px 32px 64px; }
@@ -1612,19 +1259,7 @@
 <body>
 
 <!-- ============================================================ -->
-<!-- VARIANT SWITCHER (sticky, top-most)                          -->
-<!-- ============================================================ -->
-<div class="variant-switcher" role="tablist" aria-label="Hero variant switcher">
-  <span class="vs-badge">Demo prototype</span>
-  <span class="vs-label">Hero variant</span>
-  <button data-variant="a" class="active" role="tab" aria-selected="true">A · Ask Mailchimp</button>
-  <button data-variant="b" role="tab" aria-selected="false">B · Persona pivot</button>
-  <button data-variant="c" role="tab" aria-selected="false">C · Watch the agent</button>
-  <span class="vs-meta">Stakeholder review · shared sections below the fold</span>
-</div>
-
-<!-- ============================================================ -->
-<!-- HEADER — top nav (shared across variants)                    -->
+<!-- HEADER — top nav                                             -->
 <!-- ============================================================ -->
 <header class="site">
   <nav class="nav">
@@ -1648,137 +1283,10 @@
 </header>
 
 <!-- ============================================================ -->
-<!-- HERO SHELL — 3 variants stacked, only one active at a time   -->
+<!-- HERO — persona-pivot with embedded Analytics AI playground   -->
 <!-- ============================================================ -->
 <div class="hero-shell">
-
-<!-- ===== VARIANT A · Ask Mailchimp ===== -->
-<section class="hero-variant active va-hero" id="variant-a" data-variant="a" role="tabpanel">
-  <!-- Corner illustrations: plant + freddie thinking. Approximated with hand-drawn SVGs to avoid heavy mix-blend on cream BG. -->
-  <div class="va-corner left" aria-hidden="true">
-    <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" fill="none">
-      <g stroke="#241c15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Plant pot -->
-        <path d="M70 220 L60 250 L160 250 L150 220 Z" fill="#FAFAF7"/>
-        <line x1="70" y1="220" x2="150" y2="220"/>
-        <!-- Leaves -->
-        <path d="M110 220 C110 180 95 150 80 130 C70 117 80 90 100 90 C108 90 113 95 110 105 C108 115 110 130 110 220 Z" fill="#FFE01B" opacity="0.9"/>
-        <path d="M110 220 C110 175 130 145 145 125 C158 110 150 85 130 88 C120 89 116 100 118 110 C122 130 110 175 110 220 Z" fill="none"/>
-        <path d="M110 220 C110 175 130 145 145 125 C158 110 150 85 130 88 C120 89 116 100 118 110 C122 130 110 175 110 220 Z" fill="#FAFAF7" stroke="#241c15"/>
-        <path d="M125 110 Q138 95 144 80" stroke-width="1.3" fill="none"/>
-        <path d="M95 130 Q86 115 88 100" stroke-width="1.3" fill="none"/>
-        <!-- Coffee cup -->
-        <path d="M30 180 Q30 230 70 230 Q110 230 110 180 L30 180 Z" fill="white" />
-        <path d="M110 195 Q140 195 140 215 Q140 225 110 225"/>
-        <line x1="50" y1="180" x2="50" y2="170" />
-        <line x1="60" y1="180" x2="60" y2="166" />
-        <line x1="70" y1="180" x2="70" y2="170" />
-        <line x1="80" y1="180" x2="80" y2="166" />
-        <line x1="90" y1="180" x2="90" y2="170" />
-      </g>
-    </svg>
-  </div>
-  <div class="va-corner right" aria-hidden="true">
-    <svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" fill="none">
-      <g stroke="#241c15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Clouds -->
-        <path d="M30 30 q10 -16 26 -10 q14 -10 28 4 q14 -2 14 12 q-2 8 -16 8 l-44 0 q-12 -2 -8 -14 z" fill="white"/>
-        <path d="M120 70 q8 -10 20 -6 q10 -6 20 4 q10 -2 10 8 q-2 6 -12 6 l-30 0 q-10 0 -8 -12 z" fill="white"/>
-        <path d="M62 78 q8 -8 18 -4 q10 -4 18 4 q8 -2 8 8 q-2 6 -10 6 l-26 0 q-10 0 -8 -14 z" fill="white"/>
-        <!-- Freddie head (stylised as a chimp silhouette looking up) -->
-        <path d="M120 130 C100 130 88 145 90 168 C92 188 110 200 130 200 C152 200 170 184 168 162 C166 142 144 130 120 130 Z" fill="white"/>
-        <!-- Hat -->
-        <path d="M100 138 L106 122 L168 124 L170 138" fill="white"/>
-        <path d="M96 138 L172 138" />
-        <ellipse cx="118" cy="160" rx="3" ry="3" fill="#241c15"/>
-        <ellipse cx="146" cy="158" rx="3" ry="3" fill="#241c15"/>
-        <path d="M120 178 q12 8 24 -2"/>
-        <!-- Body hint -->
-        <path d="M96 200 q-4 38 16 60 l60 0 q14 -22 6 -56" fill="white"/>
-        <!-- Yellow notes -->
-        <path d="M180 116 l-6 12 M188 122 l-12 6 M184 132 l-2 14" stroke="#FFE01B" stroke-width="3"/>
-      </g>
-    </svg>
-  </div>
-  <span class="va-sparkle s1" aria-hidden="true">✦</span>
-  <span class="va-sparkle s2" aria-hidden="true">✦</span>
-  <span class="va-sparkle s3" aria-hidden="true">✦</span>
-
-  <div class="va-inner">
-    <div class="va-eyebrow-pill">
-      <span class="va-spark">✦</span>
-      Powered by Analytics AI
-    </div>
-    <h1 class="hero-h1 va-headline">Ask Mailchimp anything about your business.</h1>
-
-    <form class="va-input-wrap" id="vaInputForm" autocomplete="off" onsubmit="return false;">
-      <div class="va-input-row">
-        <span class="va-spark-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2 L13.8 10.2 L22 12 L13.8 13.8 L12 22 L10.2 13.8 L2 12 L10.2 10.2 Z" fill="#FFE01B" stroke="#241c15" stroke-width="0.8" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <input class="va-input" id="vaInput" type="text" placeholder="Why are my opens dropping?" aria-label="Ask Mailchimp" />
-        <button class="va-ask-btn" type="submit" id="vaAskBtn">Ask</button>
-      </div>
-    </form>
-
-    <div class="va-chip-grid" id="vaChipGrid">
-      <button class="va-chip" data-chip="opens">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17 L8 12 L12 16 L21 7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7 L21 7 L21 13" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Why did opens drop?
-      </button>
-      <button class="va-chip" data-chip="mothers-day">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="6" width="18" height="13" rx="1.5"/><path d="M3 8 L12 14 L21 8"/></svg></span>
-        Draft Mother's Day email
-      </button>
-      <button class="va-chip" data-chip="vip">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 19 c0 -3 3 -5 6 -5 c3 0 6 2 6 5"/><path d="M14 18 c0 -2 2 -4 5 -4 s4 2 4 4"/></svg></span>
-        Build a VIP segment
-      </button>
-      <button class="va-chip" data-chip="cart">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4 L5 4 L7 16 L19 16 L21 8 L7 8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></span>
-        Set up cart recovery
-      </button>
-      <button class="va-chip" data-chip="sms">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4 h16 v12 h-9 l-5 4 v-4 h-2 z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="12" x2="13" y2="12"/></svg></span>
-        Send via SMS
-      </button>
-      <button class="va-chip" data-chip="forecast">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="20" x2="21" y2="20"/><rect x="5" y="13" width="3" height="6"/><rect x="11" y="9" width="3" height="10"/><rect x="17" y="5" width="3" height="14"/></svg></span>
-        Forecast next month
-      </button>
-      <button class="va-chip" data-chip="brand">
-        <span class="va-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 16 L9 12 L13 15 L20 9"/></svg></span>
-        Apply brand kit
-      </button>
-    </div>
-
-    <div class="va-answer-wrap" id="vaAnswerWrap" aria-live="polite">
-      <div class="va-answer">
-        <div class="va-answer-head">
-          <div class="va-answer-avatar" aria-hidden="true">✦</div>
-          <div class="va-answer-q" id="vaAnswerQ">Why did opens drop?</div>
-        </div>
-        <div class="va-answer-body" id="vaAnswerBody"></div>
-        <div class="va-answer-viz" id="vaAnswerViz">
-          <div class="va-answer-bars" id="vaAnswerBars"></div>
-          <div class="va-answer-stat" id="vaAnswerStat">
-            <span class="num">−18%</span>
-            <span class="label">vs prior 7 days</span>
-          </div>
-        </div>
-        <div class="va-answer-tools">
-          <span class="lbl">Used</span>
-          <span id="vaAnswerTools"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== VARIANT B · Persona pivot ===== -->
-<section class="hero-variant vb-hero" id="variant-b" data-variant="b" role="tabpanel">
+<section class="vb-hero" id="hero">
   <div class="container" style="max-width: 1280px;">
     <div class="vb-eyebrow">I am a . . .</div>
     <div class="vb-pillrow" id="vbPillRow">
@@ -1798,17 +1306,72 @@
       </div>
 
       <aside class="vb-right">
-        <div class="vb-card-label">Ask</div>
-        <div class="vb-ask-bubble" id="vbAskBubble">What should I send for Mother's Day?</div>
-        <div class="vb-card-label" style="color: var(--mc-text-muted);">Agent</div>
-        <div class="vb-agent-row">
-          <div class="vb-agent-avatar" aria-hidden="true">✦</div>
-          <div class="vb-agent-bubble" id="vbAgentBubble">Best send: Mon 9am to VIP segment. Draft and landing page ready.</div>
+        <!-- Data source toggle: Sample data (default) | Upload Excel / CSV -->
+        <div class="pg-ds" role="tablist" aria-label="Data source">
+          <button class="pg-ds-tab active" data-pg-tab="sample" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            Sample data
+          </button>
+          <button class="pg-ds-tab" data-pg-tab="upload" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload Excel / CSV
+          </button>
         </div>
-        <div class="vb-tools" id="vbTools">
-          <a href="#" class="vb-tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3 l5 5 -10 10 -5 1 1 -5 z"/></svg> Editor</a>
-          <a href="#" class="vb-tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 19 c0 -3 3 -5 6 -5"/></svg> Segments</a>
-          <a href="#" class="vb-tool-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 6 h8 M18 8 v8 M16 18 H8 a4 4 0 0 1 -4 -4 V8"/></svg> Automations</a>
+
+        <!-- The playground frame. Persona-aware: toolbar / greeting / suggestions / sample chart all swap on persona change. -->
+        <div class="pg-frame-wrap" id="pgFrameWrap">
+          <div class="pg-app">
+            <div class="pg-toolbar">
+              <div class="pg-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div class="pg-title">
+                <span class="pg-pill">Analytics AI</span>
+                <span class="pg-title-name" id="pgTitle">Oat Lord · Live demo</span>
+              </div>
+              <div class="pg-toolbar-spacer" aria-hidden="true"></div>
+            </div>
+            <div class="pg-body">
+              <div class="pg-chat">
+                <div class="pg-messages" id="pgMessages" aria-live="polite">
+                  <!-- Greeting injected by JS per persona -->
+                </div>
+                <div class="pg-suggested" id="pgSuggested">
+                  <span class="pg-suggested-label">Try a question</span>
+                  <!-- Chips injected by JS per persona -->
+                </div>
+                <form class="pg-input" id="pgInputForm" autocomplete="off" onsubmit="return false;">
+                  <input type="text" id="pgInput" placeholder="Ask Analytics AI anything…" aria-label="Ask Analytics AI" />
+                  <button type="submit" id="pgSendBtn">Send</button>
+                </form>
+              </div>
+              <div class="pg-viz">
+                <div class="pg-viz-eyebrow">Live visualization</div>
+                <div class="pg-viz-title" id="pgVizTitle">Sample insight</div>
+                <div class="pg-metric-row" id="pgMetricRow" style="display:none;">
+                  <div class="pg-metric"><div class="val" id="pgM1Val">·</div><div class="lbl" id="pgM1Lbl">Metric</div><div class="delta" id="pgM1Delta"></div></div>
+                  <div class="pg-metric"><div class="val" id="pgM2Val">·</div><div class="lbl" id="pgM2Lbl">Metric</div><div class="delta" id="pgM2Delta"></div></div>
+                </div>
+                <div class="pg-canvas" id="pgCanvas">
+                  <!-- Pre-loaded persona "sample insight" injected by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Upload mode replaces the dark frame body -->
+          <div class="pg-upload-wrap" id="pgUploadWrap">
+            <div class="pg-upload-zone" id="pgUploadZone">
+              <input type="file" id="pgFileInput" accept=".csv,.xlsx,.xls,.tsv" style="display:none;" />
+              <div class="pg-upload-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h4>Drop your spreadsheet here</h4>
+              <p>Excel (.xlsx, .xls), CSV, or TSV. Up to 50MB. Your data stays in your browser. Nothing is uploaded to our servers in this demo.</p>
+              <div class="pg-upload-actions">
+                <button type="button" class="pg-browse" id="pgBrowseBtn">Browse files</button>
+                <span>The agent will detect columns and auto-generate insights.</span>
+              </div>
+            </div>
+            <div class="pg-upload-error" id="pgUploadError" role="alert"></div>
+          </div>
         </div>
       </aside>
     </div>
@@ -1823,213 +1386,6 @@
   </div>
 </section>
 
-<!-- ===== VARIANT C · Watch the agent ===== -->
-<section class="hero-variant vc-hero" id="variant-c" data-variant="c" role="tabpanel">
-  <div class="vc-eyebrow">One agent. Every Mailchimp tool.</div>
-  <h1 class="hero-h1 vc-headline">Watch the agent run your marketing.</h1>
-
-  <div class="vc-frame">
-    <div class="vc-traffic" aria-hidden="true">
-      <span class="dot1"></span><span class="dot2"></span><span class="dot3"></span>
-    </div>
-
-    <div class="vc-cmd glow" id="vcCmd">
-      <span class="vc-cmd-spark">✦</span>
-      <span class="vc-cmd-text" id="vcCmdText">Agent: <strong>"Draft Mother's Day email"</strong></span>
-      <span class="vc-cmd-key">⌘ K</span>
-    </div>
-
-    <div class="vc-body">
-      <!-- Scene 1 — Editor -->
-      <div class="vc-scene active" data-scene="0">
-        <div class="vc-pane">
-          <div class="vc-pane-label">Email editor · template</div>
-          <div class="vc-template-block">
-            <div class="vc-template-row has"><span class="vc-handle">≡</span> Hero · Mother's Day banner <span class="pill-tag">Auto</span></div>
-            <div class="vc-template-row has"><span class="vc-handle">≡</span> Subject · "A gift made just for her"</div>
-            <div class="vc-template-row has"><span class="vc-handle">≡</span> Product · Posture Chair</div>
-            <div class="vc-template-row"><span class="vc-handle" style="background:var(--mc-text-muted)">+</span> Drag to add block</div>
-          </div>
-        </div>
-        <div class="vc-pane">
-          <div class="vc-pane-label">Live preview</div>
-          <div class="vc-email-mock">
-            <h5 style="font-size:13px;font-style:italic;color:var(--mc-text-muted);">Big Mood</h5>
-            <h6>A gift she'll love</h6>
-            <p class="lead">We picked your top sellers for Mother's Day. Free shipping included.</p>
-            <div class="vc-email-product">
-              <div class="vc-email-product-img">🪑</div>
-              <div class="vc-email-product-info">
-                <div class="name">Posture Chair</div>
-                <div class="price">$149.00</div>
-                <span class="btn">Shop now</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scene 2 — Segment -->
-      <div class="vc-scene" data-scene="1">
-        <div class="vc-pane">
-          <div class="vc-pane-label">Segments · ranked</div>
-          <div class="vc-seg-list">
-            <div class="vc-seg-row hot">
-              <span class="vc-seg-name">VIP buyers</span>
-              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 92%"></div></div>
-              <span class="vc-seg-pct">92%</span>
-            </div>
-            <div class="vc-seg-row">
-              <span class="vc-seg-name">Repeat shoppers</span>
-              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 64%"></div></div>
-              <span class="vc-seg-pct">64%</span>
-            </div>
-            <div class="vc-seg-row">
-              <span class="vc-seg-name">Browse abandoners</span>
-              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 41%"></div></div>
-              <span class="vc-seg-pct">41%</span>
-            </div>
-            <div class="vc-seg-row">
-              <span class="vc-seg-name">Lapsed 90d</span>
-              <div class="vc-seg-bar"><div class="vc-seg-bar-fill" style="width: 22%"></div></div>
-              <span class="vc-seg-pct">22%</span>
-            </div>
-          </div>
-        </div>
-        <div class="vc-pane" style="justify-content:center">
-          <div class="vc-pane-label">Agent recommendation</div>
-          <div style="background: rgba(0,185,166,0.12); border:1px solid var(--mc-teal); border-radius:10px; padding:14px 16px; color:white; font-size:13px; line-height:1.55;">
-            <strong style="color:var(--mc-teal); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; display:block; margin-bottom:6px;">Send first</strong>
-            VIP buyers · 1,847 contacts.<br/>
-            Predicted open rate <strong style="color:white;">52%</strong>, predicted revenue <strong style="color:white;">$12,400</strong>.
-          </div>
-        </div>
-      </div>
-
-      <!-- Scene 3 — Analytics -->
-      <div class="vc-scene" data-scene="2">
-        <div class="vc-pane" style="grid-column: span 1;">
-          <div class="vc-pane-label">Open rate · last 14 days</div>
-          <div class="vc-chart">
-            <svg viewBox="0 0 320 160" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="vcAreaG" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#00B9A6" stop-opacity="0.32"/>
-                  <stop offset="100%" stop-color="#00B9A6" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <g stroke="rgba(255,255,255,0.06)" stroke-width="0.6">
-                <line x1="0" y1="40" x2="320" y2="40"/>
-                <line x1="0" y1="80" x2="320" y2="80"/>
-                <line x1="0" y1="120" x2="320" y2="120"/>
-              </g>
-              <path d="M 0 80 L 30 70 L 60 65 L 90 60 L 120 55 L 150 60 L 180 70 L 210 95 L 240 120 L 270 132 L 300 130 L 320 128"
-                fill="none" stroke="#00B9A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M 0 80 L 30 70 L 60 65 L 90 60 L 120 55 L 150 60 L 180 70 L 210 95 L 240 120 L 270 132 L 300 130 L 320 128 L 320 160 L 0 160 Z"
-                fill="url(#vcAreaG)"/>
-              <circle cx="210" cy="95" r="6" fill="#FF6B47" stroke="white" stroke-width="1.5"/>
-              <circle cx="210" cy="95" r="11" fill="none" stroke="#FF6B47" stroke-opacity="0.4" stroke-width="1.2">
-                <animate attributeName="r" values="11;18;11" dur="1.6s" repeatCount="indefinite"/>
-                <animate attributeName="stroke-opacity" values="0.4;0;0.4" dur="1.6s" repeatCount="indefinite"/>
-              </circle>
-            </svg>
-          </div>
-        </div>
-        <div class="vc-pane" style="justify-content:center">
-          <div class="vc-pane-label">Anomaly detected</div>
-          <div class="vc-anomaly-callout">
-            <strong>Open rate −18% on Apr 28</strong>
-            Subject line tested low on the "Repeat shoppers" segment. Try a question-led subject in the next send.
-          </div>
-        </div>
-      </div>
-
-      <!-- Scene 4 — Automation -->
-      <div class="vc-scene" data-scene="3">
-        <div class="vc-pane" style="grid-column: span 2; min-height: 280px;">
-          <div class="vc-pane-label">Automations · canvas</div>
-          <div class="vc-flow">
-            <div class="vc-flow-node cart" title="Abandoned cart">🛒
-              <span class="vc-flow-node-label">Abandoned Cart</span>
-            </div>
-            <div class="vc-flow-arrow"></div>
-            <div class="vc-flow-node wait">⏱ <span>Wait 1d</span></div>
-            <div class="vc-flow-arrow"></div>
-            <div class="vc-flow-node send" title="Send reminder">✉
-              <span class="vc-flow-node-label">Send Reminder</span>
-            </div>
-          </div>
-          <div class="vc-canvas-controls" aria-hidden="true">
-            <button>+</button><button>−</button><button>⛶</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scene 5 — SMS -->
-      <div class="vc-scene" data-scene="4">
-        <div class="vc-pane">
-          <div class="vc-pane-label">SMS composer</div>
-          <div class="vc-sms-card">
-            <div class="vc-sms-bubble">Big Mood: a gift made just for her. 20% off this weekend → bigm.co/mday</div>
-            <div class="vc-sms-meta">
-              <span>To · VIP buyers (1,847)</span>
-              <span>92 / 160 chars</span>
-            </div>
-          </div>
-        </div>
-        <div class="vc-pane" style="justify-content:center">
-          <div class="vc-pane-label">Cross-channel plan</div>
-          <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px 16px; color:rgba(255,255,255,0.85); font-size:13px; line-height:1.55;">
-            <strong style="color:var(--mc-teal); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; display:block; margin-bottom:6px;">Sync</strong>
-            Email lands Mon 9am. SMS goes 4 hours later to non-openers.<br/>
-            Predicted lift · <strong style="color:white;">+27%</strong> click rate.
-          </div>
-        </div>
-      </div>
-
-      <!-- Scene 6 — Brand kit -->
-      <div class="vc-scene" data-scene="5">
-        <div class="vc-pane">
-          <div class="vc-pane-label">Brand kit</div>
-          <div style="margin-bottom:14px;">
-            <div class="vc-bk-row">
-              <div class="vc-bk-swatch" style="background:#1B5E5A;"></div>
-              <div class="vc-bk-swatch" style="background:#FFE01B;"></div>
-              <div class="vc-bk-swatch" style="background:#241C15;"></div>
-              <div class="vc-bk-swatch" style="background:#FAFAF7;"></div>
-            </div>
-            <div style="font-size:11px; color:rgba(255,255,255,0.55); letter-spacing:0.06em; text-transform:uppercase;">Voice · Confident, friendly, witty</div>
-          </div>
-        </div>
-        <div class="vc-pane">
-          <div class="vc-pane-label">Recolored template</div>
-          <div class="vc-bk-card">
-            <div class="h">Big Mood</div>
-            <p>Hand-picked gifts for the people who get you. Brand voice and palette applied automatically.</p>
-            <span class="btn">Shop the collection</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="vc-progress-row" id="vcProgressRow">
-    <div class="vc-progress-bar" data-bar="0"></div>
-    <div class="vc-progress-bar" data-bar="1"></div>
-    <div class="vc-progress-bar" data-bar="2"></div>
-    <div class="vc-progress-bar" data-bar="3"></div>
-    <div class="vc-progress-bar" data-bar="4"></div>
-    <div class="vc-progress-bar" data-bar="5"></div>
-  </div>
-  <div class="vc-labels-row" id="vcLabelsRow">
-    <span class="vc-label" data-label="0">Editor</span>
-    <span class="vc-label" data-label="1">Segment</span>
-    <span class="vc-label" data-label="2">Analytics</span>
-    <span class="vc-label" data-label="3">Automation</span>
-    <span class="vc-label" data-label="4">SMS</span>
-    <span class="vc-label" data-label="5">Brand kit</span>
-  </div>
-</section>
 
 </div><!-- /.hero-shell -->
 
@@ -2543,221 +1899,46 @@
 const prefersReducedMotion = window.matchMedia &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ============================================================ */
-/* Variant switcher                                              */
-/* ============================================================ */
-(function variantSwitcher() {
-  const buttons = document.querySelectorAll('.variant-switcher button[data-variant]');
-  const panels = document.querySelectorAll('.hero-variant');
-  if (!buttons.length || !panels.length) return;
-
-  function activate(v) {
-    if (!['a','b','c'].includes(v)) v = 'a';
-    buttons.forEach(b => {
-      const isActive = b.dataset.variant === v;
-      b.classList.toggle('active', isActive);
-      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
-    });
-    panels.forEach(p => {
-      p.classList.toggle('active', p.dataset.variant === v);
-    });
-    if (v === 'b') startVariantBRotation();
-    else stopVariantBRotation();
-    if (v === 'c') startVariantCRotation();
-    else stopVariantCRotation();
-  }
-
-  buttons.forEach(b => {
-    b.addEventListener('click', () => {
-      const v = b.dataset.variant;
-      activate(v);
-      try {
-        history.replaceState(null, '', '#variant=' + v);
-      } catch (e) { /* ignore */ }
-    });
-  });
-
-  // Read URL hash on load
-  function readHash() {
-    const m = (location.hash || '').match(/variant=([abc])/);
-    return m ? m[1] : 'a';
-  }
-  activate(readHash());
-
-  window.addEventListener('hashchange', () => {
-    const m = (location.hash || '').match(/variant=([abc])/);
-    if (m) activate(m[1]);
-  });
-})();
+/* Persona-rotation state. The hero is "the hero" now (Variants A and C
+   are gone), so this state controls the embedded Analytics AI playground. */
+var variantBTimer = null;
+var pgInteracted = false;
 
 /* ============================================================ */
-/* VARIANT A — placeholder rotator + chip answer panel           */
+/* HERO — Persona pivot + embedded Analytics AI playground       */
 /* ============================================================ */
-(function variantA() {
-  const input = document.getElementById('vaInput');
-  const askBtn = document.getElementById('vaAskBtn');
-  const form = document.getElementById('vaInputForm');
-  const chipGrid = document.getElementById('vaChipGrid');
-  const answerWrap = document.getElementById('vaAnswerWrap');
-  const answerQ = document.getElementById('vaAnswerQ');
-  const answerBody = document.getElementById('vaAnswerBody');
-  const answerBars = document.getElementById('vaAnswerBars');
-  const answerStat = document.getElementById('vaAnswerStat');
-  const answerTools = document.getElementById('vaAnswerTools');
-  if (!input || !chipGrid) return;
 
-  const placeholders = [
-    'Why are my opens dropping?',
-    'Draft a Mother\u2019s Day campaign for VIPs.',
-    'Which segment converts best this month?',
-    'Build a cart-recovery flow for shoppers.',
-    'What\u2019s my forecasted revenue next month?'
-  ];
-  let phIdx = 0;
-  let phTimer = null;
-  function startPlaceholderRotation() {
-    if (prefersReducedMotion) return;
-    if (phTimer) clearInterval(phTimer);
-    phTimer = setInterval(() => {
-      if (document.activeElement === input || (input.value && input.value.length)) return;
-      phIdx = (phIdx + 1) % placeholders.length;
-      input.placeholder = placeholders[phIdx];
-    }, 3200);
-  }
-  startPlaceholderRotation();
-
-  // Chip data
-  const ANSWERS = {
-    'opens': {
-      q: 'Why did opens drop?',
-      body: 'Open rate fell <strong>−18%</strong> in the last 7 days, driven mostly by the "Repeat shoppers" segment. Subject-line tone shifted from question-led to declarative. Try the next send with a question subject and resend to non-openers after 24h.',
-      bars: [40, 52, 48, 55, 42, 36, 28, 30, 26, 24],
-      stat: { num: '\u221218%', label: 'vs prior 7 days' },
-      tools: ['Analytics AI', 'Audience Segmentation']
-    },
-    'mothers-day': {
-      q: 'Draft a Mother\u2019s Day email.',
-      body: 'Drafted a 3-block template using your top sellers and brand voice. Predicted open rate <strong>52%</strong>, predicted revenue <strong>$12,400</strong> if sent Mon 9am to VIP buyers.',
-      bars: [22, 28, 34, 40, 48, 56, 62, 70, 76, 82],
-      stat: { num: '$12.4k', label: 'predicted revenue' },
-      tools: ['Email Editor', 'Brand Kit', 'Audience Segmentation']
-    },
-    'vip': {
-      q: 'Build a VIP segment.',
-      body: 'Created a "VIP buyers" segment of <strong>1,847 contacts</strong>: 3+ orders in 90 days, average order value above $80, and opened 5+ campaigns. Average LTV is 4.2x your overall average.',
-      bars: [30, 36, 42, 50, 58, 66, 74, 80, 86, 92],
-      stat: { num: '1,847', label: 'contacts in segment' },
-      tools: ['Audience Segmentation', 'Predictive Insights']
-    },
-    'cart': {
-      q: 'Set up cart recovery.',
-      body: 'Built a 3-step automation: Abandoned Cart trigger \u00b7 wait 1 day \u00b7 send reminder with the exact items and a 10% recovery code. Estimated recovered revenue <strong>$4,800/mo</strong> at your current cart volumes.',
-      bars: [18, 22, 30, 36, 42, 50, 58, 66, 70, 76],
-      stat: { num: '$4.8k', label: 'recovered / month' },
-      tools: ['Automations', 'Email Editor']
-    },
-    'sms': {
-      q: 'Send via SMS.',
-      body: 'Drafted a 92-character SMS that mirrors your email tone and includes a short link. Sending 4h after the email to non-openers is predicted to lift click rate by <strong>+27%</strong>.',
-      bars: [28, 34, 40, 46, 52, 58, 64, 70, 76, 82],
-      stat: { num: '+27%', label: 'predicted lift' },
-      tools: ['SMS Marketing', 'Audience Segmentation']
-    },
-    'forecast': {
-      q: 'Forecast next month.',
-      body: 'Forecast revenue for next month is <strong>$78.2k</strong>, up 12% on last month. Largest driver is the cart-recovery flow you turned on April 12. Confidence band 70\u201385%.',
-      bars: [42, 46, 52, 56, 60, 66, 70, 74, 78, 82],
-      stat: { num: '$78.2k', label: 'forecast next month' },
-      tools: ['Analytics AI', 'Predictive Insights']
-    },
-    'brand': {
-      q: 'Apply brand kit.',
-      body: 'Applied your brand kit to your last 3 templates: deep-teal primary, Cavendish yellow accent, peppercorn body, Cooper Light headlines. <strong>9 templates</strong> updated.',
-      bars: [60, 64, 66, 68, 72, 74, 76, 78, 80, 82],
-      stat: { num: '9', label: 'templates re-skinned' },
-      tools: ['Brand Kit', 'Email Editor']
-    }
-  };
-
-  function renderAnswer(key) {
-    const a = ANSWERS[key];
-    if (!a) return;
-    answerQ.textContent = a.q;
-    answerBody.innerHTML = a.body;
-    answerBars.innerHTML = '';
-    a.bars.forEach((h, i) => {
-      const bar = document.createElement('div');
-      bar.className = 'va-answer-bar' + (key === 'opens' && i >= 6 ? ' hot' : '');
-      bar.style.height = '0%';
-      answerBars.appendChild(bar);
-      requestAnimationFrame(() => {
-        setTimeout(() => { bar.style.height = h + '%'; }, 30 + i * 40);
-      });
-    });
-    answerStat.querySelector('.num').textContent = a.stat.num;
-    answerStat.querySelector('.label').textContent = a.stat.label;
-    answerTools.innerHTML = a.tools.map(t =>
-      `<a href="#recommended" class="va-tool-chip" data-tool="${t}">${t}</a>`
-    ).join(' ');
-    answerWrap.classList.add('visible');
-  }
-
-  // Chip clicks
-  chipGrid.querySelectorAll('.va-chip').forEach(c => {
-    c.addEventListener('click', () => {
-      chipGrid.querySelectorAll('.va-chip').forEach(x => x.classList.remove('active'));
-      c.classList.add('active');
-      const k = c.dataset.chip;
-      input.value = ANSWERS[k] ? ANSWERS[k].q : '';
-      renderAnswer(k);
-    });
-  });
-
-  // Submitting the form (Enter key or Ask button)
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!input.value.trim()) {
-      input.focus();
-      return;
-    }
-    const v = input.value.trim().toLowerCase();
-    let matched = 'opens';
-    if (v.includes('mother') || v.includes('draft')) matched = 'mothers-day';
-    else if (v.includes('vip') || v.includes('segment')) matched = 'vip';
-    else if (v.includes('cart')) matched = 'cart';
-    else if (v.includes('sms') || v.includes('text')) matched = 'sms';
-    else if (v.includes('forecast') || v.includes('next month') || v.includes('revenue')) matched = 'forecast';
-    else if (v.includes('brand')) matched = 'brand';
-    chipGrid.querySelectorAll('.va-chip').forEach(x => {
-      x.classList.toggle('active', x.dataset.chip === matched);
-    });
-    renderAnswer(matched);
-  });
-
-  // Pre-render the default answer (opens) hidden so first chip click is snappy
-  renderAnswer('opens');
-  // Hide initially — will reveal on first chip click
-  if (answerWrap) answerWrap.classList.remove('visible');
-})();
-
-/* ============================================================ */
-/* VARIANT B — Persona pivot                                     */
-/* ============================================================ */
-let variantBTimer = null;
+// Auto-rotation through personas; pauses on hover and on first manual
+// interaction (chip click, persona pill, dot, input typing, mode toggle,
+// or file upload).
 function startVariantBRotation() {
   if (prefersReducedMotion) return;
+  if (pgInteracted) return;
   if (variantBTimer) clearInterval(variantBTimer);
   const order = ['ecommerce','agency','nonprofit','b2b'];
-  let i = 0;
   variantBTimer = setInterval(() => {
-    i = (i + 1) % order.length;
-    setPersona(order[i]);
+    if (pgInteracted) { stopVariantBRotation(); return; }
+    const cur = (typeof currentPersona === 'string' && order.indexOf(currentPersona) >= 0)
+      ? order.indexOf(currentPersona) : 0;
+    const next = (cur + 1) % order.length;
+    setPersona(order[next]);
   }, 8000);
 }
 function stopVariantBRotation() {
   if (variantBTimer) { clearInterval(variantBTimer); variantBTimer = null; }
 }
+function markInteracted() {
+  pgInteracted = true;
+  stopVariantBRotation();
+}
 
+// ---------- Persona content ----------
+// Each persona drives:
+//   - vbHeadline / vbSubhead / vbFeatureRow (the left half of Variant B)
+//   - playground toolbar business name
+//   - greeting paragraph in the chat pane
+//   - 4 suggested chips with rich pre-baked answers + chart renders
+//   - a default "sample insight" pre-loaded in the right pane
 const PERSONAS = {
   ecommerce: {
     headline: 'Sell more. Work less.',
@@ -2765,47 +1946,300 @@ const PERSONAS = {
     features: [
       { name: 'Email Editor',   desc: 'Create beautiful emails that sell.', svg: 'editor' },
       { name: 'Cart Recovery',  desc: 'Win back more customers with automated emails.', svg: 'cart' },
-      { name: 'Analytics AI',   desc: 'Turn data into revenue with smart insights.', svg: 'chart' },
+      { name: 'Analytics AI',   desc: 'Turn data into revenue with smart insights.', svg: 'chart' }
     ],
-    ask: 'What should I send for Mother\u2019s Day?',
-    agent: 'Best send: Mon 9am to VIP segment. Draft and landing page ready.',
-    tools: ['Editor', 'Segments', 'Automations']
+    pgTitle: 'Oat Lord · Live demo',
+    pgGreetName: 'Oat Lord',
+    pgGreetData: "campaigns, audience segments, revenue, and automations",
+    sample: {
+      eyebrow: 'Sample insight',
+      title: 'Top 5 campaigns by open rate',
+      type: 'sample-bars',
+      rows: [
+        { label: 'Holiday Flash',    val: '46%', pct: 92, fill: 'teal' },
+        { label: 'Summer Drop',      val: '38%', pct: 76, fill: 'teal' },
+        { label: 'VIP Early Access', val: '35%', pct: 70, fill: 'cta'  },
+        { label: 'New Arrivals',     val: '29%', pct: 58, fill: 'cta'  },
+        { label: 'Weekly Digest',    val: '22%', pct: 44, fill: 'cta'  }
+      ],
+      callout: { tone: 'good', html: '<strong>Best send time</strong> for your audience is Tuesday 9am ET. Switching from Friday 4pm should lift opens roughly 22%.' }
+    },
+    questions: [
+      { q: "Why did revenue drop last week?",
+        chartTitle: 'Daily revenue · last 14 days',
+        type: 'line-anomaly',
+        metrics: [
+          { val: '$18.4K', lbl: 'This week', delta: '-18%', dir: 'down' },
+          { val: '$22.5K', lbl: 'Prior week', delta: 'baseline', dir: 'flat' }
+        ],
+        answer: '<p>Revenue dropped <strong>18% week over week</strong>, falling from $22.5K to $18.4K. The decline tracks closely with your <strong>abandoned-cart automation</strong>, which paused on Tuesday after a template error.</p><p>That single automation drives roughly <strong>$4,200 / week</strong> in recovered revenue. Restarting it should close most of the gap within 7 to 10 days.</p>',
+        action: 'Restart abandoned-cart automation'
+      },
+      { q: "What are my top 3 SKUs this month?",
+        chartTitle: 'Top SKUs · revenue mix',
+        type: 'donut-sku',
+        metrics: [
+          { val: '$8.2K', lbl: 'Top SKU', delta: 'Oat Bowl Bundle', dir: 'up' },
+          { val: '43%', lbl: 'Share of revenue', delta: 'top 3 SKUs', dir: 'up' }
+        ],
+        answer: '<p>Your top 3 SKUs this month: <strong>Oat Bowl Bundle ($8.2K)</strong>, Strawberry Smoothie Mix ($5.4K), and Recovery Granola ($4.1K). Together they drive <strong>43% of revenue from just 3 SKUs</strong>.</p><p>Customers who buy the Oat Bowl Bundle are <strong>3.1x more likely</strong> to convert on a smoothie upsell within 30 days. Clear post-purchase opportunity.</p>',
+        action: 'Build post-purchase upsell'
+      },
+      { q: "Forecast next month's revenue",
+        chartTitle: 'Revenue forecast · next 30 days',
+        type: 'forecast-fan',
+        metrics: [
+          { val: '$94K', lbl: 'Forecast (May)', delta: '+8% MoM', dir: 'up' },
+          { val: '\u00b1$6K', lbl: 'Confidence band', delta: '86% conf.', dir: 'flat' }
+        ],
+        answer: "<p>May forecast: <strong>$94K (\u00b1$6K), 86% confidence</strong>. That's an 8% lift over April. The model attributes the lift to your scheduled Mother's Day campaign plus two new product launches.</p><p>One signal worth acting on: campaigns with a second reminder send 3 days post-launch have averaged <strong>$5K incremental revenue</strong>. Adding one for Mother's Day would push the forecast toward $99K.</p>",
+        action: 'Schedule reminder send'
+      },
+      { q: "Which segment has the highest LTV?",
+        chartTitle: 'Lifetime value by segment',
+        type: 'h-bars-money',
+        metrics: [
+          { val: '$412', lbl: 'Top segment LTV', delta: 'VIP buyers', dir: 'up' },
+          { val: '4.2x', lbl: 'vs overall avg', delta: '$98 baseline', dir: 'up' }
+        ],
+        answer: "<p><strong>VIP buyers</strong> ($412 average LTV) lead by a wide margin, <strong>4.2x your overall $98 baseline</strong>. Subscription Auto-Refill ($274), Repeat Shoppers ($186), and First-time Holiday ($112) round out the top 4.</p><p>Action: doubling acquisition spend on lookalikes of your VIP segment should raise blended LTV by an estimated <strong>$28 to $34 per new customer</strong> over 12 months.</p>",
+        chartData: [
+          { label: 'VIP buyers',          val: 412, fmt: '$412' },
+          { label: 'Auto-Refill subs',    val: 274, fmt: '$274' },
+          { label: 'Repeat shoppers',     val: 186, fmt: '$186' },
+          { label: 'First-time holiday',  val: 112, fmt: '$112' },
+          { label: 'Single-purchase',     val:  68, fmt: '$68'  }
+        ],
+        action: 'Build VIP lookalike audience'
+      }
+    ]
   },
+
   agency: {
     headline: 'Manage every client. From one place.',
-    subhead: 'For independent agencies running 5\u201330 active client accounts.',
+    subhead: 'For independent agencies running 10 to 30 active client accounts.',
     features: [
-      { name: 'Client Workspaces', desc: 'Switch contexts without losing your place.', svg: 'workspaces' },
-      { name: 'Risk Watchlist',     desc: 'Spot churning clients before they ask.', svg: 'risk' },
-      { name: 'Whitelabel Reports', desc: 'Branded weekly recaps in two clicks.', svg: 'report' },
+      { name: 'Client Workspaces',  desc: 'Switch contexts without losing your place.', svg: 'workspaces' },
+      { name: 'Risk Watchlist',     desc: 'Spot churning clients before they ask.',     svg: 'risk' },
+      { name: 'Whitelabel Reports', desc: 'Branded weekly recaps in two clicks.',       svg: 'report' }
     ],
-    ask: 'Which client is at risk this week?',
-    agent: 'Acme Co: opens dropped 34% week over week. Domain warm-up plan ready.',
-    tools: ['Reports', 'Audiences', 'Deliverability']
+    pgTitle: 'PixelEdge Agency',
+    pgGreetName: 'PixelEdge Agency',
+    pgGreetData: "17 active client accounts: campaigns, audiences, revenue attribution, and deliverability scores",
+    sample: {
+      eyebrow: 'Client portfolio',
+      title: 'Open rate · last 30 days',
+      type: 'sample-bars',
+      rows: [
+        { label: 'Acme Co',  val: '\u221234%', pct: 18, fill: 'red',  flagged: true },
+        { label: 'Sundial',  val: '42%',       pct: 92, fill: 'teal' },
+        { label: 'Mavenly',  val: '38%',       pct: 78, fill: 'teal' },
+        { label: 'Vela',     val: '35%',       pct: 70, fill: 'cta'  },
+        { label: 'Glow',     val: '28%',       pct: 56, fill: 'cta'  }
+      ],
+      callout: { tone: 'warn', html: '<strong>Acme Co flagged</strong> · open rate down 34% week over week. Sender reputation fell from 92 to 71 after a bulk send Mon.' }
+    },
+    questions: [
+      { q: "Which client had the worst week?",
+        chartTitle: 'Client performance · last 7 days',
+        type: 'h-bars-flagged',
+        metrics: [
+          { val: 'Acme Co', lbl: 'Underperformer', delta: '\u221234% opens', dir: 'down' },
+          { val: '\u2212$2.4K', lbl: 'Lost revenue', delta: 'vs forecast', dir: 'down' }
+        ],
+        answer: "<p><strong>Acme Co</strong> dropped 34% week over week. Their last 3 campaigns landed in spam at unusually high rates.</p><p>Root cause: sender reputation fell from <strong>92 to 71</strong> after a bulk send to an unverified list on Monday. Recommend pausing sends for 48 hours and running a domain warm-up sequence before resuming.</p>",
+        chartData: [
+          { label: 'Acme Co',  val: 14, flagged: true },
+          { label: 'Glow',     val: 28 },
+          { label: 'Vela',     val: 35 },
+          { label: 'Mavenly',  val: 38 },
+          { label: 'Sundial',  val: 42 }
+        ],
+        action: 'Pause Acme sends, run warm-up'
+      },
+      { q: "Rank my clients by deliverability risk",
+        chartTitle: 'Deliverability heat · 17 accounts',
+        type: 'heat-grid',
+        metrics: [
+          { val: '4', lbl: 'High-risk clients', delta: 'Acme + 3', dir: 'down' },
+          { val: '11', lbl: 'Healthy', delta: 'reputation > 85', dir: 'up' }
+        ],
+        answer: "<p>Of your 17 client accounts, <strong>4 are in the high-risk band</strong> (sender reputation under 75): Acme Co (71), Riverbed Coffee (73), Halwell &amp; Co (74), Pinedale (75).</p><p>The pattern across the high-risk four: bulk sends to lists with <strong>over 0.4% hard bounces</strong> in the prior 30 days. A list-hygiene pass on each is the highest-leverage move this week.</p>",
+        action: 'Run list-hygiene on top 4'
+      },
+      { q: "What's pulling down our portfolio open rate?",
+        chartTitle: 'Portfolio open rate · 90 days',
+        type: 'line-portfolio',
+        metrics: [
+          { val: '31.4%', lbl: 'Portfolio open', delta: '\u22122.8 pp', dir: 'down' },
+          { val: '2 of 17', lbl: 'Drag accounts', delta: 'Acme + Riverbed', dir: 'down' }
+        ],
+        answer: "<p>Portfolio open rate fell from <strong>34.2% to 31.4%</strong> over the past 90 days. Strip out two accounts (Acme Co and Riverbed Coffee) and the portfolio number rises to <strong>34.6%</strong>, slightly above your 90-day baseline.</p><p>The two drag accounts share a pattern: both shifted to twice-weekly sends in March. Returning either to a weekly cadence should recover roughly <strong>1.6 portfolio points</strong>.</p>",
+        action: 'Recommend cadence reset'
+      },
+      { q: "Which client should I upsell first?",
+        chartTitle: 'Upsell scoring · revenue \u00d7 engagement',
+        type: 'scatter-upsell',
+        metrics: [
+          { val: 'Sundial', lbl: 'Top score', delta: '94/100', dir: 'up' },
+          { val: '+$8K/mo', lbl: 'Total upsell pot.', delta: '4 ready clients', dir: 'up' }
+        ],
+        answer: "<p><strong>Sundial Apparel</strong> is your strongest upsell candidate, scoring 94/100. They've maxed Standard's 5-audience limit, revenue is up <strong>38% QoQ</strong>, and they've asked support about Premium features twice in the last month.</p><p>Bundle Premium with 4 onboarding sessions and your win probability is <strong>87%</strong>. Total estimated value across all 4 upsell-ready clients: <strong>around $8K MRR</strong>.</p>",
+        action: 'Draft Sundial upsell pitch'
+      }
+    ]
   },
+
   nonprofit: {
     headline: 'Tell stories. Move donors.',
-    subhead: 'For nonprofits raising under $5M and running 4+ appeals per year.',
+    subhead: 'For nonprofits with up to 5K active donors and 4+ appeals per year.',
     features: [
-      { name: 'Story Templates', desc: 'Donor-led emails that read like a letter.', svg: 'letter' },
+      { name: 'Story Templates', desc: 'Donor-led emails that read like a letter.',          svg: 'letter' },
       { name: 'Lapsed Win-back', desc: 'Bring back donors who haven\u2019t given in 12+ months.', svg: 'heart' },
-      { name: 'Impact Reports',  desc: 'Show outcomes, not just totals.', svg: 'impact' },
+      { name: 'Impact Reports',  desc: 'Show outcomes, not just totals.',                    svg: 'impact' }
     ],
-    ask: 'What moved the most donations last quarter?',
-    agent: 'Story-led emails to lapsed donors lifted gifts 2.4x. Replicating in this quarter\u2019s plan.',
-    tools: ['Templates', 'Audiences', 'Analytics AI']
+    pgTitle: 'Reach Out · Live demo',
+    pgGreetName: 'Reach Out',
+    pgGreetData: "5,124 donors, 28 campaigns, gift history, and major-donor scoring signals",
+    sample: {
+      eyebrow: 'Year-to-date',
+      title: 'Top campaigns by donations',
+      type: 'sample-vbars',
+      rows: [
+        { label: 'Holiday Drive',     val: '$14.2K', pct: 100, fill: 'teal' },
+        { label: 'Spring Appeal',     val: '$9.8K',  pct: 69,  fill: 'cta'  },
+        { label: 'Monthly Newsletter', val: '$4.1K', pct: 29,  fill: 'gold' }
+      ],
+      callout: { tone: 'good', html: '<strong>Holiday Drive: 62% above target.</strong> Subject line "A meal for a neighbor" beat control by 47%.' }
+    },
+    questions: [
+      { q: "Which appeal moved the most donations?",
+        chartTitle: 'Appeal performance · YTD',
+        type: 'v-bars-callout',
+        metrics: [
+          { val: '$14.2K', lbl: 'Holiday Drive', delta: '+62% vs target', dir: 'up' },
+          { val: '68%', lbl: 'Of Q4 revenue', delta: 'single campaign', dir: 'up' }
+        ],
+        answer: "<p>Your <strong>Holiday Drive</strong> raised <strong>$14.2K</strong>. That is 62% above target and 68% of all Q4 revenue. The winning subject line was <em>'A meal for a neighbor'</em>, which beat the control by 47%.</p><p>Pattern across your top 5 campaigns: stories with <strong>named beneficiaries outperform generic appeals 2.3x</strong>. Build Spring Drive around 3 to 4 specific recipient stories.</p>",
+        action: 'Replicate for Spring Drive'
+      },
+      { q: "Identify donors with major-gift potential",
+        chartTitle: 'Major-gift candidates',
+        type: 'donor-cohort',
+        metrics: [
+          { val: '42 donors', lbl: 'Major candidates', delta: '~$50K potential', dir: 'up' },
+          { val: '7', lbl: 'Top tier (>$500)', delta: '3 brand new', dir: 'up' }
+        ],
+        answer: "<p>I've identified <strong>42 donors</strong> with major-gift potential: 3+ gifts in 24 months and 5+ engaged emails this year. Estimated annual upgrade potential: <strong>~$50K</strong>.</p><p>Of those, 7 are top tier (lifetime gifts above $500), and <strong>3 are brand new this quarter</strong>. Those 3 are your highest-priority outreach. Engagement is hottest right after the first major gift.</p>",
+        action: 'Export major-donor list'
+      },
+      { q: "Is donor retention improving?",
+        chartTitle: 'Donor retention · 24-month trend',
+        type: 'line-retention',
+        metrics: [
+          { val: '68%', lbl: 'YoY retention', delta: '+4 pp', dir: 'up' },
+          { val: '22%', lbl: 'Lapsed', delta: '\u22123 pp', dir: 'up' }
+        ],
+        answer: "<p>Retention is trending up: <strong>68% YoY</strong>, a 4-point improvement. Lapsed donors have fallen to 22%. Your re-engagement series is the likely driver.</p><p>Specific signal worth scaling: donors who received <strong>2+ thank-you emails</strong> retain at 81% vs 54% for those who got just one. Doubling the thank-you sequence for new donors could add 8 to 10 retention points.</p>",
+        action: 'Expand thank-you series'
+      },
+      { q: "What's our best segment for Year-End Giving?",
+        chartTitle: 'Year-End candidate segments',
+        type: 'h-bars-segments',
+        metrics: [
+          { val: 'Sustainers', lbl: 'Top segment', delta: '$182 avg gift', dir: 'up' },
+          { val: '1,847', lbl: 'Total candidates', delta: '4 segments', dir: 'up' }
+        ],
+        answer: "<p>For Year-End Giving, <strong>Sustainers</strong> are your highest-value audience (avg gift $182, predicted YE participation 64%). Lapsed major donors (avg gift $148, 41% participation) and First-time digital donors ($86, 38%) round out the top 3.</p><p>Combined audience: <strong>1,847 donors</strong> with predicted YE revenue of <strong>$118K</strong>. A tailored 3-touch sequence per segment beats one-size-fits-all by approximately <strong>1.7x</strong>.</p>",
+        chartData: [
+          { label: 'Sustainers',        val: 182, fmt: '$182' },
+          { label: 'Lapsed major',      val: 148, fmt: '$148' },
+          { label: 'First-time digital', val: 86, fmt: '$86'  },
+          { label: 'Event attendees',   val:  74, fmt: '$74'  }
+        ],
+        action: 'Build YE sequences per segment'
+      }
+    ]
   },
+
   b2b: {
     headline: 'Find your buyers. Win the next deal.',
     subhead: 'For B2B services teams running ABM and pipeline nurture.',
     features: [
-      { name: 'Account Segments', desc: 'Group by firmographic + intent.', svg: 'segments' },
-      { name: 'Pipeline Nurture', desc: 'Multi-touch journeys synced with CRM.', svg: 'pipeline' },
-      { name: 'Convert AI',       desc: 'Predict the segment most likely to close.', svg: 'predict' },
+      { name: 'Account Segments', desc: 'Group by firmographic + intent.',                svg: 'segments' },
+      { name: 'Pipeline Nurture', desc: 'Multi-touch journeys synced with CRM.',          svg: 'pipeline' },
+      { name: 'Convert AI',       desc: 'Predict the segment most likely to close.',      svg: 'predict'  }
     ],
-    ask: 'Which segment converts best?',
-    agent: 'Mid-market SaaS segment converts 3.1x baseline. Recommend doubling spend on this audience.',
-    tools: ['Segments', 'Journeys', 'Analytics AI']
+    pgTitle: 'Sundial SaaS',
+    pgGreetName: 'Sundial SaaS',
+    pgGreetData: "MQL pipeline, account-based campaigns, content engagement, and CRM-synced opportunities",
+    sample: {
+      eyebrow: 'Demo conversion',
+      title: 'Conversion lift by segment',
+      type: 'sample-bars',
+      rows: [
+        { label: 'Mid-Market SaaS', val: '3.1x', pct: 96, fill: 'teal' },
+        { label: 'Enterprise',       val: '2.4x', pct: 76, fill: 'teal' },
+        { label: 'SMB',              val: '1.7x', pct: 54, fill: 'cta'  },
+        { label: 'Self-serve',       val: '0.8x', pct: 26, fill: 'cta'  }
+      ],
+      callout: { tone: 'good', html: '<strong>Mid-Market SaaS</strong> converts at 3.1x baseline. Worth doubling spend on this segment.' }
+    },
+    questions: [
+      { q: "Which segment converts best to demos?",
+        chartTitle: 'Demo conversion by segment',
+        type: 'h-bars-mult',
+        metrics: [
+          { val: '3.1x', lbl: 'Top multiplier', delta: 'Mid-Market SaaS', dir: 'up' },
+          { val: '0.8x', lbl: 'Worst', delta: 'Self-serve', dir: 'down' }
+        ],
+        answer: "<p><strong>Mid-Market SaaS</strong> converts to demos at <strong>3.1x your baseline rate</strong>, well ahead of Enterprise (2.4x), SMB (1.7x), and Self-serve (0.8x). Demo show-up rate inside that segment is also highest at <strong>78%</strong>.</p><p>Spend skew on mid-market reps and a content track tuned for buying committees of 4 to 6 should compound this. Estimated incremental ARR over 2 quarters: <strong>$420K to $560K</strong>.</p>",
+        chartData: [
+          { label: 'Mid-Market SaaS', val: 3.1, fmt: '3.1x' },
+          { label: 'Enterprise',      val: 2.4, fmt: '2.4x' },
+          { label: 'SMB',             val: 1.7, fmt: '1.7x' },
+          { label: 'Self-serve',      val: 0.8, fmt: '0.8x' }
+        ],
+        action: 'Skew spend to mid-market'
+      },
+      { q: "What's our pipeline forecast?",
+        chartTitle: 'Pipeline forecast · next quarter',
+        type: 'forecast-fan',
+        metrics: [
+          { val: '$3.4M', lbl: 'Pipeline (Q3)', delta: '+14% QoQ', dir: 'up' },
+          { val: '\u00b1$320K', lbl: 'Confidence band', delta: '79% conf.', dir: 'flat' }
+        ],
+        answer: "<p>Q3 pipeline forecast: <strong>$3.4M (\u00b1$320K), 79% confidence</strong>. That's a 14% lift over Q2. The model attributes the lift to two newly-launched ABM plays plus a stronger top-of-funnel from the Mid-Market track.</p><p>One sensitivity: forecast hinges on a single $620K Enterprise opp slipping or holding. Confidence climbs to <strong>86%</strong> if that opp clears stage 4 by mid-quarter.</p>",
+        action: 'Force-rank top 10 enterprise opps'
+      },
+      { q: "Which content drove the most MQLs last quarter?",
+        chartTitle: 'Content \u2192 MQL attribution',
+        type: 'h-bars-mqls',
+        metrics: [
+          { val: '186', lbl: 'MQLs from top asset', delta: 'Buyer Guide', dir: 'up' },
+          { val: '38%', lbl: 'Of Q2 MQLs', delta: 'one asset', dir: 'up' }
+        ],
+        answer: "<p><strong>The HRIS Buyer's Guide</strong> drove <strong>186 MQLs last quarter</strong>, 38% of all Q2 MQLs. Webinar replay (124), ROI calculator (88), and the benchmark report (72) round out the top 4.</p><p>Worth noting: MQLs from the buyer guide convert to opps at <strong>2.1x the rate</strong> of webinar replays. Re-promoting the guide in your nurture sequences is a quick lever this quarter.</p>",
+        chartData: [
+          { label: "HRIS Buyer's Guide", val: 186 },
+          { label: 'Webinar replay',    val: 124 },
+          { label: 'ROI calculator',    val:  88 },
+          { label: 'Benchmark report',  val:  72 },
+          { label: 'Product tour',      val:  41 }
+        ],
+        action: 'Re-promote buyer guide in nurture'
+      },
+      { q: "Identify accounts at risk of churn",
+        chartTitle: 'Churn risk · scored accounts',
+        type: 'churn-tier',
+        metrics: [
+          { val: '14', lbl: 'High-risk accounts', delta: '$840K ARR', dir: 'down' },
+          { val: '38', lbl: 'Watch list', delta: '$1.2M ARR', dir: 'flat' }
+        ],
+        answer: "<p>Across 312 paying accounts, <strong>14 are high risk</strong> (<strong>$840K ARR</strong> exposed). Top signals: usage down 40%+ over 60 days, 0 logins from the executive sponsor in 30 days, and 2+ open support tickets.</p><p>Top 3 by ARR: <strong>Northwind Logistics ($142K)</strong>, Vandelay Industries ($118K), and Halwell Group ($96K). All 3 changed primary sponsor in the last 90 days. A scheduled QBR + sponsor re-onboarding plays well here.</p>",
+        action: 'Trigger QBR + sponsor onboarding'
+      }
+    ]
   }
 };
 
@@ -2914,154 +2348,867 @@ function featureSVG(kind) {
   }
 }
 
+/* ---------- Helpers ---------- */
+function pgEscapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+let currentPersona = 'ecommerce';
+
 function setPersona(p) {
   const data = PERSONAS[p];
   if (!data) return;
-  // Pills
-  const pills = document.querySelectorAll('.vb-pill');
-  pills.forEach(b => b.classList.toggle('active', b.dataset.persona === p));
-  // Dots
-  const dots = document.querySelectorAll('.vb-dot');
+  currentPersona = p;
+
+  // Persona pills + dots
+  document.querySelectorAll('.vb-pill').forEach(b => b.classList.toggle('active', b.dataset.persona === p));
   const order = ['ecommerce','agency','nonprofit','b2b'];
   const idx = order.indexOf(p);
-  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-  // Headline & subhead
+  document.querySelectorAll('.vb-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+
+  // Left column: headline / subhead / feature cards
   const headline = document.getElementById('vbHeadline');
   const subhead = document.getElementById('vbSubhead');
   if (headline) headline.textContent = data.headline;
   if (subhead) subhead.textContent = data.subhead;
-  // Features
   const featRow = document.getElementById('vbFeatureRow');
-  if (featRow) {
+  if (featRow && data.features) {
     featRow.innerHTML = data.features.map(f => `
       <div class="vb-feature-card">
         <div class="vb-feature-illo">${featureSVG(f.svg)}</div>
-        <h4>${f.name}</h4>
-        <p>${f.desc}</p>
+        <div>
+          <h4>${pgEscapeHtml(f.name)}</h4>
+          <p>${pgEscapeHtml(f.desc)}</p>
+        </div>
       </div>
     `).join('');
   }
-  // Ask + agent
-  const ask = document.getElementById('vbAskBubble');
-  const agent = document.getElementById('vbAgentBubble');
-  if (ask) ask.textContent = data.ask;
-  if (agent) agent.textContent = data.agent;
-  // Tools
-  const tools = document.getElementById('vbTools');
-  if (tools) {
-    const iconMap = {
-      'Editor':       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3 l5 5 -10 10 -5 1 1 -5 z"/></svg>',
-      'Segments':     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 19 c0 -3 3 -5 6 -5"/></svg>',
-      'Automations':  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 6 h8 M18 8 v8 M16 18 H8 a4 4 0 0 1 -4 -4 V8"/></svg>',
-      'Reports':      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1.5"/><line x1="8" y1="14" x2="8" y2="17"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="16" y1="8" x2="16" y2="17"/></svg>',
-      'Audiences':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3.5"/><path d="M3 19 c0 -3.5 3 -5.5 6 -5.5 s6 2 6 5.5"/><circle cx="17" cy="10" r="2.5"/></svg>',
-      'Deliverability':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12 l18 -8 -7 18 -3 -8 z"/></svg>',
-      'Templates':    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1.5"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="10" x2="10" y2="20"/></svg>',
-      'Analytics AI': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 L13 9 L19 10 L13 11 L12 17 L11 11 L5 10 L11 9 Z"/></svg>',
-      'Journeys':     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 c4 -4 8 -4 16 -12"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="6" r="2"/></svg>'
-    };
-    tools.innerHTML = data.tools.map(t =>
-      `<a href="#" class="vb-tool-chip">${iconMap[t] || ''} ${t}</a>`
-    ).join('');
+
+  // Right column (the playground): toolbar + greeting + suggestions + sample chart
+  const titleEl = document.getElementById('pgTitle');
+  if (titleEl && data.pgTitle) titleEl.textContent = data.pgTitle;
+
+  const messages = document.getElementById('pgMessages');
+  if (messages) {
+    messages.innerHTML = `
+      <div class="pg-msg ai">
+        <div class="pg-bubble">
+          <p>I'm Analytics AI. I have access to <strong>${pgEscapeHtml(data.pgGreetName)}'s</strong> last 6 months of data: ${pgEscapeHtml(data.pgGreetData)}.</p>
+          <p style="color: rgba(255,255,255,0.6);">Pick a question below or type your own to get started.</p>
+        </div>
+      </div>`;
+  }
+
+  const suggested = document.getElementById('pgSuggested');
+  if (suggested && data.questions) {
+    suggested.innerHTML = `<span class="pg-suggested-label">Try a question</span>` +
+      data.questions.map((qa, i) => `<button class="pg-chip" type="button" data-pg-chip="${i}">${pgEscapeHtml(qa.q)}</button>`).join('');
+    suggested.querySelectorAll('.pg-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        markInteracted();
+        askPlaygroundQuestion(parseInt(chip.dataset.pgChip, 10));
+      });
+    });
+  }
+
+  // Reset metric row + render sample insight
+  const metricRow = document.getElementById('pgMetricRow');
+  if (metricRow) metricRow.style.display = 'none';
+  const vizTitle = document.getElementById('pgVizTitle');
+  if (vizTitle && data.sample) vizTitle.textContent = data.sample.title;
+  renderSampleInsight(data.sample);
+}
+
+function renderSampleInsight(sample) {
+  const canvas = document.getElementById('pgCanvas');
+  if (!canvas || !sample) return;
+  if (sample.type === 'sample-bars') {
+    canvas.innerHTML = `
+      <div class="pg-sample">
+        <div class="pg-sample-eyebrow"><span class="pg-pulse"></span>${pgEscapeHtml(sample.eyebrow)}</div>
+        <div class="pg-sample-title">${pgEscapeHtml(sample.title)}</div>
+        <div class="pg-sample-rows">
+          ${sample.rows.map(r => `
+            <div class="pg-bar-row${r.flagged ? ' flagged' : ''}">
+              <span class="pg-bar-label">${pgEscapeHtml(r.label)}</span>
+              <div class="pg-bar-track"><div class="pg-bar-fill ${r.fill}" style="width:0%"></div></div>
+              <span class="pg-bar-val">${pgEscapeHtml(r.val)}</span>
+            </div>
+          `).join('')}
+        </div>
+        ${sample.callout ? `<div class="pg-callout${sample.callout.tone === 'warn' ? ' warn' : ''}">${sample.callout.html}</div>` : ''}
+      </div>`;
+    requestAnimationFrame(() => {
+      canvas.querySelectorAll('.pg-bar-fill').forEach((el, i) => {
+        const pct = sample.rows[i] ? sample.rows[i].pct : 0;
+        setTimeout(() => { el.style.width = pct + '%'; }, 30 + i * 60);
+      });
+    });
+    return;
+  }
+  if (sample.type === 'sample-vbars') {
+    const max = 100;
+    canvas.innerHTML = `
+      <div class="pg-sample">
+        <div class="pg-sample-eyebrow"><span class="pg-pulse"></span>${pgEscapeHtml(sample.eyebrow)}</div>
+        <div class="pg-sample-title">${pgEscapeHtml(sample.title)}</div>
+        <div style="display:flex; gap:14px; align-items:flex-end; flex:1; padding:10px 6px 4px;">
+          ${sample.rows.map((r, i) => `
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+              <span style="font-size:11.5px; font-weight:700; color:white;">${pgEscapeHtml(r.val)}</span>
+              <div class="pg-vbar-track" style="width:100%; height:120px; background:rgba(255,255,255,0.05); border-radius:6px; display:flex; align-items:flex-end; overflow:hidden;">
+                <div class="pg-vbar-fill ${r.fill}" style="width:100%; height:0%; border-radius:6px; transition: height 1s ease ${i * 100}ms;"></div>
+              </div>
+              <span style="font-size:11px; color:rgba(255,255,255,0.6); text-align:center; line-height:1.2;">${pgEscapeHtml(r.label)}</span>
+            </div>
+          `).join('')}
+        </div>
+        ${sample.callout ? `<div class="pg-callout${sample.callout.tone === 'warn' ? ' warn' : ''}">${sample.callout.html}</div>` : ''}
+      </div>`;
+    requestAnimationFrame(() => {
+      canvas.querySelectorAll('.pg-vbar-fill').forEach((el, i) => {
+        const pct = sample.rows[i] ? sample.rows[i].pct : 0;
+        const colorMap = { teal: 'var(--mc-teal)', cta: 'var(--mc-cta)', gold: 'var(--mc-gold)', red: 'var(--mc-coral)' };
+        el.style.background = colorMap[sample.rows[i].fill] || 'var(--mc-teal)';
+        setTimeout(() => { el.style.height = pct + '%'; }, 50 + i * 100);
+      });
+    });
+    return;
   }
 }
 
-(function variantBInit() {
-  const pillRow = document.getElementById('vbPillRow');
-  if (!pillRow) return;
-  pillRow.querySelectorAll('.vb-pill').forEach(p => {
-    p.addEventListener('click', () => {
-      stopVariantBRotation();
-      setPersona(p.dataset.persona);
+function askPlaygroundQuestion(idx) {
+  const data = PERSONAS[currentPersona];
+  if (!data || !data.questions || !data.questions[idx]) return;
+  const qa = data.questions[idx];
+
+  // Append user bubble
+  const messages = document.getElementById('pgMessages');
+  if (messages) {
+    const u = document.createElement('div');
+    u.className = 'pg-msg user';
+    u.innerHTML = `<div class="pg-bubble">${pgEscapeHtml(qa.q)}</div>`;
+    messages.appendChild(u);
+    const a = document.createElement('div');
+    a.className = 'pg-msg ai';
+    a.innerHTML = `<div class="pg-bubble"><span class="pg-typing"></span></div>`;
+    messages.appendChild(a);
+    messages.scrollTop = messages.scrollHeight;
+    setTimeout(() => {
+      const bubble = a.querySelector('.pg-bubble');
+      if (bubble) {
+        bubble.innerHTML = qa.answer + (qa.action ? `<button class="pg-action" type="button">${pgEscapeHtml(qa.action)}</button>` : '');
+      }
+      messages.scrollTop = messages.scrollHeight;
+    }, 600);
+  }
+
+  // Update viz title + metrics
+  const vizTitle = document.getElementById('pgVizTitle');
+  if (vizTitle) vizTitle.textContent = qa.chartTitle || data.sample.title;
+  const metricRow = document.getElementById('pgMetricRow');
+  if (metricRow && qa.metrics && qa.metrics.length >= 2) {
+    metricRow.style.display = 'flex';
+    const m1v = document.getElementById('pgM1Val');
+    const m1l = document.getElementById('pgM1Lbl');
+    const m1d = document.getElementById('pgM1Delta');
+    const m2v = document.getElementById('pgM2Val');
+    const m2l = document.getElementById('pgM2Lbl');
+    const m2d = document.getElementById('pgM2Delta');
+    if (m1v) m1v.textContent = qa.metrics[0].val;
+    if (m1l) m1l.textContent = qa.metrics[0].lbl;
+    if (m1d) { m1d.textContent = qa.metrics[0].delta; m1d.className = 'delta ' + (qa.metrics[0].dir || 'flat'); }
+    if (m2v) m2v.textContent = qa.metrics[1].val;
+    if (m2l) m2l.textContent = qa.metrics[1].lbl;
+    if (m2d) { m2d.textContent = qa.metrics[1].delta; m2d.className = 'delta ' + (qa.metrics[1].dir || 'flat'); }
+  } else if (metricRow) {
+    metricRow.style.display = 'none';
+  }
+
+  setTimeout(() => renderPlaygroundChart(qa), 250);
+}
+
+/* ---------- Chart renderer ---------- */
+function renderPlaygroundChart(qa) {
+  const canvas = document.getElementById('pgCanvas');
+  if (!canvas) return;
+  const t = qa.type;
+  let svg = '';
+
+  if (t === 'line-anomaly') {
+    // E-com revenue drop scene with anomaly callout
+    svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="pglg1" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#007C89" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#007C89" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="rgba(255,255,255,0.07)" stroke-width="0.6">
+        <line x1="0" y1="50" x2="360" y2="50"/>
+        <line x1="0" y1="100" x2="360" y2="100"/>
+        <line x1="0" y1="150" x2="360" y2="150"/>
+      </g>
+      <path d="M0,60 L40,52 L80,48 L120,42 L160,46 L200,55 L240,90 L280,128 L320,138 L360,134"
+            stroke="#00B9A6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M0,60 L40,52 L80,48 L120,42 L160,46 L200,55 L240,90 L280,128 L320,138 L360,134 L360,180 L0,180 Z"
+            fill="url(#pglg1)"/>
+      <circle cx="240" cy="90" r="6" fill="#FF6B47" stroke="white" stroke-width="1.5"/>
+      <circle cx="240" cy="90" r="11" fill="none" stroke="#FF6B47" stroke-opacity="0.4" stroke-width="1.4">
+        <animate attributeName="r" values="11;18;11" dur="1.6s" repeatCount="indefinite"/>
+        <animate attributeName="stroke-opacity" values="0.4;0;0.4" dur="1.6s" repeatCount="indefinite"/>
+      </circle>
+      <text x="248" y="82" font-size="11" fill="#FF6B47" font-weight="700">\u221218% on Tue</text>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'donut-sku') {
+    // Donut with 3 segments: Bundle / Smoothie / Granola / Other
+    svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(90,90)">
+        <circle r="62" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="22"/>
+        <circle r="62" fill="none" stroke="#007C89" stroke-width="22"
+                stroke-dasharray="167 222" stroke-dashoffset="0" transform="rotate(-90)"/>
+        <circle r="62" fill="none" stroke="#00B9A6" stroke-width="22"
+                stroke-dasharray="110 282" stroke-dashoffset="-167" transform="rotate(-90)"/>
+        <circle r="62" fill="none" stroke="#F4A100" stroke-width="22"
+                stroke-dasharray="84 308" stroke-dashoffset="-277" transform="rotate(-90)"/>
+        <text y="-2" text-anchor="middle" font-size="20" font-weight="700" fill="white">$17.7K</text>
+        <text y="14" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.55)">top 3 SKUs</text>
+      </g>
+      <g transform="translate(180,30)" font-size="11" fill="rgba(255,255,255,0.85)">
+        <g><rect x="0" y="0" width="10" height="10" rx="2" fill="#007C89"/><text x="16" y="9" font-weight="600">Oat Bowl Bundle <tspan fill="rgba(255,255,255,0.6)" font-weight="400">$8.2K</tspan></text></g>
+        <g transform="translate(0,22)"><rect width="10" height="10" rx="2" fill="#00B9A6"/><text x="16" y="9" font-weight="600">Strawberry Smoothie <tspan fill="rgba(255,255,255,0.6)" font-weight="400">$5.4K</tspan></text></g>
+        <g transform="translate(0,44)"><rect width="10" height="10" rx="2" fill="#F4A100"/><text x="16" y="9" font-weight="600">Recovery Granola <tspan fill="rgba(255,255,255,0.6)" font-weight="400">$4.1K</tspan></text></g>
+        <g transform="translate(0,66)"><rect width="10" height="10" rx="2" fill="rgba(255,255,255,0.18)"/><text x="16" y="9" fill="rgba(255,255,255,0.6)">All other SKUs $23.4K</text></g>
+        <g transform="translate(0,96)"><text font-size="10" fill="rgba(255,255,255,0.45)">Top 3 = 43% of revenue</text></g>
+      </g>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'forecast-fan') {
+    // Forecast with confidence band, dotted future segment
+    svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="pglg2" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#00B9A6" stop-opacity="0.42"/>
+          <stop offset="100%" stop-color="#00B9A6" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="rgba(255,255,255,0.07)" stroke-width="0.6">
+        <line x1="0" y1="50" x2="360" y2="50"/>
+        <line x1="0" y1="100" x2="360" y2="100"/>
+        <line x1="0" y1="150" x2="360" y2="150"/>
+      </g>
+      <!-- confidence band (future) -->
+      <path d="M210,60 L260,52 L310,42 L360,32 L360,78 L310,72 L260,82 L210,90 Z" fill="url(#pglg2)"/>
+      <!-- historical solid line -->
+      <path d="M0,140 L30,128 L60,120 L90,108 L120,100 L150,90 L180,82 L210,78"
+            stroke="#007C89" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <!-- forecast dotted line -->
+      <path d="M210,78 L260,62 L310,52 L360,40"
+            stroke="#00B9A6" stroke-width="2.4" stroke-dasharray="5,4" fill="none" stroke-linecap="round"/>
+      <!-- particle stream stylized as small dots in the future zone -->
+      <g fill="#00B9A6" opacity="0.7">
+        <circle cx="232" cy="68" r="1.6"/><circle cx="248" cy="58" r="1.4"/>
+        <circle cx="270" cy="64" r="1.6"/><circle cx="284" cy="50" r="1.4"/>
+        <circle cx="306" cy="55" r="1.6"/><circle cx="320" cy="46" r="1.4"/>
+        <circle cx="342" cy="44" r="1.6"/>
+      </g>
+      <line x1="210" y1="20" x2="210" y2="160" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-dasharray="2,3"/>
+      <text x="210" y="172" font-size="10" fill="rgba(255,255,255,0.45)" text-anchor="middle">Today</text>
+      <circle cx="210" cy="78" r="4.5" fill="#007C89" stroke="white" stroke-width="1"/>
+      <circle cx="360" cy="40" r="5" fill="#00B9A6" stroke="white" stroke-width="1"/>
+      <text x="354" y="28" font-size="11" fill="#00B9A6" font-weight="700" text-anchor="end">${pgEscapeHtml(qa.metrics && qa.metrics[0] ? qa.metrics[0].val : '')}</text>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'h-bars-money' || t === 'h-bars-segments' || t === 'h-bars-mult' || t === 'h-bars-mqls' || t === 'h-bars-flagged') {
+    const data = qa.chartData || [];
+    const max = Math.max(1, ...data.map(d => d.val));
+    canvas.innerHTML = `<div style="display:flex; flex-direction:column; gap:8px; flex:1; justify-content:center;">
+      ${data.map((d, i) => {
+        const w = (d.val / max) * 100;
+        const fill = d.flagged ? 'var(--mc-coral)' : (i === 0 ? 'var(--mc-teal)' : (i === 1 ? 'var(--mc-cta)' : 'rgba(0,124,137,0.55)'));
+        const labelColor = d.flagged ? 'var(--mc-coral)' : 'rgba(255,255,255,0.65)';
+        return `<div class="pg-bar-row${d.flagged ? ' flagged' : ''}">
+          <span class="pg-bar-label" style="color:${labelColor};">${pgEscapeHtml(d.label)}</span>
+          <div class="pg-bar-track"><div style="height:100%; width:0%; background:${fill}; border-radius:4px; transition: width 0.9s ease ${i*80}ms;" data-pct="${w}"></div></div>
+          <span class="pg-bar-val">${pgEscapeHtml(d.fmt || (typeof d.val === 'number' ? d.val.toLocaleString() : d.val))}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+    requestAnimationFrame(() => {
+      canvas.querySelectorAll('[data-pct]').forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 30 + i * 60);
+      });
+    });
+    return;
+  }
+
+  if (t === 'heat-grid') {
+    // 17-cell heatmap (clients) — colored by deliverability risk
+    const cells = [
+      [85,72,73,71,90,88,91],
+      [92,75,78,82,86,89,75],
+      [88,79,84]
+    ];
+    const flat = cells.flat();
+    const cellSvg = [];
+    let cx = 0, cy = 0;
+    flat.forEach((score, i) => {
+      const col = i % 7;
+      const row = Math.floor(i / 7);
+      const x = 14 + col * 46;
+      const y = 22 + row * 44;
+      let fill = '#007C89';
+      if (score < 75) fill = '#FF6B47';
+      else if (score < 82) fill = '#F4A100';
+      else if (score < 90) fill = '#00B9A6';
+      cellSvg.push(`<rect x="${x}" y="${y}" width="40" height="38" rx="6" fill="${fill}"
+        stroke="${score < 75 ? 'white' : 'rgba(255,255,255,0.08)'}" stroke-width="${score < 75 ? 1.5 : 1}"/>`);
+      cellSvg.push(`<text x="${x + 20}" y="${y + 23}" font-size="11" font-weight="700" fill="white" text-anchor="middle">${score}</text>`);
+    });
+    svg = `<svg viewBox="0 0 340 170" preserveAspectRatio="xMidYMid meet">
+      ${cellSvg.join('')}
+      <g font-size="10" fill="rgba(255,255,255,0.5)">
+        <text x="14" y="14">17 client accounts · sender reputation score</text>
+        <g transform="translate(14,160)">
+          <rect width="10" height="8" rx="2" fill="#FF6B47"/><text x="14" y="7">Risk</text>
+          <rect x="56" width="10" height="8" rx="2" fill="#F4A100"/><text x="70" y="7">Watch</text>
+          <rect x="116" width="10" height="8" rx="2" fill="#00B9A6"/><text x="130" y="7">Healthy</text>
+          <rect x="184" width="10" height="8" rx="2" fill="#007C89"/><text x="198" y="7">Strong</text>
+        </g>
+      </g>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'line-portfolio') {
+    svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="pglg3" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#FF6B47" stop-opacity="0.32"/>
+          <stop offset="100%" stop-color="#FF6B47" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="rgba(255,255,255,0.07)" stroke-width="0.6">
+        <line x1="0" y1="55" x2="360" y2="55"/>
+        <line x1="0" y1="105" x2="360" y2="105"/>
+      </g>
+      <!-- Portfolio (with drag) -->
+      <path d="M0,60 L40,62 L80,58 L120,66 L160,72 L200,80 L240,90 L280,98 L320,108 L360,114"
+            stroke="#FF6B47" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M0,60 L40,62 L80,58 L120,66 L160,72 L200,80 L240,90 L280,98 L320,108 L360,114 L360,180 L0,180 Z" fill="url(#pglg3)"/>
+      <!-- Without drag accounts (counterfactual) -->
+      <path d="M0,58 L40,55 L80,52 L120,55 L160,52 L200,50 L240,48 L280,46 L320,44 L360,42"
+            stroke="#00B9A6" stroke-width="2" fill="none" stroke-dasharray="4,4" stroke-linecap="round"/>
+      <text x="356" y="36" font-size="10" fill="#00B9A6" text-anchor="end" font-weight="700">excluding 2 drag accounts</text>
+      <text x="356" y="128" font-size="10" fill="#FF6B47" text-anchor="end" font-weight="700">portfolio (with drag)</text>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'scatter-upsell') {
+    // Bubble chart: revenue (x) vs engagement (y), bubble = ARR
+    const points = [
+      { x:  60, y:  58, r: 12, label: 'Acme',    color: '#FF6B47' },
+      { x: 110, y: 110, r: 14, label: 'Glow',    color: 'rgba(0,124,137,0.7)' },
+      { x: 180, y:  90, r: 18, label: 'Vela',    color: 'rgba(0,124,137,0.7)' },
+      { x: 230, y:  60, r: 22, label: 'Mavenly', color: 'rgba(0,124,137,0.7)' },
+      { x: 290, y:  35, r: 26, label: 'Sundial', color: '#FFE01B' }
+    ];
+    svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet">
+      <g stroke="rgba(255,255,255,0.07)" stroke-width="0.6">
+        <line x1="32" y1="20" x2="32" y2="156"/>
+        <line x1="32" y1="156" x2="350" y2="156"/>
+      </g>
+      <text x="32" y="14" font-size="9" fill="rgba(255,255,255,0.5)">engagement</text>
+      <text x="350" y="172" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="end">revenue \u2192</text>
+      ${points.map(p => `
+        <circle cx="${p.x + 32}" cy="${p.y}" r="${p.r}" fill="${p.color}" fill-opacity="0.85" stroke="white" stroke-opacity="0.18"/>
+        <text x="${p.x + 32}" y="${p.y + p.r + 11}" font-size="10" fill="rgba(255,255,255,0.85)" text-anchor="middle" font-weight="700">${pgEscapeHtml(p.label)}</text>
+      `).join('')}
+      <text x="${290 + 32}" y="${35 - 32}" font-size="10" fill="#FFE01B" text-anchor="middle" font-weight="700">upsell-ready</text>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'v-bars-callout') {
+    const data = [
+      { label: 'Holiday Drive',    val: 14.2, h: 100 },
+      { label: 'Spring Appeal',    val: 9.8,  h: 69 },
+      { label: 'Monthly Newsletter', val: 4.1, h: 29 },
+      { label: 'Anniversary',      val: 2.6,  h: 18 },
+      { label: 'Ad Hoc',           val: 1.4,  h: 10 }
+    ];
+    canvas.innerHTML = `
+      <div style="display:flex; gap:10px; align-items:flex-end; flex:1; padding:10px 6px 4px;">
+        ${data.map((d, i) => `
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <span style="font-size:11px; font-weight:700; color:${i === 0 ? 'var(--mc-teal)' : 'rgba(255,255,255,0.85)'};">$${d.val}K</span>
+            <div style="width:100%; height:120px; background:rgba(255,255,255,0.05); border-radius:6px; display:flex; align-items:flex-end; overflow:hidden;">
+              <div style="width:100%; height:0%; background:${i === 0 ? 'var(--mc-teal)' : (i === 1 ? 'var(--mc-cta)' : 'rgba(0,124,137,0.5)')}; border-radius:6px; transition: height 0.9s ease ${i*80}ms;" data-vh="${d.h}"></div>
+            </div>
+            <span style="font-size:10.5px; color:rgba(255,255,255,0.6); text-align:center; line-height:1.15;">${pgEscapeHtml(d.label)}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="pg-callout"><strong>Holiday Drive: 62% above target.</strong> Subject "A meal for a neighbor" beat control by 47%.</div>`;
+    requestAnimationFrame(() => {
+      canvas.querySelectorAll('[data-vh]').forEach((el, i) => {
+        setTimeout(() => { el.style.height = el.dataset.vh + '%'; }, 30 + i * 80);
+      });
+    });
+    return;
+  }
+
+  if (t === 'donor-cohort') {
+    canvas.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:10px; flex:1; justify-content:center;">
+        <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:8px; padding:10px 12px; background:rgba(0,185,166,0.06); border:1px solid rgba(0,185,166,0.25); border-radius:9px;">
+          <div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em;">Tier 1 · Top</div>
+            <div style="font-size:18px; font-weight:700; color:var(--mc-teal);">7 donors</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.6);">Lifetime &gt; $500</div>
+          </div>
+          <div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em;">Avg gift</div>
+            <div style="font-size:16px; font-weight:600; color:white;">$680</div>
+          </div>
+          <div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em;">New this Q</div>
+            <div style="font-size:16px; font-weight:600; color:var(--mc-yellow);">3</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap:8px; padding:10px 12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:9px;">
+          <div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em;">Tier 2 · Engaged</div>
+            <div style="font-size:18px; font-weight:700; color:white;">35 donors</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.6);">3+ gifts in 24mo</div>
+          </div>
+          <div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em;">Avg gift</div>
+            <div style="font-size:16px; font-weight:600; color:white;">$184</div>
+          </div>
+          <div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em;">Upgrade pot.</div>
+            <div style="font-size:16px; font-weight:600; color:var(--mc-sage);">~$42K</div>
+          </div>
+        </div>
+        <div class="pg-callout"><strong>42 candidates · ~$50K upgrade potential.</strong> 3 brand-new top-tier donors are highest priority.</div>
+      </div>`;
+    return;
+  }
+
+  if (t === 'line-retention') {
+    svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="pglg4" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#3FB58E" stop-opacity="0.42"/>
+          <stop offset="100%" stop-color="#3FB58E" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="rgba(255,255,255,0.07)" stroke-width="0.6">
+        <line x1="0" y1="55" x2="360" y2="55"/>
+        <line x1="0" y1="105" x2="360" y2="105"/>
+      </g>
+      <path d="M0,120 L40,118 L80,114 L120,108 L160,100 L200,92 L240,82 L280,72 L320,62 L360,54"
+            stroke="#3FB58E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M0,120 L40,118 L80,114 L120,108 L160,100 L200,92 L240,82 L280,72 L320,62 L360,54 L360,180 L0,180 Z" fill="url(#pglg4)"/>
+      <!-- Annotation: thank-you series turned on -->
+      <line x1="160" y1="20" x2="160" y2="160" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-dasharray="3,4"/>
+      <text x="166" y="32" font-size="10" fill="rgba(255,255,255,0.7)">Thank-you series live</text>
+      <circle cx="360" cy="54" r="5" fill="#3FB58E" stroke="white" stroke-width="1"/>
+      <text x="354" y="42" font-size="11" fill="#3FB58E" text-anchor="end" font-weight="700">68%</text>
+    </svg>`;
+    canvas.innerHTML = svg;
+    return;
+  }
+
+  if (t === 'churn-tier') {
+    canvas.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:8px; flex:1; justify-content:center;">
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1; background:rgba(255,107,71,0.10); border:1px solid rgba(255,107,71,0.45); border-radius:9px; padding:10px 12px;">
+            <div style="font-size:10px; color:var(--mc-coral); font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">High risk</div>
+            <div style="font-size:22px; font-weight:700; color:white; line-height:1.1;">14</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55);">$840K ARR</div>
+          </div>
+          <div style="flex:1; background:rgba(244,161,0,0.10); border:1px solid rgba(244,161,0,0.45); border-radius:9px; padding:10px 12px;">
+            <div style="font-size:10px; color:var(--mc-gold); font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Watch</div>
+            <div style="font-size:22px; font-weight:700; color:white; line-height:1.1;">38</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55);">$1.2M ARR</div>
+          </div>
+          <div style="flex:1; background:rgba(63,181,142,0.08); border:1px solid rgba(63,181,142,0.4); border-radius:9px; padding:10px 12px;">
+            <div style="font-size:10px; color:var(--mc-sage); font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Healthy</div>
+            <div style="font-size:22px; font-weight:700; color:white; line-height:1.1;">260</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.55);">$8.4M ARR</div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:9px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+          <div style="font-size:10px; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:0.08em;">Top 3 high-risk by ARR</div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:white;"><span>Northwind Logistics</span><span style="color:var(--mc-coral); font-weight:700;">$142K</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:white;"><span>Vandelay Industries</span><span style="color:var(--mc-coral); font-weight:700;">$118K</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:white;"><span>Halwell Group</span><span style="color:var(--mc-coral); font-weight:700;">$96K</span></div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  // Fallback for any custom data shape (e.g., uploaded data)
+  if (qa.chartData && qa.chartData.length) {
+    const data = qa.chartData;
+    const max = Math.max(1, ...data.map(d => d.val));
+    canvas.innerHTML = `<div style="display:flex; flex-direction:column; gap:8px; flex:1; justify-content:center;">
+      ${data.map((d, i) => `
+        <div class="pg-bar-row">
+          <span class="pg-bar-label">${pgEscapeHtml(d.label)}</span>
+          <div class="pg-bar-track"><div style="height:100%; width:0%; background:${i === 0 ? 'var(--mc-teal)' : 'var(--mc-cta)'}; border-radius:4px; transition: width 0.9s ease ${i*60}ms;" data-pct="${(d.val / max) * 100}"></div></div>
+          <span class="pg-bar-val">${pgEscapeHtml(d.fmt || (typeof d.val === 'number' ? (d.val > 1000 ? Math.round(d.val).toLocaleString() : (Math.round(d.val * 10) / 10).toString()) : d.val))}</span>
+        </div>`).join('')}
+    </div>`;
+    requestAnimationFrame(() => {
+      canvas.querySelectorAll('[data-pct]').forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, 30 + i * 60);
+      });
+    });
+    return;
+  }
+
+  // Default: clear and show a small placeholder
+  canvas.innerHTML = `<div style="flex:1; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.4); font-size:12px;">Visualization rendering…</div>`;
+}
+
+/* ---------- Data source toggle (Sample / Upload) + file upload ---------- */
+(function pgDataSource() {
+  const tabs = document.querySelectorAll('.pg-ds-tab');
+  const frame = document.getElementById('pgFrameWrap');
+  const uploadWrap = document.getElementById('pgUploadWrap');
+  if (!tabs.length || !frame || !uploadWrap) return;
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.pgTab;
+      tabs.forEach(b => {
+        const active = b === btn;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      if (mode === 'upload') {
+        frame.classList.add('upload-mode');
+        uploadWrap.classList.add('active');
+        markInteracted();
+      } else {
+        frame.classList.remove('upload-mode');
+        uploadWrap.classList.remove('active');
+      }
     });
   });
+})();
+
+/* ---------- Upload zone: parse CSV / Excel and generate insights ---------- */
+function pgNum(v) {
+  if (typeof v === 'number') return v;
+  if (v == null || v === '') return 0;
+  return parseFloat(String(v).replace(/[$,%\s]/g, '')) || 0;
+}
+function pgDetectColumnTypes(rows, cols) {
+  const types = {};
+  cols.forEach(col => {
+    let nums = 0, dates = 0, total = 0;
+    for (const r of rows.slice(0, 30)) {
+      const v = r[col];
+      if (v === null || v === undefined || v === '') continue;
+      total++;
+      if (typeof v === 'number' || (typeof v === 'string' && !isNaN(parseFloat(v.replace(/[$,%]/g, ''))))) nums++;
+      if (!isNaN(Date.parse(v))) dates++;
+    }
+    types[col] = {
+      numeric: total > 0 && nums / total > 0.7,
+      date: total > 0 && dates / total > 0.7 && nums / total < 0.7,
+      category: total > 0 && nums / total < 0.3 && dates / total < 0.3
+    };
+  });
+  return types;
+}
+function pgFindColumn(cols, keywords) {
+  for (const kw of keywords) {
+    const found = cols.find(c => c.toLowerCase().includes(kw.toLowerCase()));
+    if (found) return found;
+  }
+  return null;
+}
+function pgTopRowsBy(rows, col, n = 5) {
+  return [...rows].sort((a,b) => pgNum(b[col]) - pgNum(a[col])).slice(0, n);
+}
+function pgSummarize(rows, col) {
+  const values = rows.map(r => pgNum(r[col])).filter(v => !isNaN(v));
+  if (!values.length) return null;
+  const sum = values.reduce((a,b) => a+b, 0);
+  return { sum, avg: sum / values.length, max: Math.max(...values), min: Math.min(...values), count: values.length };
+}
+
+function generatePgInsightsFromData(rows, cols) {
+  const types = pgDetectColumnTypes(rows, cols);
+  const numericCols = cols.filter(c => types[c].numeric);
+  const categoryCols = cols.filter(c => types[c].category);
+  const revenueCol = pgFindColumn(cols, ['revenue', 'sales', 'amount', 'donation', 'gift']);
+  const openCol = pgFindColumn(cols, ['open rate', 'opens']);
+  const recipCol = pgFindColumn(cols, ['recipients', 'sent', 'delivered']);
+  const nameCol = pgFindColumn(cols, ['campaign', 'name', 'title']) || categoryCols[0];
+  const dateCol = cols.find(c => types[c].date);
+  const audienceCol = pgFindColumn(cols, ['audience', 'segment', 'list', 'group']);
+  const questions = [];
+  const fmt = (col, v) => {
+    const lc = (col || '').toLowerCase();
+    if (lc.includes('rate')) return v.toFixed(1) + '%';
+    if (lc.match(/revenue|sales|amount|donation|gift/)) return '$' + Math.round(v).toLocaleString();
+    return Math.round(v).toLocaleString();
+  };
+
+  const primary = revenueCol || numericCols[0];
+  if (primary && nameCol) {
+    const top = pgTopRowsBy(rows, primary, 5);
+    const sum = pgSummarize(rows, primary);
+    questions.push({
+      q: `Which ${nameCol.toLowerCase()} drove the most ${primary.toLowerCase()}?`,
+      chartTitle: `Top ${nameCol.toLowerCase()} by ${primary.toLowerCase()}`,
+      type: 'h-bars-money',
+      metrics: [
+        { val: fmt(primary, pgNum(top[0][primary])), lbl: 'Top performer', delta: String(top[0][nameCol]).slice(0, 16), dir: 'up' },
+        { val: fmt(primary, sum.avg), lbl: 'Average', delta: rows.length + ' rows', dir: 'flat' }
+      ],
+      answer: `<p>Top performer: <strong>"${pgEscapeHtml(String(top[0][nameCol]))}"</strong> with ${primary.toLowerCase()} of <strong>${fmt(primary, pgNum(top[0][primary]))}</strong>.</p><p>Top 3 alone account for <strong>${Math.round(top.slice(0,3).reduce((a,r) => a + pgNum(r[primary]), 0) / sum.sum * 100)}%</strong> of total ${primary.toLowerCase()}. Worth analyzing what made them work, and replicating that pattern across the rest of your sends.</p>`,
+      chartData: top.slice(0, 5).map(r => ({ label: String(r[nameCol]).slice(0, 18), val: pgNum(r[primary]), fmt: fmt(primary, pgNum(r[primary])) })),
+      action: `Replicate top ${nameCol.toLowerCase()} pattern`
+    });
+  }
+
+  if (openCol && nameCol) {
+    const sum = pgSummarize(rows, openCol);
+    const top = pgTopRowsBy(rows, openCol, 5);
+    const bottom = [...rows].sort((a,b) => pgNum(a[openCol]) - pgNum(b[openCol]))[0];
+    questions.push({
+      q: `What's driving open rate differences across ${nameCol.toLowerCase()}s?`,
+      chartTitle: 'Open rate distribution',
+      type: 'h-bars-money',
+      metrics: [
+        { val: sum.avg.toFixed(1) + '%', lbl: 'Avg open rate', delta: 'best ' + pgNum(top[0][openCol]).toFixed(1) + '%', dir: 'up' },
+        { val: (pgNum(top[0][openCol]) - pgNum(bottom[openCol])).toFixed(1) + 'pp', lbl: 'Spread', delta: 'optimization room', dir: 'flat' }
+      ],
+      answer: `<p>Average open rate is <strong>${sum.avg.toFixed(1)}%</strong>, ranging from <strong>${pgNum(bottom[openCol]).toFixed(1)}%</strong> ("${pgEscapeHtml(String(bottom[nameCol]))}") to <strong>${pgNum(top[0][openCol]).toFixed(1)}%</strong> ("${pgEscapeHtml(String(top[0][nameCol]))}").</p><p>That's a <strong>${(pgNum(top[0][openCol]) - pgNum(bottom[openCol])).toFixed(1)}-point spread</strong>. ${audienceCol ? `Sends to <strong>"${pgEscapeHtml(String(top[0][audienceCol]))}"</strong> tend to outperform broader ones.` : 'Subject lines and audience segmentation are the most likely drivers.'}</p>`,
+      chartData: top.slice(0, 5).map(r => ({ label: String(r[nameCol]).slice(0, 18), val: pgNum(r[openCol]), fmt: pgNum(r[openCol]).toFixed(1) + '%' })),
+      action: 'A/B test top performer subject'
+    });
+  }
+
+  if (audienceCol && primary) {
+    const byAud = {};
+    rows.forEach(r => {
+      const a = String(r[audienceCol] == null ? 'Unknown' : r[audienceCol]);
+      if (!byAud[a]) byAud[a] = { count: 0, total: 0 };
+      byAud[a].count++;
+      byAud[a].total += pgNum(r[primary]);
+    });
+    const summary = Object.entries(byAud).map(([k, v]) => ({ label: k, avg: v.total / v.count, count: v.count, total: v.total })).sort((a,b) => b.avg - a.avg);
+    if (summary.length) {
+      questions.push({
+        q: `Which ${audienceCol.toLowerCase()} performs best?`,
+        chartTitle: `${primary} by ${audienceCol.toLowerCase()}`,
+        type: 'h-bars-money',
+        metrics: [
+          { val: fmt(primary, summary[0].avg), lbl: 'Best segment avg', delta: summary[0].label.slice(0, 14), dir: 'up' },
+          { val: (summary[0].avg / Math.max(summary[summary.length-1].avg, 1)).toFixed(1) + 'x', lbl: 'Top vs bottom', delta: summary.length + ' segments', dir: 'up' }
+        ],
+        answer: `<p><strong>"${pgEscapeHtml(summary[0].label)}"</strong> is your strongest segment with average ${primary.toLowerCase()} of <strong>${fmt(primary, summary[0].avg)}</strong> across ${summary[0].count} ${summary[0].count === 1 ? 'send' : 'sends'}.</p><p>Compared to <strong>"${pgEscapeHtml(summary[summary.length-1].label)}"</strong> at ${fmt(primary, summary[summary.length-1].avg)}, that's a <strong>${(summary[0].avg / Math.max(summary[summary.length-1].avg, 1)).toFixed(1)}x performance gap</strong>. Worth investing more in the top segments and pruning or re-engaging the weakest.</p>`,
+        chartData: summary.slice(0, 5).map(s => ({ label: s.label.slice(0, 18), val: s.avg, fmt: fmt(primary, s.avg) })),
+        action: 'Double down on best segment'
+      });
+    }
+  }
+
+  if (dateCol && primary) {
+    const sorted = [...rows].sort((a,b) => new Date(a[dateCol]) - new Date(b[dateCol]));
+    const half = Math.floor(sorted.length / 2);
+    const fh = sorted.slice(0, half), sh = sorted.slice(half);
+    if (fh.length && sh.length) {
+      const fhAvg = fh.reduce((a,r) => a + pgNum(r[primary]), 0) / fh.length;
+      const shAvg = sh.reduce((a,r) => a + pgNum(r[primary]), 0) / sh.length;
+      const change = ((shAvg - fhAvg) / Math.max(fhAvg, 1)) * 100;
+      const dir = change > 0 ? 'up' : 'down';
+      questions.push({
+        q: `How is ${primary.toLowerCase()} trending over time?`,
+        chartTitle: `${primary} trend over time`,
+        type: 'h-bars-money',
+        metrics: [
+          { val: fmt(primary, shAvg), lbl: 'Recent avg', delta: (change > 0 ? '+' : '') + change.toFixed(1) + '%', dir: dir },
+          { val: sorted.length, lbl: 'Data points', delta: dateCol, dir: 'flat' }
+        ],
+        answer: `<p>${primary} is trending <strong>${dir === 'up' ? 'upward' : 'downward'}</strong>. The first half of your data (${fh.length} rows) averaged <strong>${fmt(primary, fhAvg)}</strong>, the second half <strong>${fmt(primary, shAvg)}</strong>. That's a <strong>${Math.abs(change).toFixed(1)}% ${dir === 'up' ? 'lift' : 'decline'}</strong>.</p><p>${dir === 'up' ? "Document what changed in the second half. Codify it as your new baseline." : 'Investigate what changed: cadence, audience composition, content type, or seasonality.'}</p>`,
+        chartData: sorted.slice(0, 6).map((r, i) => ({ label: String(r[dateCol] || ('Row ' + (i+1))).slice(0, 16), val: pgNum(r[primary]), fmt: fmt(primary, pgNum(r[primary])) })),
+        action: dir === 'up' ? 'Document winning strategy' : 'Diagnose decline'
+      });
+    }
+  }
+
+  return questions;
+}
+
+(function pgUploadInit() {
+  const zone = document.getElementById('pgUploadZone');
+  const fileInput = document.getElementById('pgFileInput');
+  const browseBtn = document.getElementById('pgBrowseBtn');
+  const errEl = document.getElementById('pgUploadError');
+  if (!zone || !fileInput) return;
+
+  function showErr(msg) {
+    if (!errEl) return;
+    errEl.textContent = msg;
+    errEl.classList.add('visible');
+    setTimeout(() => errEl.classList.remove('visible'), 6000);
+  }
+
+  if (browseBtn) {
+    browseBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+  }
+  zone.addEventListener('click', () => fileInput.click());
+  ['dragenter', 'dragover'].forEach(ev => {
+    zone.addEventListener(ev, (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+  });
+  ['dragleave', 'drop'].forEach(ev => {
+    zone.addEventListener(ev, (e) => { e.preventDefault(); zone.classList.remove('dragover'); });
+  });
+  zone.addEventListener('drop', (e) => {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files.length) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file) {
+    if (errEl) errEl.classList.remove('visible');
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    const reader = new FileReader();
+    if (ext === 'csv' || ext === 'tsv') {
+      if (typeof Papa === 'undefined') { showErr('CSV parser failed to load. Reload the page and try again.'); return; }
+      reader.onload = (e) => {
+        Papa.parse(e.target.result, {
+          header: true, skipEmptyLines: true, dynamicTyping: true,
+          complete: (results) => activateUpload(results.data, file.name),
+          error: (err) => showErr('Could not parse CSV: ' + (err && err.message ? err.message : err))
+        });
+      };
+      reader.readAsText(file);
+    } else if (ext === 'xlsx' || ext === 'xls') {
+      if (typeof XLSX === 'undefined') { showErr('Excel parser failed to load. Reload the page and try again.'); return; }
+      reader.onload = (e) => {
+        try {
+          const wb = XLSX.read(e.target.result, { type: 'array' });
+          const sheet = wb.Sheets[wb.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+          activateUpload(json, file.name);
+        } catch (err) {
+          showErr('Could not parse Excel file: ' + (err && err.message ? err.message : err));
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      showErr('Unsupported file type. Please upload CSV, TSV, XLSX, or XLS.');
+    }
+  }
+
+  function activateUpload(rows, sourceName) {
+    if (!rows || !rows.length) { showErr('No rows found in the file.'); return; }
+    const cols = Object.keys(rows[0]);
+    const questions = generatePgInsightsFromData(rows, cols);
+    if (!questions.length) {
+      showErr('Could not detect columns to analyze. Try a file with named columns and at least one numeric metric (Revenue, Open Rate, Donations…).');
+      return;
+    }
+    PERSONAS.custom = {
+      headline: PERSONAS[currentPersona].headline,
+      subhead: PERSONAS[currentPersona].subhead,
+      features: PERSONAS[currentPersona].features,
+      pgTitle: sourceName + ' · Your data',
+      pgGreetName: sourceName,
+      pgGreetData: cols.length + " columns across " + rows.length + " rows: " + cols.slice(0, 4).join(', ') + (cols.length > 4 ? ', and more' : ''),
+      sample: PERSONAS[currentPersona].sample,
+      questions: questions
+    };
+    markInteracted();
+    // Switch back to sample-data tab so the chat is visible
+    const sampleTab = document.querySelector('.pg-ds-tab[data-pg-tab="sample"]');
+    if (sampleTab) sampleTab.click();
+    setPersona('custom');
+    // Repaint with custom greeting
+    const messages = document.getElementById('pgMessages');
+    if (messages) {
+      messages.innerHTML = `
+        <div class="pg-msg ai">
+          <div class="pg-bubble">
+            <p>Connected to <strong>${pgEscapeHtml(sourceName)}</strong>. I detected <strong>${cols.length} columns</strong> across <strong>${rows.length} rows</strong>, including ${cols.slice(0, 4).map(c => `<code>${pgEscapeHtml(c)}</code>`).join(', ')}${cols.length > 4 ? ', and more' : ''}.</p>
+            <p style="color: rgba(255,255,255,0.6);">I prepared <strong>${questions.length} questions</strong> tailored to your dataset. Pick one below or ask your own.</p>
+          </div>
+        </div>`;
+    }
+  }
+})();
+
+/* ---------- Hero init: render default persona + start auto-rotation ---------- */
+(function heroInit() {
+  const pillRow = document.getElementById('vbPillRow');
+  if (pillRow) {
+    pillRow.querySelectorAll('.vb-pill').forEach(p => {
+      p.addEventListener('click', () => {
+        markInteracted();
+        setPersona(p.dataset.persona);
+      });
+    });
+  }
   document.querySelectorAll('.vb-dot').forEach(d => {
     d.addEventListener('click', () => {
-      stopVariantBRotation();
+      markInteracted();
       const order = ['ecommerce','agency','nonprofit','b2b'];
       setPersona(order[parseInt(d.dataset.personaDot, 10)]);
     });
   });
-  const heroB = document.getElementById('variant-b');
-  if (heroB) {
-    heroB.addEventListener('mouseenter', stopVariantBRotation);
+  const hero = document.getElementById('hero');
+  if (hero) {
+    hero.addEventListener('mouseenter', stopVariantBRotation);
+    hero.addEventListener('mouseleave', () => {
+      if (!pgInteracted && !prefersReducedMotion) startVariantBRotation();
+    });
   }
-  // Initial render of E-commerce features so the row is populated even before activation
+  // Custom user input for the playground.
+  const pgInput = document.getElementById('pgInput');
+  const pgInputForm = document.getElementById('pgInputForm');
+  if (pgInputForm) {
+    pgInputForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!pgInput || !pgInput.value.trim()) { if (pgInput) pgInput.focus(); return; }
+      markInteracted();
+      askPlaygroundQuestion(0);
+      pgInput.value = '';
+    });
+  }
+  if (pgInput) {
+    pgInput.addEventListener('input', markInteracted);
+  }
+  // Render default persona (E-commerce) and kick off auto-rotation. The
+  // variant switcher used to call startVariantBRotation() on hash routing,
+  // but with only one hero we just start it directly.
   setPersona('ecommerce');
-})();
-
-/* ============================================================ */
-/* VARIANT C — Watch the agent (scene cycler)                    */
-/* ============================================================ */
-const VC_SCENES = [
-  { label: 'Editor',     cmd: 'Agent: <strong>"Draft Mother\u2019s Day email"</strong>' },
-  { label: 'Segment',    cmd: 'Agent: <strong>"Show me my best segment"</strong>' },
-  { label: 'Analytics',  cmd: 'Agent: <strong>"Why did opens drop?"</strong>' },
-  { label: 'Automation', cmd: 'Agent: <strong>"Set up cart-recovery flow"</strong>' },
-  { label: 'SMS',        cmd: 'Agent: <strong>"Send this via SMS too"</strong>' },
-  { label: 'Brand kit',  cmd: 'Agent: <strong>"Apply our brand kit"</strong>' }
-];
-let vcTimer = null;
-let vcCurrent = 0;
-
-function setVCScene(i) {
-  vcCurrent = ((i % VC_SCENES.length) + VC_SCENES.length) % VC_SCENES.length;
-  document.querySelectorAll('.vc-scene').forEach((el, idx) => {
-    el.classList.toggle('active', idx === vcCurrent);
-  });
-  document.querySelectorAll('.vc-progress-bar').forEach((b, idx) => {
-    b.classList.remove('active', 'done');
-    if (idx < vcCurrent) b.classList.add('done');
-    if (idx === vcCurrent) b.classList.add('active');
-  });
-  document.querySelectorAll('.vc-label').forEach((l, idx) => {
-    l.classList.toggle('active', idx === vcCurrent);
-  });
-  const cmd = document.getElementById('vcCmdText');
-  if (cmd) cmd.innerHTML = VC_SCENES[vcCurrent].cmd;
-  const cmdBox = document.getElementById('vcCmd');
-  if (cmdBox) {
-    cmdBox.classList.remove('glow');
-    void cmdBox.offsetWidth; // restart glow animation
-    cmdBox.classList.add('glow');
-  }
-}
-
-function startVariantCRotation() {
-  setVCScene(0);
-  if (prefersReducedMotion) return;
-  if (vcTimer) clearInterval(vcTimer);
-  vcTimer = setInterval(() => {
-    setVCScene(vcCurrent + 1);
-  }, 3500);
-}
-function stopVariantCRotation() {
-  if (vcTimer) { clearInterval(vcTimer); vcTimer = null; }
-}
-
-(function variantCInit() {
-  document.querySelectorAll('.vc-progress-bar').forEach(b => {
-    b.addEventListener('click', () => {
-      stopVariantCRotation();
-      setVCScene(parseInt(b.dataset.bar, 10));
-    });
-  });
-  document.querySelectorAll('.vc-label').forEach(l => {
-    l.addEventListener('click', () => {
-      stopVariantCRotation();
-      setVCScene(parseInt(l.dataset.label, 10));
-    });
-  });
-  const heroC = document.getElementById('variant-c');
-  if (heroC) {
-    heroC.addEventListener('mouseenter', () => {
-      // pause but don't reset on hover
-      if (vcTimer) { clearInterval(vcTimer); vcTimer = null; }
-    });
-    heroC.addEventListener('mouseleave', () => {
-      if (heroC.classList.contains('active') && !prefersReducedMotion) startVariantCRotation();
-    });
-  }
+  startVariantBRotation();
 })();
 
 /* ============================================================ */
