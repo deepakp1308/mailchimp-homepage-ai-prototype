@@ -1170,26 +1170,38 @@
     align-items: start;
   }
 
+  /* ----- LEFT: Customize my experience form ----- */
   .cockpit-form {
     background: var(--mc-bg-soft);
     border: 1px solid var(--mc-border);
     border-radius: 18px;
-    padding: 24px;
+    padding: 22px 22px 20px;
     position: sticky;
     top: 88px;
     box-shadow: 0 14px 40px rgba(0,0,0,0.04);
   }
   .cf-eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--mc-cta);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
-  .cf-field { display: block; margin-bottom: 18px; }
+  .cf-eyebrow .cf-eye-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mc-cta);
+    box-shadow: 0 0 0 4px rgba(0,124,137,0.12);
+  }
+  .cf-field { display: block; margin-bottom: 14px; }
   .cf-label {
     display: block;
-    font-size: 13px; font-weight: 700;
+    font-size: 12px; font-weight: 700;
     color: var(--mc-text);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .cf-label-hint {
+    font-size: 11px; font-weight: 500; color: var(--mc-text-muted);
+    margin-left: 6px;
   }
   .cf-select-wrap { position: relative; display: block; }
   .cf-select {
@@ -1216,37 +1228,74 @@
     color: var(--mc-text);
   }
   .cf-goal-chips {
-    display: flex; flex-wrap: wrap; gap: 8px;
+    display: flex; flex-wrap: wrap; gap: 6px;
   }
   .cf-goal {
     background: white;
     border: 1.5px solid var(--mc-border);
     color: var(--mc-text);
-    padding: 8px 13px;
+    padding: 7px 12px 7px 10px;
     border-radius: 999px;
-    font-size: 13px; font-weight: 600;
+    font-size: 12.5px; font-weight: 600;
     cursor: pointer; font-family: inherit;
-    transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+  }
+  .cf-goal::before {
+    content: '+';
+    display: inline-grid; place-items: center;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: rgba(36,28,21,0.06);
+    color: var(--mc-text);
+    font-size: 12px; line-height: 1; font-weight: 700;
+    transition: background 0.15s, color 0.15s, transform 0.2s;
   }
   .cf-goal:hover { border-color: var(--mc-text); }
   .cf-goal.active {
-    background: var(--mc-pep);
-    border-color: var(--mc-pep);
+    background: var(--mc-text);
+    border-color: var(--mc-text);
     color: white;
   }
+  .cf-goal.active::before {
+    content: '✓';
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    transform: rotate(0deg);
+  }
+  .cf-goal:active { transform: scale(0.97); }
   .cf-goal:focus-visible {
     outline: 3px solid var(--mc-cta);
     outline-offset: 2px;
+  }
+  .cf-divider {
+    height: 1px;
+    background: var(--mc-border);
+    margin: 14px -22px 12px;
   }
   .cf-summary {
     background: white;
     border: 1px solid var(--mc-border);
     color: var(--mc-text-secondary);
     border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 18px;
+    padding: 11px 13px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .cf-summary-head {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--mc-text); text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .cf-summary-head .cf-summary-count {
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    border-radius: 999px;
+    padding: 1px 7px;
+    font-size: 10.5px;
+    border: 1px solid var(--mc-text);
   }
   .cf-summary strong { color: var(--mc-text); font-weight: 700; }
   .cf-cta {
@@ -1277,66 +1326,137 @@
     line-height: 1.4;
   }
 
+  /* ----- RIGHT: Dynamic recommendation cards ----- */
   .cockpit-cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
   }
-  /* Cards retain .reco-card / .reco-illo / .reco-cta classes from the
-     prior design so styling is shared. We re-declare them here to live
-     inside the cockpit. */
   .cockpit-cards .reco-card {
-    background: var(--mc-bg-soft);
-    border-radius: 16px;
-    padding: 26px 24px;
+    background: white;
+    border-radius: 18px;
+    padding: 0;
     display: flex; flex-direction: column;
-    border: 1px solid var(--mc-border);
+    border: 1.5px solid var(--mc-border);
     text-decoration: none;
     color: inherit;
-    transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s, border-color 0.3s, opacity 0.3s;
+    transition:
+      transform 0.45s cubic-bezier(.2,.7,.2,1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease,
+      opacity 0.3s ease,
+      filter 0.3s ease;
     position: relative;
+    overflow: hidden;
+    min-height: 0;
   }
   .cockpit-cards .reco-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 38px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 22px 44px rgba(0,0,0,0.10);
     border-color: var(--mc-text);
   }
-  .cockpit-cards .reco-card.matched {
-    border-color: var(--mc-cta);
-    box-shadow: 0 16px 36px rgba(0,124,137,0.16);
+  .cockpit-cards .reco-card:focus-visible {
+    outline: 3px solid var(--mc-cta);
+    outline-offset: 3px;
   }
-  .cockpit-cards .reco-card.matched::before {
-    content: 'Matched to your goals';
-    position: absolute;
-    top: -10px; left: 16px;
-    background: var(--mc-cta);
-    color: white;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
+  /* Top recommendation: highlighted border, subtle teal glow, and a yellow badge */
+  .cockpit-cards .reco-card.top-pick {
+    border-color: var(--mc-text);
+    box-shadow:
+      0 0 0 2px var(--mc-yellow) inset,
+      0 18px 38px rgba(0,124,137,0.16);
+    transform: translateY(-2px);
   }
-  .cockpit-cards .reco-card.dim { opacity: 0.55; filter: grayscale(0.2); }
+  .cockpit-cards .reco-card.top-pick:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 0 0 2px var(--mc-yellow) inset,
+      0 26px 50px rgba(0,124,137,0.22);
+  }
+  /* Re-entry pulse used after reorder. Triggered by toggling .just-reordered. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cockpit-cards .reco-card.just-reordered {
+      animation: recoFadeIn 0.42s cubic-bezier(.2,.7,.2,1) both;
+    }
+    .cockpit-cards .reco-card.top-pick .reco-badge {
+      animation: recoBadgePop 0.38s cubic-bezier(.2,.9,.2,1) both;
+    }
+  }
+  @keyframes recoFadeIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.985); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+  @keyframes recoBadgePop {
+    0%   { opacity: 0; transform: translateY(4px) scale(0.85); }
+    60%  { opacity: 1; transform: translateY(0)   scale(1.05); }
+    100% { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+  .cockpit-cards .reco-card.dim { opacity: 0.7; filter: saturate(0.85); }
   .cockpit-cards .reco-card.hidden { display: none; }
-  .cockpit-cards .reco-illo {
-    width: 72px; height: 72px;
-    margin-bottom: 16px;
+
+  /* Top-pick badge */
+  .cockpit-cards .reco-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    z-index: 2;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--mc-yellow);
     color: var(--mc-text);
-    display: grid; place-items: center;
+    border: 1px solid var(--mc-text);
+    padding: 4px 10px 4px 8px;
+    border-radius: 999px;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    opacity: 0;
+    pointer-events: none;
   }
-  .cockpit-cards .reco-illo svg { width: 72px; height: 72px; }
+  .cockpit-cards .reco-card.top-pick .reco-badge { opacity: 1; }
+  .cockpit-cards .reco-badge .reco-badge-spark {
+    color: var(--mc-text);
+    font-size: 11px; line-height: 1;
+  }
+
+  /* Image illo: consistent aspect ratio across all cards */
+  .cockpit-cards .reco-illo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--mc-bg-soft);
+    margin: 0 0 0 0;
+    border-bottom: 1px solid var(--mc-border);
+    display: block;
+  }
+  .cockpit-cards .reco-illo picture,
+  .cockpit-cards .reco-illo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.2,.7,.2,1);
+  }
+  .cockpit-cards .reco-card:hover .reco-illo img {
+    transform: scale(1.04);
+  }
+
+  .cockpit-cards .reco-body {
+    padding: 18px 20px 20px;
+    display: flex; flex-direction: column;
+    flex: 1;
+  }
   .cockpit-cards .reco-card h3 {
     font-family: 'Cooper Light', 'Georgia', serif;
     font-weight: 300;
-    font-size: 22px;
-    margin-bottom: 6px;
-    line-height: 1.15;
+    font-size: 21px;
+    margin: 0 0 6px;
+    line-height: 1.18;
     letter-spacing: -0.005em;
   }
   .cockpit-cards .reco-card p {
     font-size: 13.5px;
     color: var(--mc-text-secondary);
-    margin-bottom: 14px;
+    margin: 0 0 14px;
     line-height: 1.5;
     flex: 1;
   }
@@ -1348,6 +1468,9 @@
     display: inline-flex; align-items: center; gap: 4px;
   }
 
+  @media (max-width: 1100px) {
+    .cockpit-cards { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 980px) {
     .cockpit-grid { grid-template-columns: 1fr; }
     .cockpit-form { position: relative; top: 0; }
@@ -2388,11 +2511,14 @@
   <div class="cockpit-grid">
     <!-- LEFT: Customize my experience form -->
     <aside class="cockpit-form" aria-label="Customize my experience">
-      <div class="cf-eyebrow">Customize my experience</div>
-      <label class="cf-field">
-        <span class="cf-label">Industry</span>
+      <div class="cf-eyebrow">
+        <span class="cf-eye-dot" aria-hidden="true"></span>
+        Customize my experience
+      </div>
+      <label class="cf-field" for="cfIndustry">
+        <span class="cf-label">Tell us your industry</span>
         <span class="cf-select-wrap">
-          <select id="cfIndustry" class="cf-select">
+          <select id="cfIndustry" class="cf-select" aria-describedby="cfSummary">
             <option value="retail">Retail &amp; e-commerce</option>
             <option value="hospitality">Hospitality</option>
             <option value="nonprofit">Non-profit</option>
@@ -2405,19 +2531,31 @@
       </label>
 
       <div class="cf-field">
-        <span class="cf-label">My top goals</span>
+        <span class="cf-label">
+          Pick your top goals
+          <span class="cf-label-hint">(tap any)</span>
+        </span>
         <div class="cf-goal-chips" id="cfGoalChips" role="group" aria-label="Goals">
-          <button class="cf-goal active" type="button" data-goal="grow">Grow revenue</button>
-          <button class="cf-goal active" type="button" data-goal="save-time">Save time</button>
-          <button class="cf-goal" type="button" data-goal="retain">Retain customers</button>
-          <button class="cf-goal" type="button" data-goal="reach">Reach new audiences</button>
-          <button class="cf-goal" type="button" data-goal="personalize">Personalize sends</button>
-          <button class="cf-goal" type="button" data-goal="insights">Better insights</button>
+          <button class="cf-goal active" type="button" data-goal="grow"        aria-pressed="true">Grow revenue</button>
+          <button class="cf-goal active" type="button" data-goal="save-time"   aria-pressed="true">Save time</button>
+          <button class="cf-goal"        type="button" data-goal="retain"      aria-pressed="false">Retain customers</button>
+          <button class="cf-goal"        type="button" data-goal="reach"       aria-pressed="false">Reach new audiences</button>
+          <button class="cf-goal"        type="button" data-goal="personalize" aria-pressed="false">Personalize sends</button>
+          <button class="cf-goal"        type="button" data-goal="insights"    aria-pressed="false">Better insights</button>
         </div>
       </div>
 
-      <div class="cf-summary" id="cfSummary">
-        Showing 6 recommendations for <strong id="cfIndustryName">Retail &amp; e-commerce</strong> teams focused on <strong id="cfGoalNames">growing revenue, saving time</strong>.
+      <div class="cf-divider" aria-hidden="true"></div>
+
+      <div class="cf-summary" id="cfSummary" aria-live="polite">
+        <div class="cf-summary-head">
+          <span>Showing</span>
+          <span class="cf-summary-count" id="cfSummaryCount">3</span>
+          <span>top picks</span>
+        </div>
+        <div class="cf-summary-body">
+          for <strong id="cfIndustryName">Retail &amp; e-commerce</strong> teams focused on <strong id="cfGoalNames">growing revenue, saving time</strong>.
+        </div>
       </div>
 
       <button type="button" class="cf-cta btn-spin" data-scroll-to="pricing">
@@ -2429,112 +2567,138 @@
 
     <!-- RIGHT: Dynamic recommendation cards. Each card carries data-tags
          (industry + goals it serves) so the cockpit can filter, reorder,
-         and highlight matches based on form selections. -->
+         and highlight matches based on form selections.
+
+         Card visuals use MC brand assets staged at assets/recommendations/.
+         Each <picture> serves an animated GIF when the user has no reduced-
+         motion preference, otherwise a brand-aligned still JPG. The same
+         JPG is used as the <img> fallback (and alt text describes the
+         illustration so screen readers get equivalent context). -->
     <div class="cockpit-cards" id="cockpitCards">
-      <a class="reco-card" href="#" data-reco="sms" data-goals="reach grow personalize" data-industries="retail hospitality creators other">
+      <a class="reco-card" href="#" data-reco="email-builder" data-goals="save-time grow reach" data-industries="nonprofit services creators retail hospitality other">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
         <div class="reco-illo">
-          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="20" y="14" width="44" height="58" rx="6" fill="#FFF1A8"/>
-            <line x1="32" y1="26" x2="52" y2="26"/>
-            <line x1="32" y1="34" x2="48" y2="34"/>
-            <line x1="32" y1="42" x2="44" y2="42"/>
-            <circle cx="42" cy="58" r="3" fill="#241c15"/>
-            <path d="M14 28 q-4 4 -2 8 q3 5 8 4" stroke="#007C89"/>
-            <path d="M70 30 q4 4 2 8 q-3 5 -8 4" stroke="#007C89"/>
-          </svg>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/email-builder.jpg" type="image/jpeg">
+            <source srcset="assets/recommendations/email-builder.gif" type="image/gif">
+            <img src="assets/recommendations/email-builder.jpg" alt="Mailchimp illustration of an envelope being sent." loading="lazy" decoding="async">
+          </picture>
         </div>
-        <h3>Reach more customers with SMS</h3>
-        <p>Send timely texts that land alongside your campaigns. SMS shows higher open rates than any other channel.</p>
-        <span class="reco-cta">Explore SMS →</span>
+        <div class="reco-body">
+          <h3>Build emails customers love</h3>
+          <p>Drag-and-drop editor, brand kit, and proven templates so every send looks professional in minutes.</p>
+          <span class="reco-cta">Explore the email builder →</span>
+        </div>
       </a>
 
-      <a class="reco-card" href="#" data-reco="ai" data-goals="grow insights personalize" data-industries="retail hospitality nonprofit services creators other">
+      <a class="reco-card" href="#" data-reco="content" data-goals="save-time personalize reach" data-industries="creators nonprofit hospitality retail services other">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
         <div class="reco-illo">
-          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 64 L26 50 L36 56 L48 38 L58 46 L70 22" fill="none" stroke="#007C89" stroke-width="2.2"/>
-            <circle cx="14" cy="64" r="3" fill="#241c15"/>
-            <circle cx="26" cy="50" r="3" fill="#241c15"/>
-            <circle cx="36" cy="56" r="3" fill="#241c15"/>
-            <circle cx="48" cy="38" r="3" fill="#241c15"/>
-            <circle cx="58" cy="46" r="3" fill="#241c15"/>
-            <circle cx="70" cy="22" r="3" fill="#FFE01B"/>
-            <path d="M64 16 l3 -8 m6 8 l-3 -8 m-3 16 l-8 0 m11 -3 l8 -3" stroke="#FFE01B" stroke-width="1.5"/>
-          </svg>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/content.jpg" type="image/jpeg">
+            <img src="assets/recommendations/content.jpg" alt="Mailchimp illustration of a magical bear conjuring fresh content." loading="lazy" decoding="async">
+          </picture>
         </div>
-        <h3>Discover new ways to drive sales</h3>
-        <p>AI tools surface hidden patterns in your data and recommend the next best action for every customer.</p>
-        <span class="reco-cta">Try Analytics AI →</span>
+        <div class="reco-body">
+          <h3>Create content with AI assist</h3>
+          <p>Generate on-brand subject lines, body copy and product descriptions in your voice — in seconds.</p>
+          <span class="reco-cta">Try content creation →</span>
+        </div>
       </a>
 
-      <a class="reco-card" href="#" data-reco="automations" data-goals="save-time grow retain" data-industries="retail hospitality services creators other">
+      <a class="reco-card" href="#" data-reco="sms" data-goals="reach grow retain personalize" data-industries="retail hospitality creators other services nonprofit">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
         <div class="reco-illo">
-          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="20" cy="22" r="9" fill="#FFE01B"/>
-            <circle cx="62" cy="22" r="9" fill="white"/>
-            <circle cx="42" cy="62" r="9" fill="#00B9A6"/>
-            <path d="M28 24 H54" stroke="#241c15"/>
-            <path d="M22 32 L40 54" stroke="#241c15"/>
-            <path d="M60 32 L46 54" stroke="#241c15"/>
-            <path d="M22 18 l-4 -4 m6 -2 l-2 -6" stroke="#241c15" stroke-width="1.2"/>
-          </svg>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/sms.jpg" type="image/jpeg">
+            <source srcset="assets/recommendations/sms.gif" type="image/gif">
+            <img src="assets/recommendations/sms.jpg" alt="Mailchimp illustration of a giant ear listening — your message lands instantly." loading="lazy" decoding="async">
+          </picture>
         </div>
-        <h3>Save time on repetitive tasks</h3>
-        <p>Automate welcome series, abandoned carts, win-backs and birthdays in a single visual canvas.</p>
-        <span class="reco-cta">See automations →</span>
+        <div class="reco-body">
+          <h3>Reach more customers with SMS</h3>
+          <p>Send timely texts that land alongside your campaigns. SMS earns higher open rates than any other channel.</p>
+          <span class="reco-cta">Explore SMS →</span>
+        </div>
       </a>
 
-      <a class="reco-card" href="#" data-reco="content" data-goals="save-time personalize" data-industries="retail hospitality nonprofit services creators other">
+      <a class="reco-card" href="#" data-reco="automations" data-goals="save-time grow retain" data-industries="retail hospitality services creators other nonprofit">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
         <div class="reco-illo">
-          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="14" y="18" width="56" height="40" rx="4" fill="white"/>
-            <line x1="14" y1="28" x2="70" y2="28"/>
-            <circle cx="20" cy="23" r="1.5" fill="#FF6B47"/>
-            <circle cx="26" cy="23" r="1.5" fill="#FFE01B"/>
-            <circle cx="32" cy="23" r="1.5" fill="#3FB58E"/>
-            <line x1="22" y1="38" x2="62" y2="38"/>
-            <line x1="22" y1="44" x2="56" y2="44"/>
-            <line x1="22" y1="50" x2="48" y2="50"/>
-            <path d="M30 70 q12 -8 24 0" stroke="#FFE01B" stroke-width="2"/>
-          </svg>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/automations.jpg" type="image/jpeg">
+            <source srcset="assets/recommendations/automations.gif" type="image/gif">
+            <img src="assets/recommendations/automations.jpg" alt="Mailchimp illustration of stairs animating upward — automated steps that compound." loading="lazy" decoding="async">
+          </picture>
         </div>
-        <h3>Send high-quality content with ease</h3>
-        <p>Pre-built templates, brand kit, and AI assist help you draft, design and send beautiful emails fast.</p>
-        <span class="reco-cta">Explore the editor →</span>
+        <div class="reco-body">
+          <h3>Save time with smart automations</h3>
+          <p>Welcome series, abandoned carts, win-backs and birthdays — orchestrated in a single visual canvas.</p>
+          <span class="reco-cta">See automations →</span>
+        </div>
       </a>
 
-      <a class="reco-card" href="#" data-reco="dashboards" data-goals="insights grow" data-industries="retail hospitality nonprofit services creators other">
+      <a class="reco-card" href="#" data-reco="ai" data-goals="grow insights personalize" data-industries="retail services other hospitality nonprofit creators">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
         <div class="reco-illo">
-          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="12" y="20" width="60" height="44" rx="4" fill="#FAFAF7"/>
-            <rect x="20" y="44" width="6" height="14" fill="#007C89"/>
-            <rect x="30" y="36" width="6" height="22" fill="#00B9A6"/>
-            <rect x="40" y="28" width="6" height="30" fill="#FFE01B"/>
-            <rect x="50" y="40" width="6" height="18" fill="#007C89"/>
-            <rect x="60" y="32" width="6" height="26" fill="#00B9A6"/>
-            <path d="M18 30 L28 26 L38 22 L48 24 L58 18 L68 20" stroke="#241c15" stroke-width="1.5"/>
-          </svg>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/ai.jpg" type="image/jpeg">
+            <source srcset="assets/recommendations/ai.gif" type="image/gif">
+            <img src="assets/recommendations/ai.jpg" alt="Mailchimp illustration of a slingshot launching forward — AI-powered next best action." loading="lazy" decoding="async">
+          </picture>
         </div>
-        <h3>See what's working at a glance</h3>
-        <p>Daily insight cards, revenue forecasts and benchmark comparisons surface what changed and why.</p>
-        <span class="reco-cta">View dashboards →</span>
+        <div class="reco-body">
+          <h3>Predict your next best action</h3>
+          <p>Analytics AI surfaces hidden patterns in your data and recommends the next best step for every customer.</p>
+          <span class="reco-cta">Try Analytics AI →</span>
+        </div>
       </a>
 
-      <a class="reco-card" href="#" data-reco="segments" data-goals="personalize retain reach" data-industries="retail nonprofit services creators other">
+      <a class="reco-card" href="#" data-reco="dashboards" data-goals="insights grow save-time" data-industries="services retail other hospitality nonprofit creators">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
         <div class="reco-illo">
-          <svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#241c15" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="42" cy="42" r="22" fill="white"/>
-            <circle cx="42" cy="42" r="22" fill="none" stroke-dasharray="34 14"/>
-            <circle cx="42" cy="32" r="5" fill="#FFE01B"/>
-            <path d="M30 56 q12 -10 24 0" stroke="#241c15"/>
-            <circle cx="22" cy="22" r="3" fill="#00B9A6"/>
-            <circle cx="62" cy="22" r="3" fill="#FF6B47"/>
-            <circle cx="22" cy="62" r="3" fill="#007C89"/>
-            <circle cx="62" cy="62" r="3" fill="#3FB58E"/>
-          </svg>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/dashboards.jpg" type="image/jpeg">
+            <source srcset="assets/recommendations/dashboards.gif" type="image/gif">
+            <img src="assets/recommendations/dashboards.jpg" alt="Mailchimp benchmark illustration animating — dashboards that show what changed and why." loading="lazy" decoding="async">
+          </picture>
         </div>
-        <h3>Personalize every interaction</h3>
-        <p>Predictive segments and dynamic content adapt every send to where each customer is in their journey.</p>
-        <span class="reco-cta">Build a segment →</span>
+        <div class="reco-body">
+          <h3>See what's working at a glance</h3>
+          <p>Daily insight cards, revenue forecasts and benchmark comparisons surface what changed and why.</p>
+          <span class="reco-cta">View reporting →</span>
+        </div>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="segments" data-goals="personalize retain reach insights" data-industries="retail services nonprofit creators other hospitality">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
+        <div class="reco-illo">
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/segments.jpg" type="image/jpeg">
+            <img src="assets/recommendations/segments.jpg" alt="Mailchimp illustration of an audience being grouped into segments." loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="reco-body">
+          <h3>Group customers into smart segments</h3>
+          <p>Slice your audience by behavior, lifecycle stage or predicted intent — without writing a single query.</p>
+          <span class="reco-cta">Build a segment →</span>
+        </div>
+      </a>
+
+      <a class="reco-card" href="#" data-reco="personalization" data-goals="personalize retain grow" data-industries="retail hospitality creators services nonprofit other">
+        <span class="reco-badge" aria-hidden="true"><span class="reco-badge-spark">✦</span>Top pick</span>
+        <div class="reco-illo">
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="assets/recommendations/personalization.jpg" type="image/jpeg">
+            <source srcset="assets/recommendations/personalization.gif" type="image/gif">
+            <img src="assets/recommendations/personalization.jpg" alt="Mailchimp illustration of a planet animating — personalize sends across every customer." loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="reco-body">
+          <h3>Personalize every send</h3>
+          <p>Dynamic content blocks adapt subject lines, products and offers to where each customer is in their journey.</p>
+          <span class="reco-cta">Personalize sends →</span>
+        </div>
       </a>
     </div>
   </div>
@@ -4959,6 +5123,180 @@ function generatePgInsightsFromData(rows, cols) {
   document.querySelectorAll('.price-card .contact-select').forEach(s => {
     s.addEventListener('change', () => updateCard(s.closest('.price-card')));
   });
+})();
+
+/* ============================================================ */
+/* RECOMMENDATION COCKPIT — dynamic filter / reorder / highlight */
+/* ----------------------------------------------------------    */
+/* The left "Customize my experience" form drives a deterministic */
+/* score per solution card. Cards are sorted by score, the top    */
+/* few are badged as "Top pick", and the rest are de-emphasized.  */
+/* Industry presets nudge each industry's natural top picks first.*/
+/* The summary text + count update live with the user's selection.*/
+/* ============================================================ */
+(function initRecommendationCockpit() {
+  const root = document.getElementById('recommended');
+  if (!root) return;
+  const grid       = document.getElementById('cockpitCards');
+  const select     = document.getElementById('cfIndustry');
+  const chipsRoot  = document.getElementById('cfGoalChips');
+  const summary    = document.getElementById('cfSummary');
+  const summaryNum = document.getElementById('cfSummaryCount');
+  const indName    = document.getElementById('cfIndustryName');
+  const goalNames  = document.getElementById('cfGoalNames');
+  if (!grid || !select || !chipsRoot) return;
+
+  // Industry copy table → drives the inline summary line.
+  const INDUSTRIES = {
+    retail:      { label: 'Retail & e-commerce' },
+    hospitality: { label: 'Hospitality' },
+    nonprofit:   { label: 'Non-profit' },
+    services:    { label: 'Professional services' },
+    creators:    { label: 'Content creators' },
+    other:       { label: 'Other' }
+  };
+
+  // Goal copy used for the natural-language summary ("focused on…").
+  const GOAL_COPY = {
+    'grow':        'growing revenue',
+    'save-time':   'saving time',
+    'retain':      'retaining customers',
+    'reach':       'reaching new audiences',
+    'personalize': 'personalizing sends',
+    'insights':    'better insights'
+  };
+
+  // Per-industry "primary" set drives a deterministic top-3 even when no
+  // goals are selected, and adds a small bonus when both industry+goal align.
+  const INDUSTRY_PRIMARY = {
+    retail:      ['ai', 'automations', 'sms', 'segments', 'personalization'],
+    hospitality: ['sms', 'personalization', 'automations', 'content', 'email-builder'],
+    nonprofit:   ['email-builder', 'content', 'automations', 'segments', 'dashboards'],
+    services:    ['ai', 'dashboards', 'automations', 'segments', 'email-builder'],
+    creators:    ['content', 'sms', 'personalization', 'email-builder', 'segments'],
+    other:       ['email-builder', 'automations', 'ai', 'dashboards', 'content']
+  };
+
+  // Read the cards once and cache their tag sets so scoring stays cheap.
+  const cards = Array.from(grid.querySelectorAll('.reco-card')).map((el, idx) => ({
+    el,
+    id: el.dataset.reco,
+    originalIndex: idx,
+    goals: new Set((el.dataset.goals || '').split(/\s+/).filter(Boolean)),
+    industries: new Set((el.dataset.industries || '').split(/\s+/).filter(Boolean))
+  }));
+
+  // How many cards earn the highlighted "Top pick" treatment.
+  const TOP_PICK_COUNT = 3;
+
+  function getActiveGoals() {
+    return Array.from(chipsRoot.querySelectorAll('.cf-goal.active'))
+      .map(b => b.dataset.goal)
+      .filter(Boolean);
+  }
+
+  function getIndustry() {
+    return select.value || 'retail';
+  }
+
+  // Natural-language list join: ["a","b","c"] → "a, b and c"
+  function naturalJoin(parts) {
+    if (!parts.length) return '';
+    if (parts.length === 1) return parts[0];
+    if (parts.length === 2) return parts[0] + ' and ' + parts[1];
+    return parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1];
+  }
+
+  function scoreCard(card, industry, activeGoals) {
+    let score = 0;
+    // Base: industry primary list rewards by inverse position so the
+    // industry's #1 pick stays #1 when no goals are selected.
+    const primary = INDUSTRY_PRIMARY[industry] || [];
+    const primaryIdx = primary.indexOf(card.id);
+    if (primaryIdx !== -1) score += (10 - primaryIdx); // 10..6
+    // Industry must serve this card at all (data-industries) — small bonus.
+    if (card.industries.has(industry)) score += 1;
+    // Goals: each matched goal adds 4 points, big lever for user input.
+    for (const g of activeGoals) {
+      if (card.goals.has(g)) score += 4;
+    }
+    // Tiny stable tiebreaker so equal scores keep deterministic order.
+    score += (cards.length - card.originalIndex) * 0.001;
+    return score;
+  }
+
+  // Triggers the small CSS @keyframes pulse on cards (uses dataset flag so
+  // we don't re-fire when nothing actually moved).
+  function flashReorder(orderedEls) {
+    orderedEls.forEach(el => {
+      el.classList.remove('just-reordered');
+    });
+    // Force reflow so removing+re-adding the class actually retriggers anim.
+    void grid.offsetWidth;
+    orderedEls.forEach(el => el.classList.add('just-reordered'));
+  }
+
+  function update(opts) {
+    const industry    = getIndustry();
+    const activeGoals = getActiveGoals();
+
+    // Score + sort.
+    const scored = cards
+      .map(c => ({ card: c, score: scoreCard(c, industry, activeGoals) }))
+      .sort((a, b) => b.score - a.score);
+
+    // Reorder DOM. We track whether order actually changed to avoid
+    // unnecessary animation churn on irrelevant updates.
+    const currentOrder = Array.from(grid.children);
+    const desiredOrder = scored.map(s => s.card.el);
+    let orderChanged = false;
+    for (let i = 0; i < desiredOrder.length; i++) {
+      if (currentOrder[i] !== desiredOrder[i]) { orderChanged = true; break; }
+    }
+    if (orderChanged) {
+      const frag = document.createDocumentFragment();
+      desiredOrder.forEach(el => frag.appendChild(el));
+      grid.appendChild(frag);
+    }
+
+    // Apply highlight states. Top N get .top-pick (with badge), the rest
+    // are .dim so the user can still see them but the eye lands on the picks.
+    scored.forEach((entry, i) => {
+      const el = entry.card.el;
+      el.classList.toggle('top-pick', i < TOP_PICK_COUNT);
+      el.classList.toggle('dim', i >= TOP_PICK_COUNT + 2);
+    });
+
+    // Inline summary copy.
+    if (indName) indName.textContent = (INDUSTRIES[industry] || INDUSTRIES.retail).label;
+    if (goalNames) {
+      const phrases = activeGoals.map(g => GOAL_COPY[g]).filter(Boolean);
+      goalNames.textContent = phrases.length
+        ? naturalJoin(phrases)
+        : 'whatever moves the needle';
+    }
+    if (summaryNum) summaryNum.textContent = String(TOP_PICK_COUNT);
+
+    if (orderChanged && opts && opts.animate) flashReorder(desiredOrder);
+  }
+
+  // Wire up controls.
+  select.addEventListener('change', () => {
+    if (typeof markInteracted === 'function') markInteracted();
+    update({ animate: true });
+  });
+
+  chipsRoot.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cf-goal');
+    if (!btn) return;
+    if (typeof markInteracted === 'function') markInteracted();
+    btn.classList.toggle('active');
+    btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    update({ animate: true });
+  });
+
+  // Initial paint: no animation pop so it doesn't draw the eye on load.
+  update({ animate: false });
 })();
 
 /* ============================================================ */
