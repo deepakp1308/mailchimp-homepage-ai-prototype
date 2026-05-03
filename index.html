@@ -3213,6 +3213,216 @@ const PERSONAS = {
   }
 };
 
+// Backfill the 6 ICP slugs used by the hero chips so every state renders charts.
+PERSONAS.services = {
+  ...PERSONAS.b2b,
+  pgTitle: 'Sundial Partners · Live demo',
+  pgGreetName: 'Sundial Partners',
+  pgGreetData: "engagement pipeline, deal-stage velocity, retainer expansion, and account-health signals",
+  heroPrompts: [
+    'Which service segment converts best right now?',
+    'Where is our pipeline most at risk this month?',
+    'Forecast next quarter consulting revenue'
+  ],
+  heroInsight: {
+    headline: 'Mid-market operations accounts convert 2.9x higher.',
+    byline: 'From Sundial Partners pipeline + engagement data, last 90 days.',
+    vizType: 'line-anomaly'
+  },
+  heroAction: {
+    title: 'Shift spend into mid-market operations accounts.',
+    desc: 'That segment has the highest close efficiency and fastest payback. Rebalancing budget this week is projected to add ~$180K pipeline this quarter.'
+  }
+};
+
+PERSONAS.creators = {
+  pgTitle: 'Field Notes by Maya · Live demo',
+  pgGreetName: 'Field Notes by Maya',
+  pgGreetData: "email sends, membership signups, launch-week revenue, and subscriber engagement cohorts",
+  heroPrompts: [
+    'Which launch email drove the most memberships?',
+    'What content series retains subscribers best?',
+    'Forecast next creator launch revenue'
+  ],
+  heroInsight: {
+    headline: 'Launch-day sequence drove 41% of new memberships.',
+    byline: 'From creator launches, list engagement, and product sales over 12 weeks.',
+    vizType: 'line-bookings'
+  },
+  heroAction: {
+    title: 'Reuse the launch-day sequence for your next drop.',
+    desc: 'The three-message sequence converts 2.2x over your baseline newsletter cadence. Repeating it with audience splits should add 180 to 220 paid members.'
+  },
+  sample: {
+    eyebrow: 'Creator growth',
+    title: 'Top campaigns by paid signups',
+    type: 'sample-bars',
+    rows: [
+      { label: 'Launch Day #1',      val: '412', pct: 92, fill: 'teal' },
+      { label: 'Behind-the-scenes',  val: '286', pct: 71, fill: 'teal' },
+      { label: 'Template drop',      val: '241', pct: 60, fill: 'cta'  },
+      { label: 'Live Q&A reminder',  val: '198', pct: 49, fill: 'cta'  },
+      { label: 'Weekly recap',       val: '123', pct: 30, fill: 'cta'  }
+    ],
+    callout: { tone: 'good', html: '<strong>Launch Day #1 is your anchor asset.</strong> It creates 3.3x more paid signups than routine sends.' }
+  },
+  questions: [
+    { q: "Which launch email drove the most memberships?",
+      chartTitle: 'Membership signups by launch email',
+      type: 'h-bars-mqls',
+      metrics: [
+        { val: '412', lbl: 'Top launch send', delta: 'Launch Day #1', dir: 'up' },
+        { val: '3.3x', lbl: 'Vs baseline send', delta: 'weekly recap', dir: 'up' }
+      ],
+      answer: "<p><strong>Launch Day #1</strong> delivered <strong>412 paid memberships</strong>, 3.3x your baseline weekly recap send. \"Template drop\" and \"Behind-the-scenes\" follow as your strongest secondary conversion drivers.</p><p>Bundling these top three sends into your next launch week should increase paid starts by 18% to 24% without increasing ad spend.</p>",
+      chartData: [
+        { label: 'Launch Day #1',     val: 412 },
+        { label: 'Behind-the-scenes', val: 286 },
+        { label: 'Template drop',     val: 241 },
+        { label: 'Live Q&A reminder', val: 198 },
+        { label: 'Weekly recap',      val: 123 }
+      ],
+      action: 'Build next launch week sequence'
+    },
+    { q: "What content series retains subscribers best?",
+      chartTitle: 'Retention by content series',
+      type: 'h-bars-segments',
+      metrics: [
+        { val: '74%', lbl: 'Top 30-day retention', delta: 'Creator teardown series', dir: 'up' },
+        { val: '+19 pp', lbl: 'Vs lowest series', delta: 'interview digest', dir: 'up' }
+      ],
+      answer: "<p>The <strong>Creator teardown</strong> series has your strongest 30-day retention at <strong>74%</strong>. It outperforms interviews (55%), quick tips (61%), and roundup posts (58%).</p><p>Promoting teardown content to new paid members in week one is likely to reduce first-month churn by 12% to 15%.</p>",
+      chartData: [
+        { label: 'Creator teardown', val: 74, fmt: '74%' },
+        { label: 'Quick tips',       val: 61, fmt: '61%' },
+        { label: 'Roundup posts',    val: 58, fmt: '58%' },
+        { label: 'Interview digest', val: 55, fmt: '55%' }
+      ],
+      action: 'Prioritize teardown onboarding'
+    },
+    { q: "Forecast next creator launch revenue",
+      chartTitle: 'Launch revenue forecast · next 30 days',
+      type: 'forecast-fan',
+      metrics: [
+        { val: '$64K', lbl: 'Projected launch revenue', delta: '+13% vs last drop', dir: 'up' },
+        { val: '±$5K', lbl: 'Confidence band', delta: '84% conf.', dir: 'flat' }
+      ],
+      answer: "<p>Projected revenue for your next launch is <strong>$64K (±$5K)</strong>, about 13% above your last drop. The lift comes from list growth and higher paid conversion from the launch-day sequence.</p><p>If you add the live Q&A reminder 24 hours pre-close, the model projects an extra $4K to $6K.</p>",
+      action: 'Schedule pre-close Q&A reminder'
+    },
+    { q: "Which audience should I target first for upsells?",
+      chartTitle: 'Upsell propensity by audience',
+      type: 'h-bars-money',
+      metrics: [
+        { val: '48%', lbl: 'Top upsell propensity', delta: 'Paid annual members', dir: 'up' },
+        { val: '2.1x', lbl: 'Vs free subscribers', delta: 'relative conversion', dir: 'up' }
+      ],
+      answer: "<p><strong>Paid annual members</strong> have the highest upsell propensity at <strong>48%</strong>, followed by monthly paid (34%) and highly-engaged free subscribers (23%).</p><p>Start with annual members for high-ticket offers, then cascade to monthly with a lower-friction offer.</p>",
+      chartData: [
+        { label: 'Paid annual',    val: 48, fmt: '48%' },
+        { label: 'Paid monthly',   val: 34, fmt: '34%' },
+        { label: 'Engaged free',   val: 23, fmt: '23%' },
+        { label: 'New subscribers', val: 14, fmt: '14%' }
+      ],
+      action: 'Launch annual-member upsell'
+    }
+  ]
+};
+
+PERSONAS.other = {
+  pgTitle: 'Brightline Studio · Live demo',
+  pgGreetName: 'Brightline Studio',
+  pgGreetData: "campaign outcomes, audience health, conversion funnels, and channel attribution",
+  heroPrompts: [
+    'Which channel is most efficient this month?',
+    'Where are we losing conversions in funnel?',
+    'What should we optimize first this week?'
+  ],
+  heroInsight: {
+    headline: 'Email + paid social drives 67% of total conversions.',
+    byline: 'From Brightline channel spend and conversion data over the past 30 days.',
+    vizType: 'v-bars-mini'
+  },
+  heroAction: {
+    title: 'Shift 12% budget from low-performing display to email retargeting.',
+    desc: 'Email retargeting closes at 2.6x the efficiency of display. Rebalancing spend is projected to recover ~190 additional conversions this month.'
+  },
+  sample: {
+    eyebrow: 'Mixed channel view',
+    title: 'Conversion share by channel',
+    type: 'sample-bars',
+    rows: [
+      { label: 'Email',        val: '38%', pct: 88, fill: 'teal' },
+      { label: 'Paid social',  val: '29%', pct: 72, fill: 'teal' },
+      { label: 'Organic search', val: '16%', pct: 44, fill: 'cta' },
+      { label: 'Direct',       val: '11%', pct: 32, fill: 'cta' },
+      { label: 'Display',      val: '6%',  pct: 18, fill: 'red', flagged: true }
+    ],
+    callout: { tone: 'warn', html: '<strong>Display is underperforming.</strong> Lowest conversion share at highest CPA.' }
+  },
+  questions: [
+    { q: "Which channel is most efficient this month?",
+      chartTitle: 'Efficiency by channel',
+      type: 'h-bars-money',
+      metrics: [
+        { val: '3.4x', lbl: 'Best return multiple', delta: 'Email retargeting', dir: 'up' },
+        { val: '$21', lbl: 'Lowest CPA', delta: 'best channel', dir: 'up' }
+      ],
+      answer: "<p><strong>Email retargeting</strong> is your most efficient channel this month at 3.4x return and $21 CPA. Paid social is second at 2.7x, while display trails at 0.9x and $63 CPA.</p><p>Moving 10% to 15% of display budget into email and paid social should improve blended efficiency immediately.</p>",
+      chartData: [
+        { label: 'Email retargeting', val: 3.4, fmt: '3.4x' },
+        { label: 'Paid social',       val: 2.7, fmt: '2.7x' },
+        { label: 'Organic search',    val: 2.2, fmt: '2.2x' },
+        { label: 'Direct',            val: 1.4, fmt: '1.4x' },
+        { label: 'Display',           val: 0.9, fmt: '0.9x' }
+      ],
+      action: 'Reallocate budget by efficiency'
+    },
+    { q: "Where are we losing conversions in funnel?",
+      chartTitle: 'Funnel stage drop-off',
+      type: 'h-bars-flagged',
+      metrics: [
+        { val: '43%', lbl: 'Biggest drop-off', delta: 'visit → signup', dir: 'down' },
+        { val: '17%', lbl: 'Checkout drop', delta: 'signup → purchase', dir: 'flat' }
+      ],
+      answer: "<p>Your largest leak is <strong>visit to signup</strong> at 43% drop-off. Secondary leak is signup to purchase at 17%, with mobile users showing the steepest falloff.</p><p>Shortening the signup form and surfacing proof points above the fold should recover the most conversions fastest.</p>",
+      chartData: [
+        { label: 'Visit → Signup',    val: 43, fmt: '43%', flagged: true },
+        { label: 'Signup → Trial',    val: 27, fmt: '27%' },
+        { label: 'Trial → Purchase',  val: 17, fmt: '17%' },
+        { label: 'Purchase → Repeat', val: 12, fmt: '12%' }
+      ],
+      action: 'Reduce signup friction'
+    },
+    { q: "What should we optimize first this week?",
+      chartTitle: 'Weekly optimization priority',
+      type: 'h-bars-segments',
+      metrics: [
+        { val: '1.9x', lbl: 'Highest impact score', delta: 'email retargeting', dir: 'up' },
+        { val: '~190', lbl: 'Potential recovered conversions', delta: 'this month', dir: 'up' }
+      ],
+      answer: "<p>Top priority this week is <strong>email retargeting</strong> because it combines your highest return with the fastest implementation path.</p><p>Expected impact is roughly 190 additional conversions this month if you pair budget reallocation with refreshed creative in the top 2 audiences.</p>",
+      chartData: [
+        { label: 'Email retargeting', val: 1.9, fmt: '1.9x' },
+        { label: 'Paid social',       val: 1.5, fmt: '1.5x' },
+        { label: 'Landing page UX',   val: 1.2, fmt: '1.2x' },
+        { label: 'Display refresh',   val: 0.6, fmt: '0.6x' }
+      ],
+      action: 'Ship retargeting refresh'
+    },
+    { q: "How is conversion trend changing week over week?",
+      chartTitle: 'Weekly conversion trend',
+      type: 'line-anomaly',
+      metrics: [
+        { val: '+9%', lbl: 'WoW conversion lift', delta: 'last 2 weeks', dir: 'up' },
+        { val: 'Week 3 dip', lbl: 'Anomaly detected', delta: 'creative outage', dir: 'down' }
+      ],
+      answer: "<p>Overall conversion is up <strong>9% week over week</strong>, but a sharp Week 3 dip aligns with a creative mismatch in paid social.</p><p>Fixing that campaign recovered performance within 5 days. Keep automated QA checks active before launch windows.</p>",
+      action: 'Enable pre-launch creative QA'
+    }
+  ]
+};
+
 function featureSVG(kind) {
   const stroke = '#241c15';
   const w = 'stroke="' + stroke + '" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"';
@@ -3323,36 +3533,19 @@ function pgEscapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-let currentPersona = 'ecommerce';
+let currentPersona = 'retail';
 
 function setPersona(p) {
   const data = PERSONAS[p];
   if (!data) return;
   currentPersona = p;
 
-  // Persona pills + dots
-  document.querySelectorAll('.vb-pill').forEach(b => b.classList.toggle('active', b.dataset.persona === p));
-  const order = ['ecommerce','agency','nonprofit','b2b'];
-  const idx = order.indexOf(p);
-  document.querySelectorAll('.vb-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-
-  // Left column: headline / subhead / feature cards
-  const headline = document.getElementById('vbHeadline');
-  const subhead = document.getElementById('vbSubhead');
-  if (headline) headline.textContent = data.headline;
-  if (subhead) subhead.textContent = data.subhead;
-  const featRow = document.getElementById('vbFeatureRow');
-  if (featRow && data.features) {
-    featRow.innerHTML = data.features.map(f => `
-      <div class="vb-feature-card">
-        <div class="vb-feature-illo">${featureSVG(f.svg)}</div>
-        <div>
-          <h4>${pgEscapeHtml(f.name)}</h4>
-          <p>${pgEscapeHtml(f.desc)}</p>
-        </div>
-      </div>
-    `).join('');
-  }
+  // ICP chips in the hero should mirror active persona state.
+  document.querySelectorAll('.icp-chip').forEach(chip => {
+    const isActive = chip.dataset.icp === p;
+    chip.classList.toggle('active', isActive);
+    chip.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
 
   // Right column (the playground): toolbar + greeting + suggestions + sample chart
   const titleEl = document.getElementById('pgTitle');
@@ -3387,6 +3580,77 @@ function setPersona(p) {
   const vizTitle = document.getElementById('pgVizTitle');
   if (vizTitle && data.sample) vizTitle.textContent = data.sample.title;
   renderSampleInsight(data.sample);
+  renderHeroPreview(data);
+}
+
+function renderHeroInsightViz(vizType) {
+  if (vizType === 'line-bookings') {
+    return `<svg viewBox="0 0 240 84" preserveAspectRatio="none">
+      <g stroke="rgba(36,28,21,0.15)" stroke-width="0.8">
+        <line x1="0" y1="22" x2="240" y2="22"/>
+        <line x1="0" y1="46" x2="240" y2="46"/>
+        <line x1="0" y1="70" x2="240" y2="70"/>
+      </g>
+      <path d="M0,56 L28,52 L56,50 L84,46 L112,45 L140,49 L168,58 L196,63 L224,60 L240,57" fill="none" stroke="#00B9A6" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M0,56 L28,52 L56,50 L84,46 L112,45 L140,49 L168,58 L196,63 L224,60 L240,57 L240,84 L0,84 Z" fill="rgba(0,185,166,0.16)"/>
+      <circle cx="168" cy="58" r="4.5" fill="#FF6B47" stroke="white" stroke-width="1.2"/>
+    </svg>`;
+  }
+  if (vizType === 'v-bars-mini') {
+    return `<svg viewBox="0 0 240 84" preserveAspectRatio="none">
+      <g transform="translate(14,8)">
+        <rect x="0" y="30" width="32" height="42" rx="4" fill="#007C89"/>
+        <rect x="42" y="20" width="32" height="52" rx="4" fill="#00B9A6"/>
+        <rect x="84" y="10" width="32" height="62" rx="4" fill="#FFE01B"/>
+        <rect x="126" y="26" width="32" height="46" rx="4" fill="#007C89" opacity="0.75"/>
+        <rect x="168" y="35" width="32" height="37" rx="4" fill="#007C89" opacity="0.55"/>
+      </g>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 240 84" preserveAspectRatio="none">
+    <g stroke="rgba(36,28,21,0.15)" stroke-width="0.8">
+      <line x1="0" y1="22" x2="240" y2="22"/>
+      <line x1="0" y1="46" x2="240" y2="46"/>
+      <line x1="0" y1="70" x2="240" y2="70"/>
+    </g>
+    <path d="M0,30 L24,32 L48,28 L72,34 L96,31 L120,38 L144,48 L168,58 L192,54 L216,52 L240,49"
+          fill="none" stroke="#007C89" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M0,30 L24,32 L48,28 L72,34 L96,31 L120,38 L144,48 L168,58 L192,54 L216,52 L240,49 L240,84 L0,84 Z"
+          fill="rgba(0,124,137,0.14)"/>
+    <circle cx="168" cy="58" r="4.5" fill="#FF6B47" stroke="white" stroke-width="1.2"/>
+  </svg>`;
+}
+
+function renderHeroPreview(data) {
+  if (!data) return;
+  const heroBiz = document.getElementById('hpBizName');
+  if (heroBiz && data.pgGreetName) heroBiz.textContent = data.pgGreetName;
+
+  const promptList = document.getElementById('hpPromptList');
+  if (promptList) {
+    const prompts = (data.heroPrompts && data.heroPrompts.length ? data.heroPrompts : (data.questions || []).slice(0, 3).map(q => q.q)).slice(0, 3);
+    promptList.innerHTML = prompts.map((txt, idx) => `<li><button type="button" class="hp-prompt-btn" data-hero-q="${idx}">${pgEscapeHtml(txt)}</button></li>`).join('');
+    promptList.querySelectorAll('[data-hero-q]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        markInteracted();
+        askPlaygroundQuestion(parseInt(btn.dataset.heroQ, 10));
+        const target = document.getElementById('playground');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  const insightHeadline = document.getElementById('hpInsightHeadline');
+  if (insightHeadline && data.heroInsight && data.heroInsight.headline) insightHeadline.textContent = data.heroInsight.headline;
+  const insightByline = document.getElementById('hpInsightByline');
+  if (insightByline && data.heroInsight && data.heroInsight.byline) insightByline.textContent = data.heroInsight.byline;
+  const insightViz = document.getElementById('hpInsightViz');
+  if (insightViz && data.heroInsight) insightViz.innerHTML = renderHeroInsightViz(data.heroInsight.vizType);
+
+  const actionTitle = document.getElementById('hpActionTitle');
+  if (actionTitle && data.heroAction && data.heroAction.title) actionTitle.textContent = data.heroAction.title;
+  const actionDesc = document.getElementById('hpActionDesc');
+  if (actionDesc && data.heroAction && data.heroAction.desc) actionDesc.textContent = data.heroAction.desc;
 }
 
 function renderSampleInsight(sample) {
@@ -4136,20 +4400,10 @@ function generatePgInsightsFromData(rows, cols) {
 
 /* ---------- Hero init: render default persona + start auto-rotation ---------- */
 (function heroInit() {
-  const pillRow = document.getElementById('vbPillRow');
-  if (pillRow) {
-    pillRow.querySelectorAll('.vb-pill').forEach(p => {
-      p.addEventListener('click', () => {
-        markInteracted();
-        setPersona(p.dataset.persona);
-      });
-    });
-  }
-  document.querySelectorAll('.vb-dot').forEach(d => {
-    d.addEventListener('click', () => {
+  document.querySelectorAll('.icp-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
       markInteracted();
-      const order = ['ecommerce','agency','nonprofit','b2b'];
-      setPersona(order[parseInt(d.dataset.personaDot, 10)]);
+      setPersona(chip.dataset.icp);
     });
   });
   const hero = document.getElementById('hero');
@@ -4174,10 +4428,10 @@ function generatePgInsightsFromData(rows, cols) {
   if (pgInput) {
     pgInput.addEventListener('input', markInteracted);
   }
-  // Render default persona (E-commerce) and kick off auto-rotation. The
+  // Render default persona (Retail) and kick off auto-rotation. The
   // variant switcher used to call startVariantBRotation() on hash routing,
   // but with only one hero we just start it directly.
-  setPersona('ecommerce');
+  setPersona('retail');
   startVariantBRotation();
 })();
 
@@ -4232,6 +4486,16 @@ document.querySelectorAll('.faq-item').forEach(item => {
 /* ============================================================ */
 /* Smooth-scroll any in-page #anchor link (after variant loads)  */
 /* ============================================================ */
+document.querySelectorAll('[data-scroll-to]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    markInteracted();
+    const targetId = btn.dataset.scrollTo;
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   const href = a.getAttribute('href');
   if (!href || href.length < 2) return;
