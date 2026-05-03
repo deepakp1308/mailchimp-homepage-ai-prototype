@@ -1599,157 +1599,247 @@
     flex: 1;
   }
 
-  /* ----- Before / After Analytics AI block ----- */
+  /* ----- Before / After Analytics AI block (Mailchimp brand bar) -----
+     Single connected card. Two halves separated by a center directional
+     accent (Cavendish Yellow chip with arrow). Tonal Peppercorn neutrals
+     instead of pastel pink/green. Cooper-style serif headline. One
+     verbatim Mailchimp customer quote (Anuj Chaudhry, already used in
+     the testimonials grid) anchors the result. */
   .bigboard-footer { max-width: 1280px; margin: 0 auto; }
-  .bb-impact {
+
+  .bb-compare {
     background: white;
     border: 1px solid var(--mc-border);
-    border-radius: 22px;
-    padding: 32px;
+    border-radius: 24px;
+    padding: 40px 44px 36px;
     margin-bottom: 18px;
     box-shadow: 0 14px 36px rgba(36,28,21,0.05);
-    display: grid;
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-    gap: 32px;
-    align-items: stretch;
-  }
-  .bb-impact-main { display: flex; flex-direction: column; gap: 18px; }
-  .bb-impact-eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--mc-text-muted);
-  }
-  .bb-impact-eyebrow strong { color: var(--mc-text); font-weight: 700; }
-  .bb-impact-headline {
-    font-family: 'Cooper Light', 'Cooper Md BT', 'Georgia', serif;
-    font-weight: 300; font-style: italic;
-    font-size: 26px;
-    color: var(--mc-text);
-    line-height: 1.22;
-    letter-spacing: -0.012em;
-    margin: 0 0 4px;
-  }
-  .bb-impact-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .bb-impact-cell {
-    padding: 18px 20px;
-    border-radius: 16px;
-    line-height: 1.5;
-  }
-  .bb-impact-cell.bb-before {
-    background: rgba(255,107,71,0.07);
-    border: 1px solid rgba(255,107,71,0.22);
-  }
-  .bb-impact-cell.bb-after {
-    background: rgba(63,181,142,0.09);
-    border: 1px solid rgba(63,181,142,0.28);
-  }
-  .bb-impact-label {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .bb-impact-label::before {
-    content: ""; display: inline-block;
-    width: 6px; height: 6px; border-radius: 50%;
-    background: currentColor;
-  }
-  .bb-impact-cell.bb-before .bb-impact-label { color: var(--mc-coral); }
-  .bb-impact-cell.bb-after .bb-impact-label { color: var(--mc-sage); }
-  .bb-impact-line {
-    font-size: 13.5px;
-    color: var(--mc-text);
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-  .bb-impact-line:last-child { margin-bottom: 0; }
-  .bb-impact-line strong {
-    color: var(--mc-text);
-    font-weight: 700;
-  }
-  .bb-impact-cell.bb-after .bb-impact-line strong {
-    background: linear-gradient(180deg, transparent 60%, rgba(255,224,27,0.65) 60%);
-    padding: 0 2px;
-  }
-
-  /* ----- Customer credibility anchor (right column) ----- */
-  .bb-anchor {
-    background: var(--mc-text);
-    color: white;
-    border-radius: 18px;
-    padding: 24px 24px 22px;
-    display: flex; flex-direction: column; justify-content: space-between;
-    gap: 18px;
     position: relative;
     overflow: hidden;
   }
-  .bb-anchor::before {
-    content: ""; position: absolute; right: -40px; top: -40px;
-    width: 140px; height: 140px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,224,27,0.22) 0%, rgba(255,224,27,0) 70%);
-    pointer-events: none;
+  .bb-compare-head {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 28px;
+    max-width: 760px;
   }
-  .bb-anchor-eyebrow {
-    font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--mc-yellow);
+  .bb-compare-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mc-teal-dark);
     display: inline-flex; align-items: center; gap: 8px;
   }
-  .bb-anchor-eyebrow::before {
-    content: "✦"; color: var(--mc-yellow); font-size: 13px; line-height: 1;
+  .bb-compare-eyebrow::before {
+    content: ""; display: inline-block;
+    width: 22px; height: 1px; background: var(--mc-teal-dark);
   }
-  .bb-anchor-quote {
+  .bb-compare-headline {
+    font-family: 'Cooper Light', 'Cooper Md BT', 'Georgia', serif;
+    font-weight: 300;
+    font-size: 34px;
+    color: var(--mc-text);
+    line-height: 1.16;
+    letter-spacing: -0.018em;
+    margin: 0;
+  }
+  .bb-compare-headline em {
+    font-style: italic;
+    color: var(--mc-text);
+  }
+
+  .bb-compare-grid {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
+    gap: 0;
+    align-items: stretch;
+    border-top: 1px solid var(--mc-border);
+    padding-top: 28px;
+  }
+
+  .bb-half {
+    padding: 4px 4px 0;
+    display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
+  }
+  .bb-half--before { padding-right: 28px; }
+  .bb-half--after  { padding-left: 28px; }
+
+  .bb-half-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mc-text-muted);
+  }
+  .bb-half--after .bb-half-label { color: var(--mc-teal-dark); }
+  .bb-half-label-dot {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: currentColor;
+  }
+
+  .bb-half-stat {
+    font-family: 'Cooper Light', 'Cooper Md BT', 'Georgia', serif;
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--mc-text);
+    margin: 2px 0 4px;
+  }
+  .bb-half--after .bb-half-stat {
+    background: linear-gradient(180deg, transparent 64%, var(--mc-yellow) 64%);
+    padding: 0 4px;
+    align-self: flex-start;
+  }
+  .bb-half-stat-sub {
+    font-size: 13px; font-weight: 600;
+    color: var(--mc-text-secondary);
+    letter-spacing: -0.005em;
+  }
+
+  .bb-half-list {
+    list-style: none; margin: 8px 0 0; padding: 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .bb-half-list li {
+    font-size: 14px;
+    color: var(--mc-text);
+    line-height: 1.5;
+    padding-left: 22px;
+    position: relative;
+  }
+  .bb-half-list li::before {
+    content: ""; position: absolute; left: 0; top: 9px;
+    width: 12px; height: 1.5px; background: var(--mc-text-muted);
+    border-radius: 1px;
+  }
+  .bb-half--after .bb-half-list li::before {
+    background: var(--mc-teal-dark);
+  }
+
+  /* Center directional accent: Cavendish Yellow circle + arrow on a
+     vertical axis line. The vertical line spans the full row so the
+     two halves read as one connected card. */
+  .bb-compare-axis {
+    width: 56px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .bb-compare-axis::before {
+    content: ""; position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 1px; background: var(--mc-border);
+    transform: translateX(-50%);
+  }
+  .bb-compare-axis-chip {
+    position: relative; z-index: 1;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(36,28,21,0.12);
+  }
+
+  /* Customer evidence row: dark Peppercorn strip below the comparison
+     grid. One verbatim Mailchimp customer quote, attribution, and a
+     single Cavendish Yellow stat chip. */
+  .bb-evidence {
+    margin-top: 28px;
+    background: var(--mc-text);
+    color: white;
+    border-radius: 18px;
+    padding: 22px 26px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bb-evidence::before {
+    content: ""; position: absolute; right: -60px; top: -60px;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,224,27,0.18) 0%, rgba(255,224,27,0) 70%);
+    pointer-events: none;
+  }
+  .bb-evidence-quote {
     font-family: 'Cooper Light', 'Cooper Md BT', 'Georgia', serif;
     font-weight: 300; font-style: italic;
     font-size: 19px;
-    line-height: 1.36;
+    line-height: 1.4;
     letter-spacing: -0.005em;
     color: white;
     margin: 0;
+    position: relative;
   }
-  .bb-anchor-attr {
+  .bb-evidence-quote::before {
+    content: "“";
+    position: absolute; left: -14px; top: -10px;
+    font-family: 'Cooper Light', 'Cooper Md BT', 'Georgia', serif;
+    font-size: 36px; color: var(--mc-yellow); line-height: 1;
+  }
+  .bb-evidence-side {
+    display: flex; flex-direction: column; gap: 14px; align-items: flex-start;
+  }
+  .bb-evidence-attr {
     display: flex; align-items: center; gap: 12px;
   }
-  .bb-anchor-photo {
+  .bb-evidence-photo {
     width: 44px; height: 44px; border-radius: 50%;
     background-size: cover; background-position: center;
-    border: 2px solid rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.12);
     flex-shrink: 0;
   }
-  .bb-anchor-name {
+  .bb-evidence-name {
     font-size: 14px; font-weight: 700; color: white;
     line-height: 1.2;
   }
-  .bb-anchor-role {
-    font-size: 12px; color: rgba(255,255,255,0.7);
+  .bb-evidence-role {
+    font-size: 12px; color: rgba(255,255,255,0.72);
     line-height: 1.3;
     margin-top: 2px;
   }
-  .bb-anchor-chip {
-    display: inline-flex; align-items: center; gap: 6px;
+  .bb-evidence-stat {
+    display: inline-flex; align-items: center; gap: 8px;
     background: var(--mc-yellow);
     color: var(--mc-text);
-    font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em;
-    padding: 6px 11px;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 7px 13px;
     border-radius: 999px;
-    align-self: flex-start;
   }
 
-  @media (max-width: 1100px) {
-    .bb-impact { grid-template-columns: 1fr; }
-  }
   @media (max-width: 980px) {
     .bigboard-grid { grid-template-columns: repeat(2, 1fr); }
     .bigboard-head h2 { font-size: 38px; }
     .bb-num { font-size: 52px; }
-    .bb-impact-row { grid-template-columns: 1fr; }
+    .bb-compare { padding: 30px 26px 26px; }
+    .bb-compare-headline { font-size: 28px; }
+    .bb-compare-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .bb-half--before, .bb-half--after { padding: 0; }
+    .bb-compare-axis {
+      width: auto; height: 48px;
+    }
+    .bb-compare-axis::before {
+      top: 50%; bottom: auto; left: 0; right: 0;
+      width: 100%; height: 1px;
+      transform: translateY(-50%);
+    }
+    .bb-compare-axis-chip { transform: rotate(90deg); }
+    .bb-evidence {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
   }
   @media (max-width: 540px) {
     .bigboard-grid { grid-template-columns: 1fr; }
-    .bb-impact { padding: 24px 20px; }
-    .bb-anchor { padding: 22px 20px; }
-    .bb-anchor-quote { font-size: 17px; }
+    .bb-compare { padding: 24px 20px 22px; }
+    .bb-compare-headline { font-size: 24px; }
+    .bb-half-stat { font-size: 36px; }
+    .bb-evidence { padding: 20px 20px; }
+    .bb-evidence-quote { font-size: 17px; }
     .bigboard-head h2 { font-size: 32px; }
   }
 
@@ -3211,46 +3301,63 @@
   </div>
 
   <div class="bigboard-footer">
-    <!-- Two-column comparison: tight Without / With grid on the left,
-         single customer credibility anchor on the right. The anchor
-         quote is verbatim from the Damon Runnals card already shown
-         in the testimonials section, used here as a credibility
-         anchor (no invented copy). -->
-    <div class="bb-impact">
-      <div class="bb-impact-main">
-        <div class="bb-impact-eyebrow">Before <strong>vs</strong> After Analytics AI</div>
-        <p class="bb-impact-headline">From a four-hour CSV scrub to a five-minute conversation.</p>
-        <div class="bb-impact-row">
-          <div class="bb-impact-cell bb-before">
-            <div class="bb-impact-label">Without Analytics AI</div>
-            <div class="bb-impact-line">Quarterly review: <strong>4 to 6 hours</strong> in spreadsheets.</div>
-            <div class="bb-impact-line">"Why did opens dip?" waits on the data team.</div>
-            <div class="bb-impact-line">Send time set on a hunch, not your engagement curve.</div>
-          </div>
-          <div class="bb-impact-cell bb-after">
-            <div class="bb-impact-label">With Analytics AI</div>
-            <div class="bb-impact-line">Same review in <strong>under 5 minutes</strong>, conversational.</div>
-            <div class="bb-impact-line">Ask the agent. Get a chart and the next move.</div>
-            <div class="bb-impact-line">Send time grounded in your real engagement data.</div>
-          </div>
+    <!-- Single connected comparison card with two halves and a center
+         directional accent (Cavendish Yellow chip on a vertical axis
+         line). One verbatim Mailchimp customer quote anchors the
+         result; the quote is taken directly from the Anuj Chaudhry
+         card in the testimonials grid below. No invented copy. -->
+    <article class="bb-compare" aria-labelledby="bbCompareHeadline">
+      <header class="bb-compare-head">
+        <span class="bb-compare-eyebrow">A day with Analytics AI</span>
+        <h3 id="bbCompareHeadline" class="bb-compare-headline">
+          The same quarterly review, <em>in a fraction of the time.</em>
+        </h3>
+      </header>
+
+      <div class="bb-compare-grid">
+        <div class="bb-half bb-half--before">
+          <span class="bb-half-label"><span class="bb-half-label-dot" aria-hidden="true"></span>Without Analytics AI</span>
+          <div class="bb-half-stat">4 to 6 hrs</div>
+          <div class="bb-half-stat-sub">to pull a quarterly review together</div>
+          <ul class="bb-half-list">
+            <li>Export to CSV. Pivot. Cross-check by hand.</li>
+            <li>"Why did opens drop?" waits on the data team.</li>
+            <li>Send time picked from the calendar, not the data.</li>
+          </ul>
+        </div>
+
+        <div class="bb-compare-axis" aria-hidden="true">
+          <span class="bb-compare-axis-chip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+
+        <div class="bb-half bb-half--after">
+          <span class="bb-half-label"><span class="bb-half-label-dot" aria-hidden="true"></span>With Analytics AI</span>
+          <div class="bb-half-stat">Under 5 min</div>
+          <div class="bb-half-stat-sub">same review, asked in plain English</div>
+          <ul class="bb-half-list">
+            <li>Ask the agent. Get a chart and the next step.</li>
+            <li>Anomalies and revenue drivers surfaced for you.</li>
+            <li>Send time grounded in your real audience activity.</li>
+          </ul>
         </div>
       </div>
 
-      <aside class="bb-anchor" aria-label="Customer credibility anchor">
-        <span class="bb-anchor-eyebrow">Customer evidence</span>
-        <blockquote class="bb-anchor-quote">It's like getting to hire a marketing specialist, for free. The agent tells me which segment to send to and what to say. I just hit send.</blockquote>
-        <div>
-          <div class="bb-anchor-attr">
-            <div class="bb-anchor-photo" style="background-image: url('assets/testimonial-damon.jpg');" role="img" aria-label="Damon Runnals"></div>
+      <aside class="bb-evidence" aria-label="Customer evidence">
+        <blockquote class="bb-evidence-quote">Quarterly performance reviews used to take me 4 to 6 hours. With Analytics AI, I get the same insights in minutes.</blockquote>
+        <div class="bb-evidence-side">
+          <div class="bb-evidence-attr">
+            <div class="bb-evidence-photo" style="background-image: url('assets/testimonial-anuj.jpg');" role="img" aria-label="Anuj Chaudhry"></div>
             <div>
-              <div class="bb-anchor-name">Damon Runnals</div>
-              <div class="bb-anchor-role">CEO · Minnesota Playlist</div>
+              <div class="bb-evidence-name">Anuj Chaudhry</div>
+              <div class="bb-evidence-role">Chief Growth Officer, Faris Team</div>
             </div>
           </div>
-          <div class="bb-anchor-chip" style="margin-top: 14px;">+38% click-through rate</div>
+          <div class="bb-evidence-stat">−92% time on quarterly review</div>
         </div>
       </aside>
-    </div>
+    </article>
     <p class="stats-footnote">Performance data based on Mailchimp customer aggregates measured in the last 12 months. Individual results vary.</p>
   </div>
 
@@ -4673,7 +4780,7 @@ const HERO_FEATURE_DEFINITIONS = [
     key: 'email-builder',
     label: 'Email brand campaign builder',
     src: 'assets/hero/features/email-builder.jpg',
-    alt: 'Mailchimp drag-and-drop email builder open on a laptop in a backyard.',
+    alt: 'iMac on a desk showing the Mailchimp email builder with a brand campaign in progress.',
     caption: 'Drag-and-drop builder with brand-safe templates baked in.',
     animated: false
   },
@@ -4681,16 +4788,16 @@ const HERO_FEATURE_DEFINITIONS = [
     key: 'segmentation',
     label: 'Smart Segmentation',
     src: 'assets/hero/features/segmentation.jpg',
-    alt: 'Mailchimp Smart Segmentation hero illustration.',
-    caption: 'Predictive segments that find your highest-LTV audiences.',
+    alt: 'Illustration of audience segments grouped into rows, representing Mailchimp Smart Segmentation.',
+    caption: 'Predictive segments that find your highest-value audiences.',
     animated: false
   },
   {
     key: 'sms',
     label: 'SMS Campaigns',
     src: 'assets/hero/features/sms.jpg',
-    alt: 'Marketer holding a phone with an SMS campaign on screen.',
-    caption: 'Two-way SMS campaigns that convert in your customer\u2019s pocket.',
+    alt: 'Marketer holding a phone with a Mailchimp SMS campaign open on screen.',
+    caption: 'Two-way SMS campaigns that reach customers right in their pocket.',
     animated: false
   },
   {
@@ -4698,8 +4805,8 @@ const HERO_FEATURE_DEFINITIONS = [
     label: 'Journey Automations',
     src: 'assets/hero/features/automations.gif',
     still: 'assets/hero/features/automations--still.jpg',
-    alt: 'Animated stairs illustration representing a multi-step customer journey.',
-    caption: 'Multi-step journeys that nurture every lead 24/7.',
+    alt: 'Animated illustration of a stepped journey, representing a multi-step Mailchimp automation.',
+    caption: 'Multi-step journeys that nurture every contact, around the clock.',
     animated: true
   },
   {
@@ -4707,7 +4814,7 @@ const HERO_FEATURE_DEFINITIONS = [
     label: 'Reporting & Analytics',
     src: 'assets/hero/features/analytics.gif',
     still: 'assets/hero/features/analytics--still.jpg',
-    alt: 'Animated benchmarks illustration for Reporting & Analytics.',
+    alt: 'Animated bar-chart benchmark illustration, representing Mailchimp Reporting and Analytics.',
     caption: 'Analytics AI surfaces the next best move from your real data.',
     animated: true
   }
@@ -4719,19 +4826,19 @@ const HERO_FEATURE_OVERRIDES = {
       src: 'assets/hero/features/email-builder--small-business.gif',
       still: 'assets/hero/features/email-builder.jpg',
       animated: true,
-      alt: 'Animated ad campaign for a small business.',
-      caption: 'Send a polished campaign in 10 minutes — no designer needed.'
+      alt: 'Animated small-business email campaign building inside Mailchimp.',
+      caption: 'Send a polished campaign in 10 minutes. No designer needed.'
     },
     'automations': {
       src: 'assets/hero/features/automations--small-business.jpg',
       animated: false,
-      alt: 'Small-business team reviewing an automation in their shop.',
+      alt: 'Illustration of a Mailchimp automation workflow with branching paths.',
       caption: 'Welcome, birthday, and winback flows running while you serve customers.'
     },
     'analytics': {
       src: 'assets/hero/features/analytics--small-business.jpg',
       animated: false,
-      alt: 'Mailchimp business growth illustration.',
+      alt: 'Mailchimp illustration of business growth across reporting metrics.',
       caption: 'See exactly which campaign brought in revenue this week.'
     }
   },
@@ -4740,13 +4847,13 @@ const HERO_FEATURE_OVERRIDES = {
       src: 'assets/hero/features/sms--ecommerce.gif',
       still: 'assets/hero/features/sms.jpg',
       animated: true,
-      alt: 'Animated SMS send and receive for ecommerce.',
+      alt: 'Animated phone receiving an ecommerce SMS campaign.',
       caption: 'Recover abandoned carts and announce drops with two-way SMS.'
     },
     'segmentation': {
       src: 'assets/hero/features/segmentation--ecommerce.jpg',
       animated: false,
-      alt: 'Mini-spot ink illustration of audience segmentation.',
+      alt: 'Mailchimp VIP shopper illustration, representing high-value ecommerce segments.',
       caption: 'Auto-segment VIPs, repeat buyers, and at-risk shoppers.'
     }
   },
@@ -4754,19 +4861,19 @@ const HERO_FEATURE_OVERRIDES = {
     'email-builder': {
       src: 'assets/hero/features/email-builder--nonprofit.jpg',
       animated: false,
-      alt: 'Mailchimp email builder on an iMac in a community office.',
+      alt: 'Laptop on grass showing the Mailchimp email builder with a nonprofit campaign.',
       caption: 'Donor-ready appeals, on-brand, sent in minutes.'
     },
     'segmentation': {
       src: 'assets/hero/features/segmentation--nonprofit.jpg',
       animated: false,
-      alt: 'Illustration of people connecting around a star — community segmentation.',
+      alt: 'Illustration of people connecting around a star, representing community-based donor segmentation.',
       caption: 'Group sustainers, lapsed donors, and first-time givers automatically.'
     },
     'automations': {
       src: 'assets/hero/features/automations--nonprofit.jpg',
       animated: false,
-      alt: 'Nonprofit team reviewing automations on iMac with volunteers.',
+      alt: 'Nonprofit marketer and volunteers reviewing a Mailchimp automation on an iMac.',
       caption: 'Recurring giving and thank-you journeys for every supporter.'
     }
   },
@@ -4774,20 +4881,20 @@ const HERO_FEATURE_OVERRIDES = {
     'segmentation': {
       src: 'assets/hero/features/segmentation--b2c.jpg',
       animated: false,
-      alt: 'Spot illustration of customers online.',
-      caption: 'Reach buying stages with predictive lookalike segments.'
+      alt: 'Mailchimp illustration of customers online, representing direct-to-consumer audience segments.',
+      caption: 'Reach every buying stage with predictive lookalike segments.'
     },
     'automations': {
       src: 'assets/hero/features/automations--b2c.jpg',
       animated: false,
-      alt: 'Marketer on a laptop building automations outdoors.',
+      alt: 'Marketer on a laptop building Mailchimp automations outdoors.',
       caption: 'Always-on welcome and winback flows across every channel.'
     },
     'analytics': {
       src: 'assets/hero/features/analytics--b2c.jpg',
       animated: false,
-      alt: 'Spot analytics illustration.',
-      caption: 'See what\u2019s working across email, SMS, and social in one view.'
+      alt: 'Mailchimp Reporting and Analytics spot illustration with metrics in motion.',
+      caption: 'See what is working across email, SMS, and social in one view.'
     }
   }
 };
