@@ -171,8 +171,11 @@
 
 
   /* ===================== HERO (new) ===================== */
+  /* NOTE: Vertical rhythm tuned so the playground frame peeks above the */
+  /* fold on common laptop viewports (1280×800, 1440×900). Keep paddings */
+  /* in sync with the .playground top padding below if you change either. */
   .hero {
-    padding: 60px 32px 96px;
+    padding: 40px 32px 44px;
     position: relative;
   }
   .hero-inner {
@@ -190,7 +193,7 @@
     padding: 7px 16px 7px 12px;
     border-radius: 999px;
     font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em;
-    margin-bottom: 28px;
+    margin-bottom: 22px;
     box-shadow: 0 4px 14px rgba(36,28,21,0.05);
   }
   .hero-eyebrow-pill .he-spark { width: 16px; height: 16px; display: inline-flex; }
@@ -287,7 +290,7 @@
     margin: 0 0 26px;
   }
   .hero-copy .hero-cta-row {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
     justify-content: flex-start;
   }
   .hero-segment-copy {
@@ -335,7 +338,7 @@
     border-radius: 24px;
     overflow: hidden;
     border: 1px solid rgba(36, 28, 21, 0.14);
-    min-height: 500px;
+    min-height: 396px;
     background: #0f0b07;
     box-shadow: 0 34px 74px -30px rgba(0, 0, 0, 0.5);
   }
@@ -460,9 +463,31 @@
   @media (max-width: 1140px) {
     .hero-headline { font-size: 56px; }
     .hero-split { gap: 22px; }
-    .hero-video-wrap { min-height: 430px; }
+    .hero-video-wrap { min-height: 380px; }
+  }
+  /* Short laptop folds (≈13" displays at 1280×800) — squeeze a bit more */
+  /* so the playground header peeks meaningfully above the fold without */
+  /* affecting wider laptops or tablets/phones (those use width queries). */
+  @media (min-width: 901px) and (max-height: 820px) {
+    .hero { padding: 20px 32px 16px; }
+    .hero-eyebrow-pill { margin-bottom: 10px; }
+    .hero-copy .hero-headline { margin-bottom: 8px; }
+    .hero-copy .hero-subhead { margin-bottom: 14px; }
+    .hero-copy .hero-cta-row {
+      margin-bottom: 12px;
+      flex-wrap: nowrap;
+    }
+    .hero-copy .hero-cta-row .btn-primary-cta,
+    .hero-copy .hero-cta-row .btn-secondary-cta {
+      padding: 11px 18px;
+      font-size: 14px;
+    }
+    .hero-segment-copy { margin-bottom: 6px; }
+    .hero-video-wrap { min-height: 320px; }
   }
   @media (max-width: 900px) {
+    /* Restore generous paddings on tablet/mobile — the "peek" optimization */
+    /* targets desktop laptop folds; on smaller screens readability wins. */
     .hero { padding: 42px 20px 68px; }
     .hero-split { grid-template-columns: 1fr; }
     .hero-inner { text-align: center; }
@@ -490,12 +515,24 @@
   }
 
   /* ===================== R&A Analytics Playground (ported) ===================== */
+  /* Top padding intentionally tightened so the playground frame peeks above */
+  /* the fold on 1280×800 / 1440×900 laptops. Mobile breakpoint below restores */
+  /* the original breathing room. */
   .playground {
     background: #15100A;
     color: white;
-    padding: 100px 32px;
+    padding: 44px 32px 88px;
     position: relative;
     overflow: hidden;
+  }
+  @media (min-width: 901px) and (max-height: 820px) {
+    .playground { padding-top: 18px; }
+    .playground-header { margin-bottom: 24px; }
+    .playground-header h2 { font-size: 40px; margin: 8px 0 12px; }
+    .playground-peek-cue { margin-bottom: 6px; }
+  }
+  @media (max-width: 760px) {
+    .playground { padding: 72px 20px 80px; }
   }
   .playground::before {
     content: '';
@@ -523,7 +560,39 @@
   }
   .playground > * { position: relative; z-index: 1; }
   .playground .eyebrow { color: #007C89; }
-  .playground-header { text-align: center; margin-bottom: 56px; }
+  .playground-header { text-align: center; margin-bottom: 36px; }
+  /* Subtle "Try it live" peek cue — anchored at the top of the playground so */
+  /* visitors notice the live demo while their eyes are still on the hero. */
+  .playground-peek-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 12px;
+    border-radius: 999px;
+    background: rgba(255, 224, 27, 0.14);
+    border: 1px solid rgba(255, 224, 27, 0.55);
+    color: #FFE6A6;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 22px rgba(255, 224, 27, 0.10);
+  }
+  .playground-peek-cue .ppc-arrow {
+    width: 14px; height: 14px; display: inline-flex;
+    color: #FFE01B;
+  }
+  .playground-peek-cue .ppc-arrow svg { width: 14px; height: 14px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .playground-peek-cue .ppc-arrow {
+      animation: ppcBob 2.4s ease-in-out infinite;
+    }
+    @keyframes ppcBob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(3px); }
+    }
+  }
   .playground-header h2 {
     font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
     font-weight: 300;
@@ -2737,6 +2806,12 @@
 
 <section class="playground" id="playground">
   <div class="playground-header">
+    <span class="playground-peek-cue" aria-hidden="true">
+      Try it live
+      <span class="ppc-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+      </span>
+    </span>
     <span class="eyebrow">Try Analytics AI · No signup required</span>
     <h2>Ask your data <span class="accent">anything.</span></h2>
     <p>Pick a sample business, then ask a question. Analytics AI delivers a real answer with a live chart in seconds. Same experience as ChatGPT, but grounded in your marketing data.</p>
