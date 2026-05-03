@@ -443,477 +443,603 @@
     .hero-cta-row { width: 100%; }
   }
 
-  /* ===================== PLAYGROUND section wrapper ===================== */
-  .playground-section {
-    background: #0d0a08;
+  /* ===================== R&A Analytics Playground (ported) ===================== */
+  .playground {
+    background: #15100A;
     color: white;
-    padding: 96px 32px 100px;
+    padding: 100px 32px;
     position: relative;
     overflow: hidden;
   }
-  .playground-section::before {
-    content: ''; position: absolute; top: -200px; left: 8%;
-    width: 600px; height: 600px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,124,137,0.32) 0%, transparent 70%);
-    filter: blur(80px); pointer-events: none;
+  .playground::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,124,137,0.25) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
   }
-  .playground-section::after {
-    content: ''; position: absolute; bottom: -160px; right: 4%;
-    width: 700px; height: 700px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,185,166,0.28) 0%, transparent 70%);
-    filter: blur(80px); pointer-events: none;
+  .playground::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    right: 5%;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,185,166,0.3) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
   }
-  .playground-section > * { position: relative; z-index: 1; }
-  .playground-header {
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto 40px;
-  }
-  .playground-header .eyebrow {
-    color: var(--mc-teal);
-  }
+  .playground > * { position: relative; z-index: 1; }
+  .playground .eyebrow { color: #007C89; }
+  .playground-header { text-align: center; margin-bottom: 56px; }
   .playground-header h2 {
-    font-size: 46px;
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
+    font-weight: 300;
+    font-size: 56px;
+    letter-spacing: -0.01em;
+    margin: 16px 0;
     color: white;
     line-height: 1.05;
-    margin: 14px 0;
+  }
+  .playground-header h2 .accent {
+    background: linear-gradient(135deg, #FFE01B 0%, #F4A100 50%, #00B9A6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   .playground-header p {
-    font-size: 17px;
+    font-size: 19px;
     color: rgba(255,255,255,0.65);
+    max-width: 700px;
+    margin: 0 auto;
     line-height: 1.55;
   }
-  .pg-ds-wrap {
-    max-width: 1180px;
-    margin: 0 auto 16px;
-  }
-  /* (.pg-ds is the toggle itself; in this section it lives on dark bg, so
-     give it a translucent surface) */
-  .playground-section .pg-ds {
+  .data-source { max-width: 1180px; margin: 0 auto 32px; }
+  .ds-tabs {
+    display: flex;
+    gap: 0;
+    padding: 4px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
-  }
-  .playground-section .pg-ds-tab {
-    color: rgba(255,255,255,0.6);
-  }
-  .playground-section .pg-ds-tab:hover { color: rgba(255,255,255,0.9); }
-  .playground-section .pg-ds-tab.active {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    box-shadow: none;
-  }
-  .playground-section .pg-frame-wrap {
-    max-width: 1180px;
-    margin: 0 auto;
-  }
-  /* Bigger min-height for the body in this dedicated section */
-  .playground-section .pg-body {
-    min-height: 520px;
-  }
-  .playground-section .pg-messages {
-    max-height: 380px;
-  }
-  @media (max-width: 720px) {
-    .playground-section { padding: 72px 18px 80px; }
-    .playground-header h2 { font-size: 34px; }
-  }
-
-  /* ===================== EMBEDDED ANALYTICS AI PLAYGROUND ===================== */
-  /* Compact playground that lives inside Variant B's right column. Visual
-     intent: dark-navy frame contrasts against the cream homepage canvas so it
-     reads as a "live tool" embedded in the page. Persona-aware: toolbar,
-     greeting, suggested chips, sample chart all swap on persona change. */
-
-  /* Data-source toggle (sample / upload) — sits above the frame */
-  .pg-ds {
-    display: flex; gap: 0; padding: 3px;
-    background: rgba(36, 28, 21, 0.06);
-    border: 1px solid rgba(36, 28, 21, 0.10);
-    border-radius: 12px;
-    margin-bottom: 14px;
+    border-radius: 14px;
+    margin-bottom: 16px;
     width: fit-content;
   }
-  .pg-ds-tab {
-    background: none; border: none;
-    padding: 8px 16px; border-radius: 9px;
-    color: var(--mc-text-muted);
-    font-size: 12.5px; font-weight: 600;
-    cursor: pointer; font-family: inherit;
-    display: inline-flex; align-items: center; gap: 7px;
-    transition: all 0.15s;
-  }
-  .pg-ds-tab:hover { color: var(--mc-text); }
-  .pg-ds-tab.active {
-    background: white; color: var(--mc-text);
-    box-shadow: 0 1px 2px rgba(36,28,21,0.06);
-  }
-  .pg-ds-tab svg { width: 14px; height: 14px; }
-
-  /* Premium gradient frame around the dark playground app */
-  .pg-frame-wrap {
-    padding: 1px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(0,124,137,0.55), rgba(0,185,166,0.4) 50%, rgba(0,185,166,0.5));
-    box-shadow:
-      0 24px 60px rgba(0,0,0,0.18),
-      0 0 0 1px rgba(255,255,255,0.04),
-      0 40px 100px rgba(0,124,137,0.14);
-  }
-  .pg-app {
-    background: #15100A;
-    border-radius: 17px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.04);
-  }
-  .pg-toolbar {
-    display: flex; align-items: center; gap: 12px;
-    padding: 11px 16px;
-    background: rgba(255,255,255,0.02);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .pg-dots { display: flex; gap: 6px; flex-shrink: 0; }
-  .pg-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
-  .pg-dots span:nth-child(1) { background: #ff5f57; }
-  .pg-dots span:nth-child(2) { background: #ffbd2e; }
-  .pg-dots span:nth-child(3) { background: #28c840; }
-  .pg-title {
-    display: flex; align-items: center; gap: 9px;
-    font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.7);
-    flex: 1; justify-content: center;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .pg-title-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pg-pill {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, rgba(0,124,137,0.22), rgba(0,185,166,0.22));
-    border: 1px solid rgba(0,124,137,0.35);
-    font-size: 10.5px; font-weight: 700;
-    color: white;
-    letter-spacing: 0.02em;
-    flex-shrink: 0;
-  }
-  .pg-toolbar-spacer { width: 50px; flex-shrink: 0; }
-
-  /* Body — chat left, viz right */
-  .pg-body {
-    display: grid; grid-template-columns: 1fr 1fr; min-height: 460px;
-  }
-  .pg-chat {
-    padding: 20px 18px 16px;
-    border-right: 1px solid rgba(255,255,255,0.06);
-    display: flex; flex-direction: column;
-    background: #15100A;
-    min-width: 0;
-  }
-  .pg-messages {
-    flex: 1; overflow-y: auto; max-height: 320px; padding-right: 4px;
-    margin-bottom: 14px;
-    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent;
-  }
-  .pg-messages::-webkit-scrollbar { width: 5px; }
-  .pg-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-
-  .pg-msg {
-    margin-bottom: 18px; animation: pgFade 0.35s ease-out;
-  }
-  @keyframes pgFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-  .pg-msg.user { display: flex; justify-content: flex-end; }
-  .pg-msg.user .pg-bubble {
-    background: rgba(255,255,255,0.07);
-    color: rgba(255,255,255,0.95);
-    padding: 10px 14px;
-    border-radius: 16px 16px 4px 16px;
-    font-size: 13.5px;
-    max-width: 90%;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .pg-msg.ai { display: block; }
-  .pg-msg.ai .pg-bubble {
-    color: rgba(255,255,255,0.92);
-    font-size: 13.5px;
-    line-height: 1.55;
-    padding-top: 2px;
-  }
-  .pg-msg.ai .pg-bubble strong { color: white; font-weight: 600; }
-  .pg-msg.ai .pg-bubble code {
-    background: rgba(255,255,255,0.06);
-    padding: 1px 5px; border-radius: 4px;
-    color: rgba(255,255,255,0.9);
-    font-size: 12px;
-    font-family: ui-monospace, Menlo, Consolas, monospace;
-  }
-  .pg-msg.ai .pg-bubble p { margin-bottom: 8px; }
-  .pg-msg.ai .pg-bubble p:last-child { margin-bottom: 0; }
-  .pg-action {
-    display: inline-flex; align-items: center; gap: 7px;
-    margin-top: 10px;
-    background: white;
-    color: #15100A;
-    padding: 7px 13px;
-    border-radius: 7px;
-    font-size: 12px; font-weight: 600;
-    border: none; cursor: pointer;
-    font-family: inherit;
-    transition: all 0.15s;
-  }
-  .pg-action:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
-  .pg-action::before { content: '→'; }
-
-  .pg-typing {
-    display: inline-block; width: 7px; height: 14px;
-    background: rgba(0,124,137,0.9);
-    margin-left: 2px; vertical-align: text-bottom;
-    animation: pgBlink 0.9s infinite;
-    border-radius: 1px;
-  }
-  @keyframes pgBlink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
-
-  .pg-suggested {
-    display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;
-  }
-  .pg-suggested-label {
-    font-size: 10px; color: rgba(255,255,255,0.42); font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin-bottom: 2px;
-  }
-  .pg-chip {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 9px 13px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-size: 12.5px; text-align: left;
-    transition: all 0.15s;
-    color: rgba(255,255,255,0.85);
-    font-family: inherit;
-    line-height: 1.3;
-  }
-  .pg-chip:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(0,124,137,0.45);
-    color: white;
-  }
-
-  .pg-input {
-    display: flex; gap: 6px; align-items: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 4px 4px 4px 14px;
-    transition: border-color 0.15s;
-  }
-  .pg-input:focus-within {
-    border-color: rgba(0,124,137,0.55);
-    background: rgba(255,255,255,0.07);
-  }
-  .pg-input input {
-    flex: 1; padding: 8px 0;
-    border: none; background: transparent;
-    font-size: 13.5px; font-family: inherit;
-    color: white;
-    outline: none;
-    min-width: 0;
-  }
-  .pg-input input::placeholder { color: rgba(255,255,255,0.4); }
-  .pg-input button {
-    background: white;
-    color: #15100A;
+  .ds-tab {
+    background: none;
     border: none;
-    padding: 8px 14px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13px;
-    transition: all 0.15s;
-    font-family: inherit;
-  }
-  .pg-input button:hover { background: rgba(255,255,255,0.92); }
-
-  /* Right pane — visualization */
-  .pg-viz {
-    padding: 20px 20px 18px;
-    background: #241C15;
-    display: flex; flex-direction: column;
-    min-width: 0;
-  }
-  .pg-viz-eyebrow {
-    font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4);
-    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em;
-  }
-  .pg-viz-title {
-    font-size: 17px; font-weight: 600; margin-bottom: 14px; color: white;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-  }
-  .pg-metric-row { display: flex; gap: 8px; margin-bottom: 14px; }
-  .pg-metric {
-    flex: 1; min-width: 0;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
-    padding: 10px 12px;
+    padding: 10px 22px;
     border-radius: 10px;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s;
   }
-  .pg-metric .val {
-    font-size: 19px; font-weight: 700; color: white; letter-spacing: -0.02em;
-    line-height: 1.1;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  .ds-tab:hover { color: rgba(255,255,255,0.9); }
+  .ds-tab.active { background: rgba(255,255,255,0.1); color: white; }
+  .ds-tab svg { width: 16px; height: 16px; }
+  .ds-panel { display: none; }
+  .ds-panel.active { display: block; animation: fadeIn 0.3s; }
+  .persona-picker {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1180px;
+    margin: 0 auto 32px;
   }
-  .pg-metric .lbl {
-    font-size: 9.5px; color: rgba(255,255,255,0.45);
-    margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em;
-  }
-  .pg-metric .delta { font-size: 11px; font-weight: 600; margin-top: 5px; }
-  .pg-metric .delta.up { color: var(--mc-sage); }
-  .pg-metric .delta.down { color: var(--mc-coral); }
-  .pg-metric .delta.flat { color: rgba(255,255,255,0.55); }
-
-  .pg-canvas {
-    flex: 1;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 11px;
-    padding: 14px;
-    display: flex; flex-direction: column;
-    min-height: 200px;
+  .persona-card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
   }
-  .pg-canvas svg { width: 100%; flex: 1; min-height: 0; }
-
-  /* Persona "sample insight" pre-load card content (shown before the user
-     interacts). Each persona renders its own card; we just show whichever
-     is active inside the canvas. */
-  .pg-sample {
-    display: flex; flex-direction: column; gap: 10px; flex: 1;
+  .persona-card:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
   }
-  .pg-sample-eyebrow {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--mc-teal); display: flex; align-items: center; gap: 6px;
+  .persona-card.active {
+    border-color: rgba(0,124,137,0.6);
+    box-shadow: 0 0 0 1px rgba(0,124,137,0.4), 0 12px 32px rgba(0,124,137,0.25);
+    background: rgba(255,255,255,0.07);
   }
-  .pg-sample-eyebrow .pg-pulse {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--mc-teal);
-    animation: pgPulse 2s ease-in-out infinite;
-  }
-  @keyframes pgPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
-  .pg-sample-title {
-    font-size: 14.5px; font-weight: 600; color: white; line-height: 1.35;
-  }
-  .pg-sample-rows { display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: center; }
-  .pg-bar-row { display: flex; align-items: center; gap: 9px; }
-  .pg-bar-label {
-    font-size: 11px; color: rgba(255,255,255,0.62); width: 96px; text-align: right;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .pg-bar-track {
-    flex: 1; height: 13px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 4px; overflow: hidden;
+  .persona-photo {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: var(--mc-bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     position: relative;
   }
-  .pg-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
-  .pg-bar-fill.teal { background: var(--mc-teal); }
-  .pg-bar-fill.cta  { background: var(--mc-cta); }
-  .pg-bar-fill.gold { background: var(--mc-gold); }
-  .pg-bar-fill.red  { background: var(--mc-coral); }
-  .pg-bar-val {
-    font-size: 11.5px; font-weight: 700; color: white;
-    width: 50px; font-variant-numeric: tabular-nums;
-    text-align: right;
+  .persona-photo .persona-emoji {
+    font-size: 52px;
+    line-height: 1;
+    transition: transform 0.4s ease;
   }
-  .pg-bar-row.flagged .pg-bar-label { color: var(--mc-coral); font-weight: 700; }
-  .pg-callout {
-    margin-top: 6px;
-    background: rgba(0,185,166,0.10);
-    border: 1px solid rgba(0,185,166,0.30);
-    color: rgba(255,255,255,0.85);
-    border-radius: 8px;
-    padding: 9px 12px;
-    font-size: 11.5px; line-height: 1.45;
-  }
-  .pg-callout strong { color: var(--mc-teal); font-weight: 700; }
-  .pg-callout.warn { background: rgba(255,107,71,0.10); border-color: rgba(255,107,71,0.30); }
-  .pg-callout.warn strong { color: var(--mc-coral); }
-
-  /* Upload zone (replaces the dark frame body when "Upload Excel/CSV" tab is on) */
-  .pg-upload-wrap { display: none; }
-  .pg-upload-wrap.active { display: block; }
-  .pg-frame-wrap.upload-mode .pg-app { display: none; }
-  .pg-upload-zone {
-    background: white;
-    border: 2px dashed rgba(36,28,21,0.18);
-    border-radius: 18px;
-    padding: 36px 24px;
+  .persona-card:hover .persona-emoji { transform: scale(1.06) rotate(-2deg); }
+  .persona-body { padding: 18px 22px 22px; }
+  .persona-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: white; }
+  .persona-card .role { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 6px; }
+  .persona-card .meta { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .upload-zone {
+    background: rgba(255,255,255,0.03);
+    border: 2px dashed rgba(255,255,255,0.18);
+    border-radius: 16px;
+    padding: 56px 32px;
     text-align: center;
     transition: all 0.2s;
     cursor: pointer;
-    min-height: 460px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.05);
   }
-  .pg-upload-zone:hover, .pg-upload-zone.dragover {
-    background: #FFF8E0;
-    border-color: var(--mc-cta);
-    border-style: solid;
+  .upload-zone:hover, .upload-zone.dragover {
+    background: rgba(0,124,137,0.08);
+    border-color: rgba(0,124,137,0.5);
   }
-  .pg-upload-icon {
-    width: 56px; height: 56px; border-radius: 14px;
-    background: linear-gradient(135deg, rgba(0,124,137,0.12), rgba(0,185,166,0.12));
-    border: 1px solid rgba(0,124,137,0.25);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-    color: var(--mc-cta);
+  .upload-zone .up-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.2), rgba(0,185,166,0.2));
+    border: 1px solid rgba(0,124,137,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
   }
-  .pg-upload-zone h4 {
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 17px; font-weight: 700; color: var(--mc-text);
-    margin-bottom: 6px;
+  .upload-zone .up-icon svg { width: 26px; height: 26px; color: #007C89; }
+  .upload-zone h4 { font-size: 18px; font-weight: 600; color: white; margin-bottom: 6px; }
+  .upload-zone p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+    max-width: 420px;
+    margin: 0 auto;
   }
-  .pg-upload-zone p {
-    font-size: 13.5px; color: var(--mc-text-secondary); line-height: 1.5;
-    max-width: 380px; margin: 0 auto;
+  .upload-zone .or-line {
+    margin-top: 18px;
+    display: inline-flex;
+    gap: 14px;
+    align-items: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
   }
-  .pg-upload-zone .pg-upload-actions {
-    margin-top: 14px;
-    display: inline-flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center;
-    font-size: 12.5px; color: var(--mc-text-muted);
-  }
-  .pg-upload-zone .pg-browse {
-    background: var(--mc-text); color: white;
-    padding: 9px 18px; border-radius: 8px;
-    font-weight: 600; font-size: 13px;
-    border: none; cursor: pointer; font-family: inherit;
-  }
-  .pg-upload-zone .pg-browse:hover { background: #15100A; }
-  .pg-upload-error {
-    background: rgba(255, 107, 71, 0.10);
-    border: 1px solid rgba(255, 107, 71, 0.35);
-    color: #b04d34;
-    padding: 10px 14px;
+  .upload-zone .browse-btn {
+    background: white;
+    color: #15100A;
+    padding: 10px 20px;
     border-radius: 8px;
-    font-size: 12.5px; margin-top: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .upload-zone .download-sample {
+    color: #007C89;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .ds-error {
+    background: rgba(255, 107, 138, 0.08);
+    border: 1px solid rgba(255, 107, 138, 0.3);
+    color: #ff8fa3;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 12px;
     display: none;
   }
-  .pg-upload-error.visible { display: block; }
-
-  @media (max-width: 1080px) {
-    .pg-body { min-height: 0; }
+  .ds-error.visible { display: block; }
+  .playground-frame-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.6), rgba(0,185,166,0.4) 40%, rgba(0,185,166,0.5));
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05), 0 60px 140px rgba(0,124,137,0.18);
   }
-  @media (max-width: 920px) {
-    .pg-body { grid-template-columns: 1fr; }
-    .pg-chat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .pg-viz { padding: 18px 16px; }
+  .playground-app {
+    background: #15100A;
+    border-radius: 19px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.04);
   }
-  @media (max-width: 540px) {
-    .pg-toolbar { padding: 9px 12px; gap: 8px; }
-    .pg-toolbar-spacer { display: none; }
-    .pg-title { font-size: 11px; }
-    .pg-chat { padding: 16px 14px 12px; }
-    .pg-viz { padding: 14px 12px; }
-    .pg-bar-label { width: 80px; font-size: 10.5px; }
+  .playground-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .toolbar-dots { display: flex; gap: 6px; flex-shrink: 0; }
+  .toolbar-dots span { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .toolbar-dots span:nth-child(1) { background: #ff5f57; }
+  .toolbar-dots span:nth-child(2) { background: #ffbd2e; }
+  .toolbar-dots span:nth-child(3) { background: #28c840; }
+  .playground-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    flex: 1;
+    justify-content: center;
+  }
+  .ia-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(0,124,137,0.18), rgba(0,185,166,0.18));
+    border: 1px solid rgba(0,124,137,0.3);
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+  .playground-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 540px; }
+  .chat-pane {
+    padding: 32px 28px 24px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    background: #15100A;
+  }
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 440px;
+    padding-right: 4px;
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+  }
+  .chat-messages::-webkit-scrollbar { width: 6px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+  .message { margin-bottom: 28px; animation: fadeIn 0.35s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .message.user { display: flex; justify-content: flex-end; }
+  .message.user .bubble {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.95);
+    padding: 12px 18px;
+    border-radius: 18px 18px 4px 18px;
+    font-size: 15px;
+    max-width: 85%;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .message.ai .bubble {
+    color: rgba(255,255,255,0.92);
+    font-size: 15px;
+    line-height: 1.65;
+    padding-top: 4px;
+  }
+  .message.ai .bubble strong { color: white; font-weight: 600; }
+  .message.ai .bubble p { margin-bottom: 10px; }
+  .message.ai .bubble p:last-child { margin-bottom: 0; }
+  .message.ai .bubble .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    background: white;
+    color: #15100A;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .message.ai .bubble .action-btn:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
+  .message.ai .bubble .action-btn::before { content: '→'; }
+  .typing-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: rgba(0,124,137,0.9);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.9s infinite;
+    border-radius: 1px;
+  }
+  @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+  .suggested { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .suggested .label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .chip {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 11px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    transition: all 0.15s;
+    color: rgba(255,255,255,0.85);
+    font-family: inherit;
+  }
+  .chip:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(0,124,137,0.4);
+    color: white;
+  }
+  .chat-input {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 6px 6px 6px 18px;
+    transition: border-color 0.15s;
+  }
+  .chat-input:focus-within { border-color: rgba(0,124,137,0.5); background: rgba(255,255,255,0.07); }
+  .chat-input input {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    font-family: inherit;
+    color: white;
+    outline: none;
+  }
+  .chat-input input::placeholder { color: rgba(255,255,255,0.4); }
+  .chat-input button {
+    background: white;
+    color: #15100A;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+  .chat-input button:hover { background: rgba(255,255,255,0.92); }
+  .chart-pane { padding: 32px 28px 24px; background: #241C15; }
+  .chart-pane h4 {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .chart-pane .chart-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: white;
+    letter-spacing: -0.01em;
+  }
+  .metric-row { display: flex; gap: 12px; margin-bottom: 20px; }
+  .metric {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 16px 18px;
+    border-radius: 12px;
+  }
+  .metric .val { font-size: 26px; font-weight: 700; color: white; letter-spacing: -0.02em; line-height: 1.1; }
+  .metric .lbl {
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .metric .delta { font-size: 12px; font-weight: 600; margin-top: 6px; }
+  .delta.up { color: #3FB58E; }
+  .delta.down { color: #FF6B47; }
+  .chart-canvas {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+  }
+  .chart-canvas svg { width: 100%; flex: 1; }
+  .insight-carousel {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 240px;
+    overflow: hidden;
+  }
+  .insight-card {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    pointer-events: none;
+  }
+  .insight-card.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .insight-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mc-teal);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .insight-card-label .ic-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mc-teal);
+    animation: ic-pulse 2s ease-in-out infinite;
+  }
+  @keyframes ic-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+  .insight-card-title { font-size: 16px; font-weight: 600; color: white; line-height: 1.35; }
+  .insight-card-viz {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 16px;
+    min-height: 120px;
+  }
+  .ic-bar-row { display: flex; align-items: center; gap: 10px; }
+  .ic-bar-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    width: 80px;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ic-bar-track { flex: 1; height: 14px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; }
+  .ic-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .ic-bar-fill.teal { background: var(--mc-teal); }
+  .ic-bar-fill.cta { background: var(--mc-cta); }
+  .ic-bar-val { font-size: 12px; font-weight: 700; color: white; width: 42px; font-variant-numeric: tabular-nums; }
+  .ic-gauge-wrap { display: flex; align-items: center; gap: 20px; padding: 8px 0; }
+  .ic-gauge { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
+  .ic-gauge svg { width: 80px; height: 80px; transform: rotate(-90deg); }
+  .ic-gauge-ring { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 7; }
+  .ic-gauge-value { fill: none; stroke: var(--mc-teal); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 220; stroke-dashoffset: 220; transition: stroke-dashoffset 1.2s ease; }
+  .ic-gauge-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: white; }
+  .ic-gauge-detail { display: flex; flex-direction: column; gap: 4px; }
+  .ic-gauge-detail .ic-gd-line { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .ic-gauge-detail .ic-gd-line strong { color: var(--mc-teal); }
+  .ic-rec {
+    background: rgba(0,185,166,0.06);
+    border: 1px solid rgba(0,185,166,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .ic-rec-icon { flex-shrink: 0; color: var(--mc-teal); margin-top: 2px; }
+  .ic-rec-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+  .ic-rec-text strong { color: var(--mc-teal); font-weight: 600; }
+  .ic-revenue-row { display: flex; align-items: center; gap: 20px; padding: 4px 0; }
+  .ic-donut { width: 72px; height: 72px; flex-shrink: 0; }
+  .ic-donut svg { width: 72px; height: 72px; transform: rotate(-90deg); }
+  .ic-donut-bg { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 10; }
+  .ic-donut-fill { fill: none; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 188; stroke-dashoffset: 188; transition: stroke-dashoffset 1.2s ease; }
+  .ic-donut-fill.seg1 { stroke: var(--mc-cta); }
+  .ic-donut-fill.seg2 { stroke: var(--mc-teal); }
+  .ic-donut-fill.seg3 { stroke: var(--mc-gold); }
+  .ic-revenue-detail { display: flex; flex-direction: column; gap: 6px; }
+  .ic-rev-line { font-size: 12px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 8px; }
+  .ic-rev-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ic-rev-line strong { color: white; font-weight: 600; }
+  .ic-dots { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
+  .ic-dot-nav {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s;
+  }
+  .ic-dot-nav.active { background: var(--mc-teal); width: 18px; border-radius: 3px; }
+  .playground-conversion {
+    max-width: 1100px;
+    margin: 24px auto 0;
+    background: var(--mc-text);
+    color: white;
+    padding: 24px 32px;
+    border-radius: var(--radius-xl);
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .playground-conversion::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--mc-yellow);
+    opacity: 0.95;
+  }
+  .playground-conversion > * { position: relative; z-index: 1; }
+  .playground-conversion.visible { display: flex; }
+  .playground-conversion h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .playground-conversion p { font-size: 14px; opacity: 0.9; }
+  .playground-conversion .cta-group { display: flex; gap: 8px; flex-shrink: 0; }
+  .playground-conversion .btn-white {
+    background: var(--mc-yellow);
+    color: var(--mc-text);
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .playground-conversion .btn-outline-white {
+    background: transparent;
+    color: white;
+    border: 1.5px solid white;
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  @media (max-width: 1024px) {
+    .playground-body { grid-template-columns: 1fr; }
+    .chat-pane { border-right: none; border-bottom: 1px solid var(--mc-border); }
+    .playground-conversion { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .persona-picker { grid-template-columns: 1fr; }
   }
 
   .vb-dotrow {
@@ -1995,88 +2121,210 @@
 </section>
 </div><!-- /.hero-shell -->
 
-<!-- ============================================================ -->
-<!-- PLAYGROUND SECTION — full Analytics AI demo, ICP-aware       -->
-<!-- The dark navy frame from the analytics prototype, persona-    -->
-<!-- aware for all 6 ICPs, with a Sample data / Upload toggle.     -->
-<!-- ============================================================ -->
-<section class="playground-section" id="playground">
+<section class="playground" id="playground">
   <div class="playground-header">
     <span class="eyebrow">Try Analytics AI · No signup required</span>
-    <h2 class="display-serif">Take Analytics AI for a spin.</h2>
-    <p>Pick a question, see the agent's answer with a live chart in seconds. Same experience as ChatGPT, grounded in your marketing data.</p>
+    <h2>Ask your data <span class="accent">anything.</span></h2>
+    <p>Pick a sample business, then ask a question. Analytics AI delivers a real answer with a live chart in seconds. Same experience as ChatGPT, but grounded in your marketing data.</p>
   </div>
 
-  <!-- Sample data | Upload Excel / CSV toggle (above the frame) -->
-  <div class="pg-ds-wrap">
-    <div class="pg-ds" role="tablist" aria-label="Data source">
-      <button class="pg-ds-tab active" data-pg-tab="sample" role="tab" aria-selected="true">
+  <div class="data-source">
+    <div class="ds-tabs">
+      <button class="ds-tab active" data-tab="sample">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
         Sample data
       </button>
-      <button class="pg-ds-tab" data-pg-tab="upload" role="tab" aria-selected="false">
+      <button class="ds-tab" data-tab="upload">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Upload Excel / CSV
       </button>
     </div>
-  </div>
 
-  <!-- ICP-aware playground frame. Toolbar business, greeting, suggested
-       chips, sample insight, and per-question chart renders all swap
-       when an ICP chip is clicked or the upload zone activates a
-       custom dataset. -->
-  <div class="pg-frame-wrap" id="pgFrameWrap">
-    <div class="pg-app">
-      <div class="pg-toolbar">
-        <div class="pg-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="pg-title">
-          <span class="pg-pill">Analytics AI</span>
-          <span class="pg-title-name" id="pgTitle">Oat Lord · Live demo</span>
+    <div class="ds-panel active" data-panel="sample">
+      <div class="persona-picker">
+        <div class="persona-card active" data-persona="ecommerce">
+          <div class="persona-photo">
+            <span class="persona-emoji" aria-hidden="true">🛍️</span>
+          </div>
+          <div class="persona-body">
+            <h3>Ecommerce Founder</h3>
+            <div class="role">Oat Lord · Shopify + SMS</div>
+            <div class="meta">12K customers · 6 months data</div>
+          </div>
         </div>
-        <div class="pg-toolbar-spacer" aria-hidden="true"></div>
-      </div>
-      <div class="pg-body">
-        <div class="pg-chat">
-          <div class="pg-messages" id="pgMessages" aria-live="polite">
-            <!-- greeting injected by JS per ICP -->
+        <div class="persona-card" data-persona="agency">
+          <div class="persona-photo" style="background:#FFF1A8;">
+            <span class="persona-emoji" aria-hidden="true">🏃</span>
           </div>
-          <div class="pg-suggested" id="pgSuggested">
-            <span class="pg-suggested-label">Try a question</span>
-            <!-- chips injected by JS per ICP -->
+          <div class="persona-body">
+            <h3>Agency Owner</h3>
+            <div class="role">Pixel Co. · 5 client accounts</div>
+            <div class="meta">Cross-client analytics</div>
           </div>
-          <form class="pg-input" id="pgInputForm" autocomplete="off" onsubmit="return false;">
-            <input type="text" id="pgInput" placeholder="Ask Analytics AI anything…" aria-label="Ask Analytics AI" />
-            <button type="submit" id="pgSendBtn">Send</button>
-          </form>
         </div>
-        <div class="pg-viz">
-          <div class="pg-viz-eyebrow">Live visualization</div>
-          <div class="pg-viz-title" id="pgVizTitle">Sample insight</div>
-          <div class="pg-metric-row" id="pgMetricRow" style="display:none;">
-            <div class="pg-metric"><div class="val" id="pgM1Val">·</div><div class="lbl" id="pgM1Lbl">Metric</div><div class="delta" id="pgM1Delta"></div></div>
-            <div class="pg-metric"><div class="val" id="pgM2Val">·</div><div class="lbl" id="pgM2Lbl">Metric</div><div class="delta" id="pgM2Delta"></div></div>
+        <div class="persona-card" data-persona="nonprofit">
+          <div class="persona-photo">
+            <span class="persona-emoji" aria-hidden="true">❤️</span>
           </div>
-          <div class="pg-canvas" id="pgCanvas">
-            <!-- pre-loaded sample insight injected by JS -->
+          <div class="persona-body">
+            <h3>Nonprofit Director</h3>
+            <div class="role">Reach Out · 5K donors</div>
+            <div class="meta">Campaign + donation data</div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Upload mode replaces the dark frame body when "Upload Excel/CSV" is selected -->
-    <div class="pg-upload-wrap" id="pgUploadWrap">
-      <div class="pg-upload-zone" id="pgUploadZone">
-        <input type="file" id="pgFileInput" accept=".csv,.xlsx,.xls,.tsv" style="display:none;" />
-        <div class="pg-upload-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+
+    <div class="ds-panel" data-panel="upload">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.tsv" style="display: none;" />
+        <div class="up-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         </div>
         <h4>Drop your spreadsheet here</h4>
         <p>Excel (.xlsx, .xls), CSV, or TSV. Up to 50MB. Your data stays in your browser. Nothing is uploaded to our servers in this demo.</p>
-        <div class="pg-upload-actions">
-          <button type="button" class="pg-browse" id="pgBrowseBtn">Browse files</button>
-          <span>The agent will detect columns and auto-generate insights.</span>
+        <div class="or-line">
+          <button class="browse-btn" id="browseBtn">Browse files</button>
+          <span>or download a sample:</span>
+          <a href="sample-mailchimp-campaigns.csv" download class="download-sample">CSV ↓</a>
         </div>
       </div>
-      <div class="pg-upload-error" id="pgUploadError" role="alert"></div>
+      <div class="ds-error" id="uploadError"></div>
+    </div>
+  </div>
+
+  <div class="playground-frame-wrap">
+    <div class="playground-app">
+      <div class="playground-toolbar">
+        <div class="toolbar-dots"><span></span><span></span><span></span></div>
+        <div class="playground-title">
+          <span class="ia-pill">Analytics AI</span>
+          <span id="playgroundTitle">Oat Lord · Live demo</span>
+        </div>
+        <div style="width: 60px;"></div>
+      </div>
+      <div class="playground-body">
+        <div class="chat-pane">
+          <div class="chat-messages" id="chatMessages">
+            <div class="message ai">
+              <div class="bubble">
+                <p>I'm Analytics AI. I have access to <strong id="datasetName">Oat Lord's</strong> last 6 months of marketing data: campaigns, audience segments, revenue, and automations.</p>
+                <p style="color: rgba(255,255,255,0.6);">Pick a question below or type your own to get started.</p>
+              </div>
+            </div>
+          </div>
+          <div class="suggested" id="suggestedQuestions">
+            <span class="label">Try a sample question</span>
+          </div>
+          <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask Analytics AI anything…" />
+            <button id="sendBtn">Send</button>
+          </div>
+        </div>
+        <div class="chart-pane">
+          <h4>Live Visualization</h4>
+          <div class="chart-title" id="chartTitle">Your chart will appear here</div>
+          <div class="metric-row" id="metricRow" style="display:none;">
+            <div class="metric"><div class="val" id="m1Val">—</div><div class="lbl" id="m1Lbl">Metric</div><div class="delta" id="m1Delta"></div></div>
+            <div class="metric"><div class="val" id="m2Val">—</div><div class="lbl" id="m2Lbl">Metric</div><div class="delta" id="m2Delta"></div></div>
+          </div>
+          <div class="chart-canvas" id="chartCanvas">
+            <div class="insight-carousel" id="insightCarousel">
+              <div class="insight-card active" data-card="0">
+                <div class="insight-card-label"><span class="ic-dot"></span> Sample insight</div>
+                <div class="insight-card-title">Top 5 campaigns by open rate</div>
+                <div class="insight-card-viz">
+                  <div class="ic-bar-row"><span class="ic-bar-label">Holiday Flash</span><div class="ic-bar-track"><div class="ic-bar-fill teal" style="width:92%"></div></div><span class="ic-bar-val">46%</span></div>
+                  <div class="ic-bar-row"><span class="ic-bar-label">Summer Drop</span><div class="ic-bar-track"><div class="ic-bar-fill teal" style="width:76%"></div></div><span class="ic-bar-val">38%</span></div>
+                  <div class="ic-bar-row"><span class="ic-bar-label">VIP Early Access</span><div class="ic-bar-track"><div class="ic-bar-fill cta" style="width:70%"></div></div><span class="ic-bar-val">35%</span></div>
+                  <div class="ic-bar-row"><span class="ic-bar-label">New Arrivals</span><div class="ic-bar-track"><div class="ic-bar-fill cta" style="width:58%"></div></div><span class="ic-bar-val">29%</span></div>
+                  <div class="ic-bar-row"><span class="ic-bar-label">Weekly Digest</span><div class="ic-bar-track"><div class="ic-bar-fill cta" style="width:44%"></div></div><span class="ic-bar-val">22%</span></div>
+                </div>
+              </div>
+              <div class="insight-card" data-card="1">
+                <div class="insight-card-label"><span class="ic-dot"></span> Benchmark analysis</div>
+                <div class="insight-card-title">Your open rate vs. industry</div>
+                <div class="insight-card-viz">
+                  <div class="ic-gauge-wrap">
+                    <div class="ic-gauge">
+                      <svg viewBox="0 0 80 80"><circle class="ic-gauge-ring" cx="40" cy="40" r="35"/><circle class="ic-gauge-value" cx="40" cy="40" r="35" data-target="132"/></svg>
+                      <div class="ic-gauge-center">28%</div>
+                    </div>
+                    <div class="ic-gauge-detail">
+                      <div class="ic-gd-line">Your open rate: <strong>28%</strong></div>
+                      <div class="ic-gd-line">Ecommerce avg: 22%</div>
+                      <div class="ic-gd-line" style="color:var(--mc-sage);">+6pp above benchmark</div>
+                    </div>
+                  </div>
+                  <div class="ic-rec">
+                    <div class="ic-rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                    <div class="ic-rec-text">Strong performance. Focus on <strong>click-through rate</strong> next, since yours is 1.2pp below benchmark.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-card" data-card="2">
+                <div class="insight-card-label"><span class="ic-dot"></span> Recommendation</div>
+                <div class="insight-card-title">Best send time for your audience</div>
+                <div class="insight-card-viz">
+                  <div class="ic-rec" style="margin-bottom:10px;">
+                    <div class="ic-rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <div class="ic-rec-text"><strong>Tuesday 9:00 AM</strong> drives 3.2x more revenue than your current Thursday sends.</div>
+                  </div>
+                  <div style="display:flex;gap:6px;align-items:flex-end;padding:8px 0 4px;">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;"><div style="width:100%;background:rgba(255,255,255,0.06);border-radius:3px;height:28px;"></div><span style="font-size:10px;color:rgba(255,255,255,0.4);">Mon</span></div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;"><div style="width:100%;border-radius:3px;height:80px;background:var(--mc-teal);opacity:0.8;"></div><span style="font-size:10px;color:var(--mc-teal);font-weight:700;">Tue</span></div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;"><div style="width:100%;background:rgba(255,255,255,0.06);border-radius:3px;height:36px;"></div><span style="font-size:10px;color:rgba(255,255,255,0.4);">Wed</span></div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;"><div style="width:100%;background:rgba(255,255,255,0.06);border-radius:3px;height:22px;"></div><span style="font-size:10px;color:rgba(255,255,255,0.4);">Thu</span></div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;"><div style="width:100%;background:rgba(255,255,255,0.06);border-radius:3px;height:18px;"></div><span style="font-size:10px;color:rgba(255,255,255,0.4);">Fri</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-card" data-card="3">
+                <div class="insight-card-label"><span class="ic-dot"></span> Revenue attribution</div>
+                <div class="insight-card-title">Campaign revenue, last 30 days</div>
+                <div class="insight-card-viz">
+                  <div class="ic-revenue-row">
+                    <div class="ic-donut">
+                      <svg viewBox="0 0 72 72">
+                        <circle class="ic-donut-bg" cx="36" cy="36" r="30"/>
+                        <circle class="ic-donut-fill seg1" cx="36" cy="36" r="30" data-target="94"/>
+                        <circle class="ic-donut-fill seg2" cx="36" cy="36" r="30" data-target="150" style="stroke-dashoffset:94"/>
+                        <circle class="ic-donut-fill seg3" cx="36" cy="36" r="30" data-target="170" style="stroke-dashoffset:150"/>
+                      </svg>
+                    </div>
+                    <div class="ic-revenue-detail">
+                      <div class="ic-rev-line"><span class="ic-rev-dot" style="background:var(--mc-cta);"></span> Campaigns <strong>$52.4K</strong></div>
+                      <div class="ic-rev-line"><span class="ic-rev-dot" style="background:var(--mc-teal);"></span> Automations <strong>$24.1K</strong></div>
+                      <div class="ic-rev-line"><span class="ic-rev-dot" style="background:var(--mc-gold);"></span> Journeys <strong>$7.7K</strong></div>
+                    </div>
+                  </div>
+                  <div class="ic-rec">
+                    <div class="ic-rec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                    <div class="ic-rec-text"><strong>$84.2K total</strong> from 1,247 orders. Automations drove 29%. Consider adding a post-purchase sequence.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="ic-dots" id="icDots">
+                <button class="ic-dot-nav active" data-idx="0"></button>
+                <button class="ic-dot-nav" data-idx="1"></button>
+                <button class="ic-dot-nav" data-idx="2"></button>
+                <button class="ic-dot-nav" data-idx="3"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="playground-conversion" id="playgroundConversion">
+    <div>
+      <h3>Ready to run this on your own data?</h3>
+      <p>Get the Standard plan with Analytics AI included. <strong>70% off for your first 3 months</strong>. No credit card required.</p>
+    </div>
+    <div class="cta-group">
+      <a href="#pricing" class="btn-white">Get Standard + Analytics AI</a>
+      <a href="#pricing" class="btn-outline-white">See all plans</a>
     </div>
   </div>
 </section>
@@ -4508,6 +4756,362 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+</script>
+<script>
+(function initRaPlayground() {
+  const root = document.getElementById('playground');
+  if (!root) return;
+  const personas = {
+    ecommerce: {
+      title: "Oat Lord · Live demo",
+      dataset: "Oat Lord's",
+      questions: [
+        {
+          q: "Why did revenue drop last week?",
+          chartTitle: "Weekly Revenue",
+          chartType: "line",
+          metrics: [{ val: "$18.4K", lbl: "This week", delta: "-18%", dir: "down" }, { val: "$22.5K", lbl: "Last week", delta: "baseline", dir: "up" }],
+          answer: "<p>Revenue dropped <strong>18% week-over-week</strong>, falling from $22.5K to $18.4K. The decline tracks closely with your <strong>abandoned-cart automation</strong>, which paused on Tuesday after a template error.</p><p>Looking at historical data, that single automation accounts for roughly <strong>$4,200/week</strong> in recovered revenue. Restarting it should close most of the gap within 7–10 days.</p>",
+          action: "Restart abandoned-cart automation"
+        },
+        {
+          q: "What are my top 3 products this month?",
+          chartTitle: "Top Products by Revenue",
+          chartType: "bars",
+          metrics: [{ val: "$8.2K", lbl: "Top product", delta: "+12%", dir: "up" }, { val: "43%", lbl: "% of revenue", delta: "3 SKUs", dir: "up" }],
+          answer: "<p>Your top 3 products this month: <strong>Oat Bowl Bundle ($8.2K)</strong>, Strawberry Smoothie Mix ($5.4K), and Recovery Granola ($4.1K). Together they drive <strong>43% of revenue from just 3 SKUs</strong>.</p><p>Worth noting: customers who buy the Oat Bowl Bundle are <strong>3.1x more likely</strong> to convert on a smoothie upsell within 30 days. There's a clear post-purchase opportunity here.</p>",
+          action: "Build post-purchase upsell"
+        },
+        {
+          q: "What's the best send time for my audience?",
+          chartTitle: "Open rate by hour",
+          chartType: "heatmap",
+          metrics: [{ val: "Tue 9am", lbl: "Best slot", delta: "42% open", dir: "up" }, { val: "Sun 8pm", lbl: "Worst slot", delta: "11% open", dir: "down" }],
+          answer: "<p>Your audience opens most reliably on <strong>Tuesday 9am ET (42% open rate)</strong> and Thursday 11am (38%). Sunday evenings consistently underperform, so skip them.</p><p>You're currently sending most campaigns Friday 4pm. Switching to Tuesday 9am should lift opens by approximately <strong>22%</strong>, based on the engagement patterns I see across the last 90 days.</p>",
+          action: "Reschedule next campaign"
+        }
+      ]
+    },
+    agency: {
+      title: "Pixel Co. · 5 client accounts",
+      dataset: "Pixel Co.'s 5 client accounts",
+      questions: [
+        {
+          q: "Which client had the worst week?",
+          chartTitle: "Client performance",
+          chartType: "bars",
+          metrics: [{ val: "Riverbed", lbl: "Underperformer", delta: "-31%", dir: "down" }, { val: "$2.4K", lbl: "Lost revenue", delta: "vs forecast", dir: "down" }],
+          answer: "<p><strong>Riverbed Coffee</strong> dropped 31% week-over-week, the worst performance across your 5 client accounts. Their last 3 campaigns landed in spam at unusually high rates.</p><p>The root cause: their sender reputation score fell from <strong>92 to 71</strong> after a bulk send to an unverified list on Monday. I'd pause sends for 48 hours and run a domain warm-up sequence before resuming.</p>",
+          action: "Pause Riverbed sends"
+        },
+        {
+          q: "Which client should I upsell first?",
+          chartTitle: "Upsell scoring",
+          chartType: "bars",
+          metrics: [{ val: "Sundial", lbl: "Top score", delta: "94/100", dir: "up" }, { val: "+$8K/mo", lbl: "Est. upsell value", delta: "4 clients", dir: "up" }],
+          answer: "<p><strong>Sundial Apparel</strong> is your strongest upsell candidate, scoring 94/100. They've maxed out Standard's 5-audience limit, revenue is up <strong>38% QoQ</strong>, and they've asked support about Premium features twice in the last month.</p><p>Bundle Premium with 4 onboarding sessions and your win probability is <strong>87%</strong>. Total estimated value across all 4 upsell-ready clients: ~$8K MRR.</p>",
+          action: "Draft Sundial pitch"
+        },
+        {
+          q: "Compare client open rates",
+          chartTitle: "Client open rates",
+          chartType: "bars",
+          metrics: [{ val: "Sundial", lbl: "Best", delta: "42% open", dir: "up" }, { val: "Riverbed", lbl: "Worst", delta: "14% open", dir: "down" }],
+          answer: "<p>Across your portfolio: <strong>Sundial 42%</strong>, Mavenly 38%, Vela 35%, Glow 28%, Riverbed 14%. The 28-point spread is wider than expected.</p><p>The pattern is more about vertical than tactics. Apparel clients average <strong>39% open</strong> while your two CPG clients average 22%. Consider a category-specific cadence.</p>",
+          action: "Export client report"
+        }
+      ]
+    },
+    nonprofit: {
+      title: "Reach Out · 5K donors",
+      dataset: "Reach Out's donor",
+      questions: [
+        {
+          q: "Which campaign drove the most donations?",
+          chartTitle: "Donations by campaign",
+          chartType: "bars",
+          metrics: [{ val: "$14.2K", lbl: "Holiday Drive", delta: "+62%", dir: "up" }, { val: "68%", lbl: "% of Q4 revenue", delta: "single campaign", dir: "up" }],
+          answer: "<p>Your <strong>Holiday Drive</strong> raised <strong>$14.2K</strong>. That is 62% above target and 68% of all Q4 revenue. The winning subject line was <em>'A meal for a neighbor'</em>, which beat the control by 47%.</p><p>The pattern across your top 5 campaigns: stories with <strong>named beneficiaries outperform generic appeals 2.3x</strong>. Consider building Spring Drive around 3-4 specific recipient stories.</p>",
+          action: "Replicate for Spring Drive"
+        },
+        {
+          q: "Who are my major donor candidates?",
+          chartTitle: "Donor scoring",
+          chartType: "bars",
+          metrics: [{ val: "42 donors", lbl: "Major candidates", delta: "$50K potential", dir: "up" }, { val: "7", lbl: "Top tier (>$500)", delta: "3 new", dir: "up" }],
+          answer: "<p>I've identified <strong>42 donors</strong> with high major-gift potential. They have given 3+ times over 2 years and engaged with 5+ emails this year. Estimated annual upgrade potential: <strong>~$50K</strong>.</p><p>Of those, 7 are top tier (lifetime gifts above $500), and <strong>3 are brand new this quarter</strong>. Those 3 are your highest-priority outreach.</p>",
+          action: "Export major donor list"
+        },
+        {
+          q: "How is donor retention trending?",
+          chartTitle: "Donor retention",
+          chartType: "line",
+          metrics: [{ val: "68%", lbl: "YoY retention", delta: "+4 pp", dir: "up" }, { val: "22%", lbl: "Lapsed", delta: "-3 pp", dir: "up" }],
+          answer: "<p>Retention is trending up: <strong>68% YoY</strong>, a 4-point improvement, with lapsed donors falling to 22%. Your re-engagement series is the likely driver.</p><p>Donors who received <strong>2+ thank-you emails</strong> retain at 81% vs 54% for those who got just one. Doubling the thank-you sequence for new donors could add 8–10 retention points.</p>",
+          action: "Expand thank-you series"
+        }
+      ]
+    }
+  };
+
+  let currentPersona = "ecommerce";
+  let interactionCount = 0;
+
+  const personaCards = root.querySelectorAll('.persona-card');
+  const suggestedQuestions = root.querySelector('#suggestedQuestions');
+  const chatMessages = root.querySelector('#chatMessages');
+  const chartTitle = root.querySelector('#chartTitle');
+  const chartCanvas = root.querySelector('#chartCanvas');
+  const metricRow = root.querySelector('#metricRow');
+  const playgroundTitle = root.querySelector('#playgroundTitle');
+  const datasetName = root.querySelector('#datasetName');
+  const conversion = root.querySelector('#playgroundConversion');
+
+  function initInsightCarousel() {
+    const carousel = root.querySelector('#insightCarousel');
+    if (!carousel) return;
+    const cards = carousel.querySelectorAll('.insight-card');
+    const dots = carousel.querySelectorAll('.ic-dot-nav');
+    let current = 0;
+    let timer = null;
+    function showCard(idx) {
+      cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      current = idx;
+      if (idx === 1) {
+        const g = carousel.querySelector('[data-card="1"] .ic-gauge-value');
+        if (g) setTimeout(() => { g.style.strokeDashoffset = (220 - parseInt(g.dataset.target || '132', 10)); }, 100);
+      }
+      if (idx === 3) {
+        carousel.querySelectorAll('[data-card="3"] .ic-donut-fill').forEach(r => {
+          const t = parseInt(r.dataset.target || '0', 10);
+          setTimeout(() => { r.style.strokeDashoffset = t; }, 100);
+        });
+      }
+    }
+    function start() { timer = setInterval(() => showCard((current + 1) % cards.length), 4000); }
+    function stop() { clearInterval(timer); }
+    dots.forEach(d => d.addEventListener('click', () => { stop(); showCard(parseInt(d.dataset.idx, 10)); start(); }));
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    start();
+  }
+
+  function restoreInsightCarousel() {
+    const cc = chartCanvas;
+    if (!cc) return;
+    cc.innerHTML = `
+      <div class="insight-carousel" id="insightCarousel">
+        <div class="insight-card active" data-card="0">
+          <div class="insight-card-label"><span class="ic-dot"></span> Sample insight</div>
+          <div class="insight-card-title">Top 5 campaigns by open rate</div>
+          <div class="insight-card-viz">
+            <div class="ic-bar-row"><span class="ic-bar-label">Holiday Flash</span><div class="ic-bar-track"><div class="ic-bar-fill teal" style="width:92%"></div></div><span class="ic-bar-val">46%</span></div>
+            <div class="ic-bar-row"><span class="ic-bar-label">Summer Drop</span><div class="ic-bar-track"><div class="ic-bar-fill teal" style="width:76%"></div></div><span class="ic-bar-val">38%</span></div>
+            <div class="ic-bar-row"><span class="ic-bar-label">VIP Early Access</span><div class="ic-bar-track"><div class="ic-bar-fill cta" style="width:70%"></div></div><span class="ic-bar-val">35%</span></div>
+            <div class="ic-bar-row"><span class="ic-bar-label">New Arrivals</span><div class="ic-bar-track"><div class="ic-bar-fill cta" style="width:58%"></div></div><span class="ic-bar-val">29%</span></div>
+            <div class="ic-bar-row"><span class="ic-bar-label">Weekly Digest</span><div class="ic-bar-track"><div class="ic-bar-fill cta" style="width:44%"></div></div><span class="ic-bar-val">22%</span></div>
+          </div>
+        </div>
+        <div class="insight-card" data-card="1">
+          <div class="insight-card-label"><span class="ic-dot"></span> Benchmark analysis</div>
+          <div class="insight-card-title">Your open rate vs. industry</div>
+          <div class="insight-card-viz">
+            <div class="ic-gauge-wrap">
+              <div class="ic-gauge">
+                <svg viewBox="0 0 80 80"><circle class="ic-gauge-ring" cx="40" cy="40" r="35"/><circle class="ic-gauge-value" cx="40" cy="40" r="35" data-target="132"/></svg>
+                <div class="ic-gauge-center">28%</div>
+              </div>
+              <div class="ic-gauge-detail">
+                <div class="ic-gd-line">Your open rate: <strong>28%</strong></div>
+                <div class="ic-gd-line">Ecommerce avg: 22%</div>
+                <div class="ic-gd-line" style="color:var(--mc-sage);">+6pp above benchmark</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-card" data-card="2">
+          <div class="insight-card-label"><span class="ic-dot"></span> Recommendation</div>
+          <div class="insight-card-title">Best send time for your audience</div>
+          <div class="insight-card-viz"><div class="ic-rec"><div class="ic-rec-text"><strong>Tuesday 9:00 AM</strong> drives 3.2x more revenue than your current Thursday sends.</div></div></div>
+        </div>
+        <div class="insight-card" data-card="3">
+          <div class="insight-card-label"><span class="ic-dot"></span> Revenue attribution</div>
+          <div class="insight-card-title">Campaign revenue, last 30 days</div>
+          <div class="insight-card-viz"><div class="ic-rec"><div class="ic-rec-text"><strong>$84.2K total</strong> from 1,247 orders. Automations drove 29%.</div></div></div>
+        </div>
+        <div class="ic-dots" id="icDots"><button class="ic-dot-nav active" data-idx="0"></button><button class="ic-dot-nav" data-idx="1"></button><button class="ic-dot-nav" data-idx="2"></button><button class="ic-dot-nav" data-idx="3"></button></div>
+      </div>`;
+    initInsightCarousel();
+  }
+
+  function renderSuggested() {
+    const persona = personas[currentPersona];
+    const items = persona.questions.map((qa, i) => `<button class="chip" data-idx="${i}">${qa.q}</button>`).join('');
+    suggestedQuestions.innerHTML = `<span class="label">Suggested questions</span>${items}`;
+    suggestedQuestions.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => askQuestion(parseInt(chip.dataset.idx, 10)));
+    });
+  }
+
+  function selectPersona(p) {
+    currentPersona = p;
+    personaCards.forEach(c => c.classList.toggle('active', c.dataset.persona === p));
+    playgroundTitle.textContent = personas[p].title;
+    datasetName.textContent = personas[p].dataset;
+    chatMessages.innerHTML = `
+      <div class="message ai">
+        <div class="bubble">
+          <p>I'm Analytics AI. I have access to <strong>${personas[p].dataset}</strong> last 6 months of marketing data: campaigns, audience segments, revenue, and automations.</p>
+          <p style="color: rgba(255,255,255,0.6);">Pick a question below or type your own to get started.</p>
+        </div>
+      </div>`;
+    chartTitle.textContent = "Your chart will appear here";
+    metricRow.style.display = 'none';
+    restoreInsightCarousel();
+    renderSuggested();
+  }
+
+  function renderChart(type) {
+    let svg = '';
+    if (type === 'line') {
+      svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none"><defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#007C89" stop-opacity="0.4"/><stop offset="100%" stop-color="#007C89" stop-opacity="0"/></linearGradient></defs><path d="M0,40 L60,32 L120,28 L180,40 L240,110 L300,140 L360,130" stroke="#007C89" stroke-width="2.5" fill="none"/><path d="M0,40 L60,32 L120,28 L180,40 L240,110 L300,140 L360,130 L360,180 L0,180 Z" fill="url(#g1)"/><circle cx="240" cy="110" r="5" fill="#FF6B47"/><text x="248" y="103" font-size="11" fill="#FF6B47" font-weight="700">-18%</text></svg>`;
+    } else if (type === 'bars') {
+      svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none"><rect x="20" y="40" width="60" height="130" rx="6" fill="#007C89"/><rect x="100" y="60" width="60" height="110" rx="6" fill="#00B9A6"/><rect x="180" y="80" width="60" height="90" rx="6" fill="#F4A100"/><rect x="260" y="120" width="60" height="50" rx="6" fill="#FFE01B"/></svg>`;
+    } else if (type === 'heatmap') {
+      svg = `<svg viewBox="0 0 360 180" preserveAspectRatio="none">${[0,1,2,3,4,5,6].map(d => [0,1,2,3,4,5,6,7].map(h => `<rect x="${20 + h*40}" y="${20 + d*22}" width="36" height="18" rx="3" fill="${(d===1&&h===1)?'#00B9A6':'rgba(255,255,255,0.12)'}"/>`).join('')).join('')}</svg>`;
+    }
+    chartCanvas.innerHTML = svg;
+  }
+
+  function askQuestion(idx) {
+    const qa = personas[currentPersona].questions[idx];
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user';
+    userMsg.innerHTML = `<div class="bubble">${qa.q}</div>`;
+    chatMessages.appendChild(userMsg);
+
+    const aiMsg = document.createElement('div');
+    aiMsg.className = 'message ai';
+    aiMsg.innerHTML = `<div class="bubble"><span class="typing-cursor"></span></div>`;
+    chatMessages.appendChild(aiMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+      aiMsg.querySelector('.bubble').innerHTML = qa.answer + `<button class="action-btn">${qa.action}</button>`;
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 700);
+
+    chartTitle.textContent = qa.chartTitle;
+    metricRow.style.display = 'flex';
+    root.querySelector('#m1Val').textContent = qa.metrics[0].val;
+    root.querySelector('#m1Lbl').textContent = qa.metrics[0].lbl;
+    const m1d = root.querySelector('#m1Delta');
+    m1d.textContent = qa.metrics[0].delta;
+    m1d.className = 'delta ' + qa.metrics[0].dir;
+    root.querySelector('#m2Val').textContent = qa.metrics[1].val;
+    root.querySelector('#m2Lbl').textContent = qa.metrics[1].lbl;
+    const m2d = root.querySelector('#m2Delta');
+    m2d.textContent = qa.metrics[1].delta;
+    m2d.className = 'delta ' + qa.metrics[1].dir;
+
+    setTimeout(() => renderChart(qa.chartType), 300);
+    interactionCount += 1;
+    if (conversion && interactionCount >= 2) conversion.classList.add('visible');
+  }
+
+  function showError(el, msg) {
+    el.textContent = msg;
+    el.classList.add('visible');
+    setTimeout(() => el.classList.remove('visible'), 6000);
+  }
+
+  function handleFile(file) {
+    const uploadError = root.querySelector('#uploadError');
+    uploadError.classList.remove('visible');
+    const ext = file.name.split('.').pop().toLowerCase();
+    const reader = new FileReader();
+    const setCustomDataset = (name, rowCount) => {
+      personas.custom = {
+        title: `${name} · Your data`,
+        dataset: "your",
+        questions: [
+          {
+            q: "What is the top-performing row by value?",
+            chartTitle: "Top values from uploaded data",
+            chartType: "bars",
+            metrics: [{ val: `${rowCount}`, lbl: "Rows loaded", delta: "Uploaded", dir: "up" }, { val: "Ready", lbl: "Status", delta: "Parsed", dir: "up" }],
+            answer: `<p>Connected to <strong>${name}</strong> with <strong>${rowCount}</strong> rows. Ask a specific KPI question to continue exploring this dataset.</p><p>This demo keeps your data in the browser and does not upload it to any server.</p>`,
+            action: "Ask next question"
+          }
+        ]
+      };
+      selectPersona('custom');
+    };
+    if (ext === 'csv' || ext === 'tsv') {
+      reader.onload = (e) => {
+        Papa.parse(e.target.result, {
+          header: true,
+          skipEmptyLines: true,
+          dynamicTyping: true,
+          complete: (results) => setCustomDataset(file.name, (results.data || []).length),
+          error: (err) => showError(uploadError, 'Could not parse CSV: ' + err.message)
+        });
+      };
+      reader.readAsText(file);
+    } else if (ext === 'xlsx' || ext === 'xls') {
+      reader.onload = (e) => {
+        try {
+          const wb = XLSX.read(e.target.result, { type: 'array' });
+          const sheet = wb.Sheets[wb.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+          setCustomDataset(file.name, json.length);
+        } catch (err) {
+          showError(uploadError, 'Could not parse Excel file: ' + err.message);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      showError(uploadError, 'Unsupported file type. Please upload CSV, TSV, XLSX, or XLS.');
+    }
+  }
+
+  personaCards.forEach(card => card.addEventListener('click', () => selectPersona(card.dataset.persona)));
+  root.querySelector('#sendBtn').addEventListener('click', () => {
+    const input = root.querySelector('#userInput');
+    if (!input.value.trim()) return;
+    askQuestion(0);
+    input.value = '';
+  });
+  root.querySelector('#userInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') root.querySelector('#sendBtn').click();
+  });
+
+  root.querySelectorAll('.ds-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      root.querySelectorAll('.ds-tab').forEach(b => b.classList.toggle('active', b === btn));
+      root.querySelectorAll('.ds-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === tab));
+    });
+  });
+
+  const uploadZone = root.querySelector('#uploadZone');
+  const fileInput = root.querySelector('#fileInput');
+  const browseBtn = root.querySelector('#browseBtn');
+  browseBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+  uploadZone.addEventListener('click', () => fileInput.click());
+  ['dragenter', 'dragover'].forEach(ev => uploadZone.addEventListener(ev, (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); }));
+  ['dragleave', 'drop'].forEach(ev => uploadZone.addEventListener(ev, (e) => { e.preventDefault(); uploadZone.classList.remove('dragover'); }));
+  uploadZone.addEventListener('drop', (e) => {
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) handleFile(e.target.files[0]);
+  });
+
+  renderSuggested();
+  initInsightCarousel();
+})();
 </script>
 </body>
 </html>
