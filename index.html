@@ -262,185 +262,208 @@
     outline-offset: 3px;
   }
 
-  /* ICP eyebrow + chips */
-  .icp-eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--mc-text-muted);
-    margin-bottom: 14px;
+  /* Segment pills + split hero video module */
+  .hero-split {
+    max-width: 1220px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: stretch;
+    text-align: left;
   }
-  .icp-chips {
-    display: inline-flex; flex-wrap: wrap; gap: 10px;
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: 0 auto 40px;
-    max-width: 940px;
   }
-  .icp-chip {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: white;
+  .hero-copy .hero-headline {
+    max-width: 640px;
+    margin: 0 0 18px;
+    font-size: clamp(40px, 5vw, 68px);
+  }
+  .hero-copy .hero-subhead {
+    max-width: 560px;
+    margin: 0 0 26px;
+  }
+  .hero-copy .hero-cta-row {
+    margin-bottom: 30px;
+    justify-content: flex-start;
+  }
+  .hero-segment-copy {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mc-text-muted);
+    margin-bottom: 10px;
+  }
+  .hero-segment-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .hero-segment-pill {
     border: 1.5px solid var(--mc-border);
+    background: #fff;
     color: var(--mc-text);
-    padding: 9px 16px 9px 12px;
     border-radius: 999px;
-    font-size: 14px; font-weight: 600;
-    cursor: pointer; font-family: inherit;
-    transition: all 0.18s ease;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   }
-  .icp-chip:hover {
+  .hero-segment-pill:hover {
     border-color: var(--mc-text);
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 18px rgba(36, 28, 21, 0.08);
   }
-  .icp-chip.active {
+  .hero-segment-pill.active {
     background: var(--mc-pep);
+    color: #fff;
     border-color: var(--mc-pep);
-    color: white;
-    box-shadow: 0 8px 22px rgba(36,28,21,0.16);
+    box-shadow: 0 10px 22px rgba(36, 28, 21, 0.18);
   }
-  .icp-chip-icon { width: 18px; height: 18px; display: inline-flex; }
-  .icp-chip-icon svg { width: 18px; height: 18px; }
-  .icp-chip:focus-visible {
+  .hero-segment-pill:focus-visible {
     outline: 3px solid var(--mc-cta);
     outline-offset: 2px;
   }
 
-  /* Dynamic hero preview card (3 panes) */
-  .hero-preview {
-    max-width: 1180px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.05fr 1.2fr 1fr;
-    gap: 18px;
-    background: linear-gradient(135deg, rgba(0,124,137,0.12) 0%, rgba(0,185,166,0.10) 50%, rgba(255,224,27,0.10) 100%);
-    border: 1px solid rgba(36,28,21,0.08);
-    border-radius: 22px;
-    padding: 22px;
-    box-shadow: 0 30px 70px -28px rgba(36,28,21,0.18);
-    text-align: left;
+  .hero-video-wrap {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(36, 28, 21, 0.14);
+    min-height: 500px;
+    background: #0f0b07;
+    box-shadow: 0 34px 74px -30px rgba(0, 0, 0, 0.5);
   }
-  .hp-pane {
-    background: rgba(255,255,255,0.92);
-    border: 1px solid rgba(36,28,21,0.06);
-    border-radius: 16px;
-    padding: 20px 22px;
-    backdrop-filter: blur(6px);
-    display: flex; flex-direction: column;
-    transition: transform 0.45s cubic-bezier(.2,.7,.2,1), opacity 0.45s ease;
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  .hp-pane.hp-flash {
-    animation: hpFlash 0.7s ease;
+  .hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(15, 11, 7, 0.38) 0%, rgba(15, 11, 7, 0.16) 42%, rgba(15, 11, 7, 0.78) 100%);
+    color: #fff;
+    pointer-events: none;
   }
-  @keyframes hpFlash {
-    0%   { transform: scale(0.985); opacity: 0.5; }
-    50%  { transform: scale(1.005); }
-    100% { transform: scale(1); opacity: 1; }
+  .hero-video-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
-  .hp-pane-eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--mc-cta);
-    margin-bottom: 12px;
-    display: inline-flex; align-items: center; gap: 7px;
+  .hero-video-segment {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.46);
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(5px);
+    padding: 7px 12px;
+    font-size: 11px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    font-weight: 700;
   }
-  .hp-pane-eyebrow .hp-spark { color: var(--mc-yellow); -webkit-text-stroke: 0.5px var(--mc-text); font-size: 13px; }
-  .hp-pane-eyebrow .hp-pulse {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--mc-teal);
-    animation: hpPulse 1.6s ease-in-out infinite;
-    box-shadow: 0 0 0 0 rgba(0,185,166,0.6);
-  }
-  @keyframes hpPulse {
-    0%, 100% { opacity: 0.55; box-shadow: 0 0 0 0 rgba(0,185,166,0.6); }
-    50% { opacity: 1; box-shadow: 0 0 0 6px rgba(0,185,166,0); }
-  }
-  .hp-pane-prompts .hp-prompt-list {
-    list-style: none;
-    display: flex; flex-direction: column; gap: 8px;
-    flex: 1;
-  }
-  .hp-pane-prompts .hp-prompt-list li {
-    background: var(--mc-bg-soft);
-    border: 1px solid var(--mc-border);
-    color: var(--mc-text);
-    border-radius: 10px;
-    padding: 10px 12px;
-    font-size: 13.5px; line-height: 1.35;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .hp-pane-prompts .hp-prompt-list li::before {
+  .hero-video-segment::before {
     content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--mc-cta);
-    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--mc-yellow);
   }
-
-  .hp-insight-headline {
-    font-family: 'Cooper Light', 'Georgia', serif;
-    font-size: 22px; font-weight: 300;
-    color: var(--mc-text);
-    line-height: 1.2;
-    margin-bottom: 12px;
+  .hero-video-outcome {
+    margin: 0;
+    max-width: 340px;
+    font-size: 22px;
+    line-height: 1.25;
+    font-family: 'Cooper Light', 'Cooper Lt BT', 'Georgia', serif;
+    font-style: italic;
+    font-weight: 300;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
   }
-  .hp-insight-viz {
-    background: var(--mc-bg-soft);
-    border: 1px solid var(--mc-border);
+  .hero-feature-timeline {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .hero-feature-chip {
     border-radius: 10px;
-    padding: 12px 14px;
-    margin-bottom: 12px;
-    min-height: 96px;
-    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(0, 0, 0, 0.34);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 9px 8px;
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: center;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   }
-  .hp-insight-viz svg { width: 100%; height: 92px; }
-  .hp-insight-byline {
+  .hero-feature-chip.active {
+    border-color: rgba(255, 224, 27, 0.95);
+    background: rgba(255, 224, 27, 0.24);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(255, 224, 27, 0.5);
+  }
+  .hero-video-reduce-note {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    border-radius: 999px;
+    padding: 7px 12px;
     font-size: 12px;
-    color: var(--mc-text-muted);
-    line-height: 1.4;
-  }
-
-  .hp-action-title {
-    font-size: 15.5px; font-weight: 700;
-    color: var(--mc-text);
-    line-height: 1.3;
-    margin-bottom: 8px;
-  }
-  .hp-action-desc {
-    font-size: 13px;
-    color: var(--mc-text-secondary);
-    line-height: 1.5;
-    margin-bottom: 14px;
-    flex: 1;
-  }
-  .hp-action-btn {
-    align-self: flex-start;
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--mc-text);
-    color: white;
-    border: none;
-    padding: 9px 16px;
-    border-radius: 8px;
-    font-size: 13px; font-weight: 700;
-    font-family: inherit;
     cursor: pointer;
-    transition: background 0.15s, transform 0.15s;
   }
-  .hp-action-btn:hover { background: #15100A; transform: translateY(-1px); }
-  .hp-action-btn:focus-visible { outline: 3px solid var(--mc-cta); outline-offset: 2px; }
+  .hero-video-reduce-note:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
 
-  @media (max-width: 1040px) {
-    .hero-headline { font-size: 60px; }
-    .hero-preview { grid-template-columns: 1fr 1fr; }
-    .hp-pane-action { grid-column: 1 / -1; }
+  @media (max-width: 1140px) {
+    .hero-headline { font-size: 56px; }
+    .hero-split { gap: 22px; }
+    .hero-video-wrap { min-height: 430px; }
+  }
+  @media (max-width: 900px) {
+    .hero { padding: 42px 20px 68px; }
+    .hero-split { grid-template-columns: 1fr; }
+    .hero-inner { text-align: center; }
+    .hero-copy { align-items: center; }
+    .hero-copy .hero-headline,
+    .hero-copy .hero-subhead { margin-left: auto; margin-right: auto; text-align: center; }
+    .hero-copy .hero-cta-row { justify-content: center; }
+    .hero-segment-copy { text-align: center; }
+    .hero-segment-pills { justify-content: center; }
+    .hero-video-wrap { width: min(100%, 680px); margin: 0 auto; min-height: 400px; }
   }
   @media (max-width: 760px) {
-    .hero { padding: 36px 18px 64px; }
     .hero-headline { font-size: 44px; }
     .hero-subhead { font-size: 16px; }
-    .hero-preview { grid-template-columns: 1fr; padding: 14px; gap: 12px; }
-    .hp-pane-action { grid-column: auto; }
-    .icp-chip { padding: 8px 14px 8px 10px; font-size: 13px; }
+    .hero-feature-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero-feature-chip:last-child { grid-column: 1 / -1; }
   }
   @media (max-width: 480px) {
     .hero-headline { font-size: 36px; }
-    .btn-primary-cta, .btn-secondary-cta { width: 100%; justify-content: center; }
+    .btn-primary-cta,
+    .btn-secondary-cta { width: 100%; justify-content: center; }
     .hero-cta-row { width: 100%; }
+    .hero-video-wrap { min-height: 330px; }
+    .hero-video-outcome { font-size: 20px; }
   }
 
   /* ===================== R&A Analytics Playground (ported) ===================== */
@@ -2032,89 +2055,59 @@
       Powered by Analytics AI · 70% off Standard for 3 months
     </div>
 
-    <h1 class="hero-h1 hero-headline" id="heroHeadline">Turn your marketing data into the next best move.</h1>
-    <p class="hero-sub hero-subhead" id="heroSubhead">Mailchimp's Analytics AI answers the questions you'd ask a marketing analyst. Tailored to your business, grounded in your real data.</p>
+    <div class="hero-split">
+      <div class="hero-copy">
+        <h1 class="hero-h1 hero-headline" id="heroHeadline">Turn your marketing data into the next best move.</h1>
+        <p class="hero-sub hero-subhead" id="heroSubhead">Mailchimp's Analytics AI answers the questions you'd ask a marketing analyst. Tailored to your business, grounded in your real data.</p>
 
-    <div class="hero-cta-row">
-      <button type="button" class="btn-spin btn-primary-cta" data-scroll-to="pricing">
-        <span>Get 70% off Standard + Analytics AI</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-      </button>
-      <button type="button" class="btn-secondary-cta" data-scroll-to="playground">
-        <span>Take Analytics AI for a spin</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
-      </button>
-    </div>
-
-    <div class="icp-eyebrow">Choose your business to personalize the demo</div>
-    <div class="icp-chips" role="tablist" aria-label="Industry">
-      <button class="icp-chip active" type="button" data-icp="retail" role="tab" aria-selected="true">
-        <span class="icp-chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L5 4 H19 L21 9"/><path d="M3 9 V20 H21 V9"/><path d="M9 14 H15"/></svg>
-        </span>
-        Retail &amp; e-commerce
-      </button>
-      <button class="icp-chip" type="button" data-icp="hospitality" role="tab" aria-selected="false">
-        <span class="icp-chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 V12 a7 7 0 0 0 14 0 V4"/><path d="M9 4 V8"/><path d="M15 4 V8"/><path d="M12 19 V22"/></svg>
-        </span>
-        Hospitality
-      </button>
-      <button class="icp-chip" type="button" data-icp="nonprofit" role="tab" aria-selected="false">
-        <span class="icp-chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21 C 5 16 3 11 7 8 c 2 -1.5 4 -0.5 5 1 c 1 -1.5 3 -2.5 5 -1 c 4 3 2 8 -5 13 z"/></svg>
-        </span>
-        Non-profit
-      </button>
-      <button class="icp-chip" type="button" data-icp="services" role="tab" aria-selected="false">
-        <span class="icp-chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7 V5 a2 2 0 0 1 2 -2 h2 a2 2 0 0 1 2 2 V7"/><path d="M3 13 h18"/></svg>
-        </span>
-        Professional services
-      </button>
-      <button class="icp-chip" type="button" data-icp="creators" role="tab" aria-selected="false">
-        <span class="icp-chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10,9 16,12 10,15"/></svg>
-        </span>
-        Content creators
-      </button>
-      <button class="icp-chip" type="button" data-icp="other" role="tab" aria-selected="false">
-        <span class="icp-chip-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 v5 l3 2"/></svg>
-        </span>
-        Other
-      </button>
-    </div>
-
-    <!-- Dynamic, ICP-aware preview card. Three glass panes: prompts to try,
-         a generated insight preview, and a recommended next action. JS
-         updates the contents on chip click. -->
-    <div class="hero-preview" id="heroPreview" aria-live="polite">
-      <div class="hp-pane hp-pane-prompts">
-        <div class="hp-pane-eyebrow">
-          <span class="hp-spark" aria-hidden="true">✦</span>
-          Prompts to try for <span id="hpBizName">Oat Lord</span>
+        <div class="hero-cta-row">
+          <button type="button" class="btn-spin btn-primary-cta" data-scroll-to="pricing">
+            <span>Get 70% off Standard + Analytics AI</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </button>
+          <button type="button" class="btn-secondary-cta" data-scroll-to="playground">
+            <span>Take Analytics AI for a spin</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+          </button>
         </div>
-        <ul class="hp-prompt-list" id="hpPromptList">
-          <!-- injected by JS -->
-        </ul>
-      </div>
-      <div class="hp-pane hp-pane-insight">
-        <div class="hp-pane-eyebrow"><span class="hp-pulse"></span> Insight preview</div>
-        <div class="hp-insight-headline" id="hpInsightHeadline">Revenue dropped 18% last week.</div>
-        <div class="hp-insight-viz" id="hpInsightViz" aria-hidden="true">
-          <!-- injected by JS: small chart per ICP -->
+
+        <div class="hero-segment-copy">Choose your business story</div>
+        <div class="hero-segment-pills" role="tablist" aria-label="Segment stories">
+          <button class="hero-segment-pill" type="button" data-icp="small-business" role="tab" aria-selected="false">Small business</button>
+          <button class="hero-segment-pill active" type="button" data-icp="ecommerce" role="tab" aria-selected="true">Ecommerce</button>
+          <button class="hero-segment-pill" type="button" data-icp="nonprofit" role="tab" aria-selected="false">Nonprofit</button>
+          <button class="hero-segment-pill" type="button" data-icp="b2c" role="tab" aria-selected="false">B2C</button>
         </div>
-        <div class="hp-insight-byline" id="hpInsightByline">From your last 14 days of campaign and order data.</div>
       </div>
-      <div class="hp-pane hp-pane-action">
-        <div class="hp-pane-eyebrow">Recommended next action</div>
-        <div class="hp-action-title" id="hpActionTitle">Restart your abandoned-cart automation.</div>
-        <div class="hp-action-desc" id="hpActionDesc">Pausing it on Tuesday cost roughly $4,200 in recovered revenue. Restarting closes most of the gap within 7 to 10 days.</div>
-        <button type="button" class="hp-action-btn" data-scroll-to="playground">
-          <span>Try this in the live demo</span>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+      <div class="hero-video-wrap" id="heroVideoModule" aria-live="polite">
+        <video
+          id="heroVideo"
+          class="hero-video"
+          src="assets/hero/hero-demo-loop.mp4"
+          poster="assets/hero/hero-video-poster.jpg"
+          muted
+          autoplay
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Product tour showing Mailchimp campaign tools"
+        ></video>
+        <button type="button" id="heroVideoPlayButton" class="hero-video-reduce-note" hidden>
+          Play hero video
         </button>
+        <div class="hero-video-overlay">
+          <div class="hero-video-top">
+            <div id="heroSegmentLabel" class="hero-video-segment">Ecommerce</div>
+            <p id="heroSegmentOutcome" class="hero-video-outcome">Scale every launch into repeat purchases and stronger LTV.</p>
+          </div>
+          <div class="hero-feature-timeline" id="heroFeatureChips">
+            <div class="hero-feature-chip active" data-feature-index="0">Email brand campaign builder</div>
+            <div class="hero-feature-chip" data-feature-index="1">Smart Segmentation</div>
+            <div class="hero-feature-chip" data-feature-index="2">SMS Campaigns</div>
+            <div class="hero-feature-chip" data-feature-index="3">Journey Automations</div>
+            <div class="hero-feature-chip" data-feature-index="4">Reporting &amp; Analytics</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3085,7 +3078,7 @@ var variantBTimer = null;
 var pgInteracted = false;
 
 /* ICP order is the same as the order of .icp-chip buttons in the hero. */
-const ICP_ORDER = ['retail', 'hospitality', 'nonprofit', 'services', 'creators', 'other'];
+const ICP_ORDER = ['small-business', 'ecommerce', 'nonprofit', 'b2c'];
 
 function startVariantBRotation() {
   if (prefersReducedMotion) return;
@@ -3671,6 +3664,35 @@ PERSONAS.other = {
   ]
 };
 
+// Hero redesign aliases: constrain hero stories to 4 approved segment narratives.
+PERSONAS.ecommerce = {
+  ...PERSONAS.retail,
+  heroSegmentLabel: 'Ecommerce',
+  heroProsperityOutcome: 'Scale every launch into repeat purchases and stronger LTV.',
+  heroFeatureTimes: [0.02, 0.23, 0.42, 0.66, 0.84]
+};
+
+PERSONAS['small-business'] = {
+  ...PERSONAS.hospitality,
+  heroSegmentLabel: 'Small business',
+  heroProsperityOutcome: 'Turn one weekly campaign into steady, predictable growth.',
+  heroFeatureTimes: [0.02, 0.2, 0.44, 0.65, 0.86]
+};
+
+PERSONAS.nonprofit = {
+  ...PERSONAS.nonprofit,
+  heroSegmentLabel: 'Nonprofit',
+  heroProsperityOutcome: 'Grow donor momentum and turn every appeal into measurable impact.',
+  heroFeatureTimes: [0.02, 0.25, 0.45, 0.64, 0.82]
+};
+
+PERSONAS.b2c = {
+  ...PERSONAS.creators,
+  heroSegmentLabel: 'B2C',
+  heroProsperityOutcome: 'Convert audience attention into always-on multichannel revenue.',
+  heroFeatureTimes: [0.02, 0.22, 0.41, 0.63, 0.83]
+};
+
 function featureSVG(kind) {
   const stroke = '#241c15';
   const w = 'stroke="' + stroke + '" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"';
@@ -3781,7 +3803,7 @@ function pgEscapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-let currentPersona = 'retail';
+let currentPersona = 'ecommerce';
 
 function setPersona(p) {
   const data = PERSONAS[p];
@@ -3789,7 +3811,7 @@ function setPersona(p) {
   currentPersona = p;
 
   // ICP chips in the hero should mirror active persona state.
-  document.querySelectorAll('.icp-chip').forEach(chip => {
+  document.querySelectorAll('.hero-segment-pill').forEach(chip => {
     const isActive = chip.dataset.icp === p;
     chip.classList.toggle('active', isActive);
     chip.setAttribute('aria-selected', isActive ? 'true' : 'false');
@@ -3869,36 +3891,51 @@ function renderHeroInsightViz(vizType) {
   </svg>`;
 }
 
-function renderHeroPreview(data) {
-  if (!data) return;
-  const heroBiz = document.getElementById('hpBizName');
-  if (heroBiz && data.pgGreetName) heroBiz.textContent = data.pgGreetName;
+let heroVideoTimelineFrame = null;
 
-  const promptList = document.getElementById('hpPromptList');
-  if (promptList) {
-    const prompts = (data.heroPrompts && data.heroPrompts.length ? data.heroPrompts : (data.questions || []).slice(0, 3).map(q => q.q)).slice(0, 3);
-    promptList.innerHTML = prompts.map((txt, idx) => `<li><button type="button" class="hp-prompt-btn" data-hero-q="${idx}">${pgEscapeHtml(txt)}</button></li>`).join('');
-    promptList.querySelectorAll('[data-hero-q]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        markInteracted();
-        askPlaygroundQuestion(parseInt(btn.dataset.heroQ, 10));
-        const target = document.getElementById('playground');
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
+function updateHeroFeatureTimeline(activeIdx) {
+  document.querySelectorAll('#heroFeatureChips .hero-feature-chip').forEach((chip, idx) => {
+    chip.classList.toggle('active', idx === activeIdx);
+  });
+}
+
+function syncHeroFeatureTimeline(data) {
+  const video = document.getElementById('heroVideo');
+  if (!video || !data) return;
+  const ticks = Array.isArray(data.heroFeatureTimes) && data.heroFeatureTimes.length === 5
+    ? data.heroFeatureTimes
+    : [0.02, 0.23, 0.42, 0.66, 0.84];
+
+  if (video.paused || !Number.isFinite(video.duration) || video.duration <= 0) {
+    updateHeroFeatureTimeline(0);
+    heroVideoTimelineFrame = null;
+    return;
   }
 
-  const insightHeadline = document.getElementById('hpInsightHeadline');
-  if (insightHeadline && data.heroInsight && data.heroInsight.headline) insightHeadline.textContent = data.heroInsight.headline;
-  const insightByline = document.getElementById('hpInsightByline');
-  if (insightByline && data.heroInsight && data.heroInsight.byline) insightByline.textContent = data.heroInsight.byline;
-  const insightViz = document.getElementById('hpInsightViz');
-  if (insightViz && data.heroInsight) insightViz.innerHTML = renderHeroInsightViz(data.heroInsight.vizType);
+  const progress = (video.currentTime % video.duration) / video.duration;
+  let activeIdx = 0;
+  for (let i = 0; i < ticks.length; i += 1) {
+    if (progress >= ticks[i]) activeIdx = i;
+  }
+  updateHeroFeatureTimeline(activeIdx);
+  heroVideoTimelineFrame = requestAnimationFrame(() => syncHeroFeatureTimeline(data));
+}
 
-  const actionTitle = document.getElementById('hpActionTitle');
-  if (actionTitle && data.heroAction && data.heroAction.title) actionTitle.textContent = data.heroAction.title;
-  const actionDesc = document.getElementById('hpActionDesc');
-  if (actionDesc && data.heroAction && data.heroAction.desc) actionDesc.textContent = data.heroAction.desc;
+function renderHeroPreview(data) {
+  if (!data) return;
+
+  const segment = document.getElementById('heroSegmentLabel');
+  if (segment) segment.textContent = data.heroSegmentLabel || 'Segment';
+
+  const outcome = document.getElementById('heroSegmentOutcome');
+  if (outcome) outcome.textContent = data.heroProsperityOutcome || 'Grow with smarter campaigns and clear analytics.';
+
+  if (heroVideoTimelineFrame) {
+    cancelAnimationFrame(heroVideoTimelineFrame);
+    heroVideoTimelineFrame = null;
+  }
+  updateHeroFeatureTimeline(0);
+  syncHeroFeatureTimeline(data);
 }
 
 function renderSampleInsight(sample) {
@@ -4648,12 +4685,40 @@ function generatePgInsightsFromData(rows, cols) {
 
 /* ---------- Hero init: render default persona + start auto-rotation ---------- */
 (function heroInit() {
-  document.querySelectorAll('.icp-chip').forEach(chip => {
+  const heroVideo = document.getElementById('heroVideo');
+  const reducedMotionPlayButton = document.getElementById('heroVideoPlayButton');
+
+  document.querySelectorAll('.hero-segment-pill').forEach(chip => {
     chip.addEventListener('click', () => {
       markInteracted();
       setPersona(chip.dataset.icp);
     });
   });
+
+  if (heroVideo) {
+    heroVideo.addEventListener('loadedmetadata', () => {
+      const active = PERSONAS[currentPersona];
+      if (active) renderHeroPreview(active);
+    });
+  }
+
+  if (prefersReducedMotion && heroVideo) {
+    heroVideo.pause();
+    heroVideo.removeAttribute('autoplay');
+    if (reducedMotionPlayButton) {
+      reducedMotionPlayButton.hidden = false;
+      reducedMotionPlayButton.addEventListener('click', () => {
+        heroVideo.play().then(() => {
+          renderHeroPreview(PERSONAS[currentPersona]);
+          reducedMotionPlayButton.hidden = true;
+        }).catch(() => {
+          // Keep fallback button visible if playback is blocked.
+          reducedMotionPlayButton.hidden = false;
+        });
+      });
+    }
+  }
+
   const hero = document.getElementById('hero');
   if (hero) {
     hero.addEventListener('mouseenter', stopVariantBRotation);
@@ -4679,7 +4744,7 @@ function generatePgInsightsFromData(rows, cols) {
   // Render default persona (Retail) and kick off auto-rotation. The
   // variant switcher used to call startVariantBRotation() on hash routing,
   // but with only one hero we just start it directly.
-  setPersona('retail');
+  setPersona('ecommerce');
   startVariantBRotation();
 })();
 
